@@ -1,12 +1,12 @@
 <div id="top-bar" class="container">
-    <div class="row">
-        <div class="span4">
+    <div class="d-flex">
+        <div class="mr-auto ">
             <form method="POST" class="search_form">
                 <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
             </form>
         </div>
-        <div class="span8">
-            <div class="account pull-right">
+        <div class="">
+            <div class="account ">
                 <ul class="user-menu">
                     <li><a href="#">My Account</a></li>
                     <li><a href="cart.html">Your Cart</a></li>
@@ -17,11 +17,12 @@
         </div>
     </div>
 </div>
+
 <div id="wrapper" class="container">
-    <section class="navbar main-menu">
-        <div class="navbar-inner main-menu">
-            <a href="index.html" class="logo pull-left"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
-            <nav id="menu" class="pull-right">
+    <section class="navbar-nav">
+        <div class="navbar-inner main-menu d-flex mb-4">
+            <a href="index.html" class="mr-auto"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
+            <nav id="menu" class="">
                 <ul>
                     <li><a href="./products.html">Woman</a>
                         <ul>
