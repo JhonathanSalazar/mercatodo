@@ -2,46 +2,61 @@
     <div class="d-flex">
         <div class="mr-auto ">
             <form method="POST" class="search_form">
-                <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
+                <input type="text" class="input-block-level search-query text-black-50" Placeholder="eg. T-sirt">
             </form>
         </div>
-        <div class="">
-            <div class="account ">
-                <ul class="user-menu">
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="cart.html">Your Cart</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                    <li><a href="register.html">Login</a></li>
-                </ul>
-            </div>
+        <div class="account ">
+            <ul class="user-menu">
+                <li><a href="{{ route('pages.user-account') }}">Mi cuenta</a></li>
+                <li><a href="{{ route('pages.your-car') }}">Tu carrito</a></li>
+                <li><a href="{{ route('pages.checkout') }}">Checkout</a></li>
+
+                @guest()
+                    <li>
+                        <a href={{ route('login') }}
+                        >Ingresar</a>
+                    </li>
+                @else
+                    <li>
+                        <a href='#'
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();"
+                        >Cerrar sesión</a>
+                    </li>
+                @endguest
+            </ul>
         </div>
     </div>
 </div>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" display="none">
+    @csrf
+</form>
+
 
 <div id="wrapper" class="container">
     <section class="navbar-nav">
         <div class="navbar-inner main-menu d-flex mb-4">
-            <a href="index.html" class="mr-auto"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
+            <a href="{{ route('home') }}" class="mr-auto"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
             <nav id="menu" class="">
                 <ul>
-                    <li><a href="./products.html">Woman</a>
+                    <li><a href="#_">Woman</a>
                         <ul>
-                            <li><a href="./products.html">Lacinia nibh</a></li>
-                            <li><a href="./products.html">Eget molestie</a></li>
-                            <li><a href="./products.html">Varius purus</a></li>
+                            <li><a href="#">Lacinia nibh</a></li>
+                            <li><a href="#">Eget molestie</a></li>
+                            <li><a href="#">Varius purus</a></li>
                         </ul>
                     </li>
-                    <li><a href="./products.html">Man</a></li>
-                    <li><a href="./products.html">Sport</a>
+                    <li><a href="#">Man</a></li>
+                    <li><a href="#">Sport</a>
                         <ul>
-                            <li><a href="./products.html">Gifts and Tech</a></li>
-                            <li><a href="./products.html">Ties and Hats</a></li>
-                            <li><a href="./products.html">Cold Weather</a></li>
+                            <li><a href="#">Gifts and Tech</a></li>
+                            <li><a href="#">Ties and Hats</a></li>
+                            <li><a href="#">Cold Weather</a></li>
                         </ul>
                     </li>
-                    <li><a href="./products.html">Hangbag</a></li>
-                    <li><a href="./products.html">Best Seller</a></li>
-                    <li><a href="./products.html">Top Seller</a></li>
+                    <li><a href="#">Hangbag</a></li>
+                    <li><a href="#">Best Seller</a></li>
+                    <li><a href="#">Top Seller</a></li>
                 </ul>
             </nav>
         </div>
