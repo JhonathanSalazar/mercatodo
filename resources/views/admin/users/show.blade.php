@@ -28,7 +28,7 @@
                             </li>
                         </ul>
 
-                        <a href="#" class="btn btn-primary btn-block">
+                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block">
                             <b>Editar usuario</b>
                         </a>
                     </div>
