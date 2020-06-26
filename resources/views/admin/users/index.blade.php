@@ -24,7 +24,8 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Email</th>
-                        <th>Roles</th>
+                        <th>Estado</th>
+                        <th>Rol</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -34,6 +35,13 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                @if($user->enable)
+                                    <span class="label label-success">Habilitada</span>
+                                @else
+                                    <span class="label label-danger">Inhabilitada</span>
+                                @endif
+                            </td>
                             <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                             <td>
                                 <a href="{{ route('admin.users.show', $user) }}"

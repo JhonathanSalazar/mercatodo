@@ -26,6 +26,16 @@
                             <li class="list-group-item">
                                 <b>Dirección</b> <a class="pull-right">Static Address</a>
                             </li>
+                            <li class="list-group-item">
+                                <b>Estado</b>
+                                <a class="pull-right">
+                                    @if($user->enable)
+                                        <span class="label label-success">Habilitada</span>
+                                    @else
+                                        <span class="label label-danger">Inhabilitada</span>
+                                    @endif
+                                </a>
+                            </li>
                         </ul>
 
                         <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block">

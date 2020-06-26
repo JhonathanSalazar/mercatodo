@@ -27,6 +27,15 @@
                                 <label for="email">Email:</label>
                                 <input name="email" class="form-control" type="text" value="{{ old('email', $user->email) }}">
                             </div>
+                            <div class="form-group">
+                                <label for="Habilitación usuario">Habilitación usuario</label>
+                                <select name="enable" class="form-control">
+                                    <option value="">Seleccione un estado</option>
+                                    <option value=0 {{ old('enable' ,$user->enable) == 0 ? 'selected' : '' }} >Deshabilitado</option>
+                                    <option value=1 {{ old('enable' ,$user->enable) == 1 ? 'selected' : '' }}>Habilitado</option>
+                                </select>
+                            </div>
+
                             <button class="btn btn-primary btn-block ">Actualizar información</button>
                         </form>
                     </div>

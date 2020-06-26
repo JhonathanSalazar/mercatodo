@@ -75,12 +75,14 @@ class UsersController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'email' => ['required', Rule::unique('users')->ignore($user->id)]
+            'email' => ['required', Rule::unique('users')->ignore($user->id)],
+            'enable' => 'required'
         ]);
 
         $user->update($data);
 
         return back();
+
     }
 
     /**
