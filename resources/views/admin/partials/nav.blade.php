@@ -2,26 +2,16 @@
 <ul class="sidebar-menu">
     <li class="header">NAVEGACIÓN</li>
     <li class="active treeview">
-        <a href="{{ route('home') }}"><i class="fa fa-home">
-            </i><span>Inicio</span></a>
+        <a href="{{ route('home') }}">
+            <i class="fa fa-home"></i
+            ><span>Inicio</span>
+        </a>
     </li>
     <li class="active treeview">
-        <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <a href="{{ route('admin.users.index') }}">
+            <i class="fa fa-users"></i>
+            <span>Administración de usuarios</span>
         </a>
-        <ul class="treeview-menu">
-            <li class="active">
-                <a href="index.html">
-                    <i class="fa fa-circle-o"></i>Dashboard v1</a>
-            </li>
-            <li>
-                <a href="index2.html">
-                    <i class="fa fa-circle-o"></i> Dashboard v2</a>
-            </li>
-        </ul>
     </li>
 </ul>
 
