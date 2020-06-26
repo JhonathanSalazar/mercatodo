@@ -30,7 +30,21 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 Route::view('/','home')->name('home');
-Route::get('/admin', 'AdminController@main')->name('admin.dashboard');
+
+
+//Route::get('/admin', 'AdminController@main')
+//    ->middleware('role:Admin')
+//    ->name('admin.dashboard');
+
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => 'role:Admin'],
+    function() {
+    Route::get('/', 'AdminController@main')->name('admin.dashboard');
+    Route::resource('users', 'Admin\UsersController', ['except' => 'create','as' => 'admin']);
+});
+
+
 
 Route::get('account','PagesController@userAccount')->name('pages.user-account');
 Route::get('/your-car','PagesController@yourCar')->name('pages.your-car');

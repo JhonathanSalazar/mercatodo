@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,18 +13,34 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        Role::truncate();
         User::truncate();
 
-        $user = new User;
-        $user->name = 'Admin';
-        $user->email = 'admin@gmail.com';
-        $user->password = bcrypt('123123');
-        $user->save();
+        $adminRole = Role::create(['name' => 'Admin']);
+        $buyerRole = Role::create(['name' => 'Buyer']);
 
-        $user = new User;
-        $user->name = 'User';
-        $user->email = 'user@gmail.com';
-        $user->password = bcrypt('123123');
-        $user->save();
+        $admin = new User;
+        $admin->name = 'Admin';
+        $admin->email = 'admin@gmail.com';
+        $admin->password = bcrypt('123123');
+        $admin->save();
+
+        $admin->assignRole($adminRole);
+
+        $buyer = new User;
+        $buyer->name = 'Buyer';
+        $buyer->email = 'buyer@gmail.com';
+        $buyer->password = bcrypt('123123');
+        $buyer->save();
+
+        $buyer->assignRole($buyerRole);
+
+        $buyer1 = new User;
+        $buyer1->name = 'Buyer';
+        $buyer1->email = 'buyer1@gmail.com';
+        $buyer1->password = bcrypt('123123');
+        $buyer1->save();
+
+        $buyer1->assignRole($buyerRole);
     }
 }

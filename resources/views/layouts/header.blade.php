@@ -7,23 +7,29 @@
         </div>
         <div class="account ">
             <ul class="user-menu">
-                <li><a href="{{ route('pages.user-account') }}">Mi cuenta</a></li>
-                <li><a href="{{ route('pages.your-car') }}">Tu carrito</a></li>
-                <li><a href="{{ route('pages.checkout') }}">Checkout</a></li>
 
-                @guest()
-                    <li>
-                        <a href={{ route('login') }}
-                        >Ingresar</a>
-                    </li>
-                @else
-                    <li>
-                        <a href='#'
-                           onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();"
-                        >Cerrar sesión</a>
-                    </li>
-                @endguest
+
+                    @guest()
+                        <li><a href={{ route('login') }}>Ingresar</a></li>
+                    @else
+                        <li><a href="{{ route('pages.user-account') }}">Mi cuenta</a></li>
+
+                        @if(auth()->user()->hasRole('Admin'))
+                        <li><a href={{ route('admin.dashboard') }}>Administración</a></li>
+                        @else
+
+                            <li><a href="{{ route('pages.your-car') }}">Tu carrito</a></li>
+                            <li><a href="{{ route('pages.checkout') }}">Checkout</a></li>
+                        @endif
+
+                        <li>
+                            <a href='#'
+                               onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();"
+                            >Cerrar sesión</a>
+                        </li>
+                    @endguest
+
             </ul>
         </div>
     </div>
