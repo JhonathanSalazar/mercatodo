@@ -26,7 +26,7 @@ Route::group([
     Route::get('/', 'AdminController@main')->name('admin.dashboard');
     Route::resource('users', 'Admin\UsersController',
         [
-            'except' => ['create','store', 'destroy'],
+            'except' => ['create','store'],
             'as' => 'admin'
         ]);
 });
