@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,40 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
+Auth::routes(['verify' => true]);
 
 Route::view('/','home')->name('home');
-
-
-//Route::get('/admin', 'AdminController@main')
-//    ->middleware('role:Admin')
-//    ->name('admin.dashboard');
 
 Route::group([
     'prefix' => 'admin',
     'middleware' => 'role:Admin'],
     function() {
     Route::get('/', 'AdminController@main')->name('admin.dashboard');
-    Route::resource('users', 'Admin\UsersController', ['except' => 'create','as' => 'admin']);
+    Route::resource('users', 'Admin\UsersController',
+        [
+            'except' => ['create','store'],
+            'as' => 'admin'
+        ]);
 });
 
+Route::get('account','PagesController@userAccount')
+    ->middleware('auth', 'verified')
+    ->name('pages.user-account');
 
 
-Route::get('account','PagesController@userAccount')->name('pages.user-account');
 Route::get('/your-car','PagesController@yourCar')->name('pages.your-car');
 Route::get('/checkout','PagesController@checkout')->name('pages.checkout');
 Route::get('/about','PagesController@aboutUs')->name('pages.about');
