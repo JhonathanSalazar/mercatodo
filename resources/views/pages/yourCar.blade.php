@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
     Bienvenido a tu <strong> CARRITO </strong>
