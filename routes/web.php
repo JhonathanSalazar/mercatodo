@@ -24,7 +24,7 @@ Route::group([
     'middleware' => 'role:Admin'],
     function() {
     Route::get('/', 'AdminController@main')->name('admin.dashboard');
-    Route::resource('users', 'Admin\UsersController',
+    Route::resource('users', 'UsersController',
         [
             'except' => ['create','store'],
             'as' => 'admin'

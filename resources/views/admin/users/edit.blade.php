@@ -35,7 +35,6 @@
                                     <option value=1 {{ old('enable' ,$user->enable) == 1 ? 'selected' : '' }}>Habilitado</option>
                                 </select>
                             </div>
-
                             <button class="btn btn-primary btn-block ">Actualizar información</button>
                         </form>
                     </div>
