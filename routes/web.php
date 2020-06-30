@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Auth::routes(['verify' => true]);
+
+Route::view('/','home')->name('home');
+
+Route::group(['prefix' => 'admin'],
+    function() {
+    Route::get('/', 'AdminUsersController@main')->name('admin.dashboard');
+    Route::resource('users', 'AdminUsersController',
+        [
+            'except' => ['create','store'],
+            'as' => 'admin'
+        ]);
+});
+
+Route::get('account/{user}','UsersController@edit')->name('pages.user-account.edit');
+Route::put('account/{user}', 'UsersController@update')->name('pages.user-account.update');
+
+
+Route::get('/your-car','PagesController@yourCar')->name('pages.your-car');
+Route::get('/checkout','PagesController@checkout')->name('pages.checkout');
+Route::get('/about','PagesController@aboutUs')->name('pages.about');
+Route::get('/contact', 'PagesController@contactUs')->name('pages.contact');
+
+
+
