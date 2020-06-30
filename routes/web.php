@@ -19,21 +19,18 @@ Auth::routes(['verify' => true]);
 
 Route::view('/','home')->name('home');
 
-Route::group([
-    'prefix' => 'admin',
-    'middleware' => 'role:Admin'],
+Route::group(['prefix' => 'admin'],
     function() {
-    Route::get('/', 'AdminController@main')->name('admin.dashboard');
-    Route::resource('users', 'UsersController',
+    Route::get('/', 'AdminUsersController@main')->name('admin.dashboard');
+    Route::resource('users', 'AdminUsersController',
         [
             'except' => ['create','store'],
             'as' => 'admin'
         ]);
 });
 
-Route::get('account','PagesController@userAccount')
-    ->middleware('auth', 'verified')
-    ->name('pages.user-account');
+Route::get('account/{user}','UsersController@edit')->name('pages.user-account.edit');
+Route::put('account/{user}', 'UsersController@update')->name('pages.user-account.update');
 
 
 Route::get('/your-car','PagesController@yourCar')->name('pages.your-car');

@@ -14,7 +14,7 @@
             <div class="col-md-4">
                 <h4>Mi cuenta</h4>
                 <ul class="navbar-nav">
-                    <li><a href="{{ route('pages.user-account') }}">Mi cuenta</a></li>
+                    <li><a href="{{ route('pages.user-account.update', auth()->user()) }}">Mi cuenta</a></li>
                     <li><a href="#">Historial de compras</a></li>
                     <li><a href="#">Lista de deseos</a></li>
                 </ul>
