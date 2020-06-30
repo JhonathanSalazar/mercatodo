@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
 
-class UsersController extends Controller
+
+class AdminUsersController extends Controller
 {
 
     /**
@@ -19,10 +19,19 @@ class UsersController extends Controller
     {
         $this->middleware([
             'auth',
-            'verified'
+            'role:Admin'
         ]);
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function main()
+    {
+        return view('admin.dashboard');
+    }
 
     /**
      * Display a listing of the resource.
@@ -31,7 +40,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -58,55 +68,53 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $user
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
     {
-
+        return view('admin.users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
-        $this->authorize('view', $user);
-
-        return view('pages.userAccount', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('update', $user);
-
         $data = $request->validate([
             'name' => 'required',
             'email' => ['required', Rule::unique('users')->ignore($user->id)],
+            'enable' => 'required'
         ]);
 
         $user->update($data);
 
-        return back()->with('flash','Información actualizado');
+        return back();
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
     }

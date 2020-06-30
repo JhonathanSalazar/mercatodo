@@ -12,7 +12,7 @@
                     @guest()
                         <li><a href={{ route('login') }}>Ingresar</a></li>
                     @else
-                        <li><a href="{{ route('pages.user-account') }}">Mi cuenta</a></li>
+                        <li><a href="{{ route('pages.user-account.update', auth()->user()) }}">Mi cuenta</a></li>
 
                         @if(auth()->user()->hasRole('Admin'))
                         <li><a href={{ route('admin.dashboard') }}>Administración</a></li>

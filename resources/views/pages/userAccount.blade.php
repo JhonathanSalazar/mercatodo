@@ -18,15 +18,15 @@
                                 @endforeach
                             </ul>
                         @endif
-                        <form method="" action="#" >
-                            @csrf
+                        <form method="POST" action="{{ route('pages.user-account.update', $user) }}" >
+                            @csrf @method('PUT')
                             <div class="form-group">
                                 <label for="name">Nombre:</label>
-                                <input name="name" class="form-control" type="text" value="">
+                                <input name="name" class="form-control" type="text" value="{{ old('name', $user->name) }}">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input name="email" class="form-control" type="text" value="">
+                                <input name="email" class="form-control" type="text" value="{{ old('email', $user->email) }}">
                             </div>
                             <button class="btn btn-primary btn-block ">Actualizar información</button>
                         </form>
