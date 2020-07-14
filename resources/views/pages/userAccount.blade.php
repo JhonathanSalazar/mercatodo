@@ -4,11 +4,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
+
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Datos personales</h3>
                     </div>
                     <div class="box-body">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         @if($errors->any())
                             <ul class="list-group">
                                 @foreach($errors->all() as $error)
