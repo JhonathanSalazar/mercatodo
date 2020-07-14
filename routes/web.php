@@ -21,22 +21,22 @@ Route::view('/','home')->name('home');
 
 Route::group(['prefix' => 'admin'],
     function() {
-    Route::get('/', 'AdminUsersController@main')->name('admin.dashboard');
-    Route::resource('users', 'AdminUsersController',
+    Route::get('/', 'Admin\DashboardController@main')->name('admin.dashboard');
+    Route::resource('users', 'Admin\UsersController',
         [
             'except' => ['create','store'],
             'as' => 'admin'
         ]);
 });
 
-Route::get('account/{user}','UsersController@edit')->name('pages.user-account.edit');
-Route::put('account/{user}', 'UsersController@update')->name('pages.user-account.update');
+Route::get('account/{user}','Customer\UserDataController@edit')->name('pages.user-account.edit');
+Route::put('account/{user}', 'Customer\UserDataController@update')->name('pages.user-account.update');
 
 
-Route::get('/your-car','PagesController@yourCar')->name('pages.your-car');
-Route::get('/checkout','PagesController@checkout')->name('pages.checkout');
-Route::get('/about','PagesController@aboutUs')->name('pages.about');
-Route::get('/contact', 'PagesController@contactUs')->name('pages.contact');
+Route::get('/your-car','Customer\PagesController@yourCar')->name('pages.your-car');
+Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');
+Route::get('/about','Customer\PagesController@aboutUs')->name('pages.about');
+Route::get('/contact', 'Customer\PagesController@contactUs')->name('pages.contact');
 
 
 
