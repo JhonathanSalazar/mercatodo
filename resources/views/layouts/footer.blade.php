@@ -14,6 +14,7 @@
             <div class="col-md-4">
                 <h4>Mi cuenta</h4>
                 <ul class="navbar-nav">
+<<<<<<< HEAD
 
                     <li><a href=
                            @auth()
@@ -23,6 +24,9 @@
                             @endauth
                         >Mi cuenta</a>
                     </li>
+=======
+                    <li><a href="#">Mi cuenta</a></li>
+>>>>>>> master
                     <li><a href="#">Historial de compras</a></li>
                     <li><a href="#">Lista de deseos</a></li>
                 </ul>
