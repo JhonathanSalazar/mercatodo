@@ -1,11 +1,14 @@
 <div id="top-bar" class="container">
-    <div class="d-flex">
-        <div class="mr-auto ">
-            <form method="POST" class="search_form">
-                <input type="text" class="input-block-level search-query text-black-50" Placeholder="eg. T-sirt">
+    <div class="d-flex justify-content-between align-items-center">
+            <form method="POST" class="form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" placeholder="Ingrese el articulo">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                    </div>
+                </div>
             </form>
-        </div>
-        <div class="account ">
+        <div class="account float-right">
             <ul class="user-menu">
 
 
