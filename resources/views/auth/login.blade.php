@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4 mb-2">
-                                    <button type="submit" class="btn btn-primary"
+                                    <button type="submit" class="btn btn-outline-dark"
                                     >Ingresar</button>
 
                                     @if (Route::has('password.request'))
@@ -67,7 +67,7 @@
                                     @endif
                                 </div>
                                 <div class="col-md-8 offset-md-4">
-                                    <a class="btn btn-primary" href="{{ route('register') }}">Registrarse</a>
+                                    <a class="btn btn-outline-dark" href="{{ route('register') }}">Registrarse</a>
                                 </div>
                             </div>
                         </form>
