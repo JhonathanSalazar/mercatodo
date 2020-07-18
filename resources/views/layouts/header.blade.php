@@ -1,11 +1,14 @@
 <div id="top-bar" class="container">
-    <div class="d-flex">
-        <div class="mr-auto ">
-            <form method="POST" class="search_form">
-                <input type="text" class="input-block-level search-query text-black-50" Placeholder="eg. T-sirt">
+    <div class="d-flex justify-content-between align-items-center">
+            <form method="POST" class="form-inline">
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" placeholder="Ingrese el articulo">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                    </div>
+                </div>
             </form>
-        </div>
-        <div class="account ">
+        <div class="account float-right">
             <ul class="user-menu">
 
 
@@ -38,29 +41,15 @@
     @csrf
 </form>
 
-
+<div id="app">
 <div id="wrapper" class="container">
     <section class="navbar-nav">
         <div class="navbar-inner main-menu d-flex mb-4">
             <a href="{{ route('home') }}" class="mr-auto"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
             <nav id="menu" class="">
                 <ul>
-                    <li><a href="#_">Woman</a>
-                        <ul>
-                            <li><a href="#">Lacinia nibh</a></li>
-                            <li><a href="#">Eget molestie</a></li>
-                            <li><a href="#">Varius purus</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="#_">Woman</a></li>
                     <li><a href="#">Man</a></li>
-                    <li><a href="#">Sport</a>
-                        <ul>
-                            <li><a href="#">Gifts and Tech</a></li>
-                            <li><a href="#">Ties and Hats</a></li>
-                            <li><a href="#">Cold Weather</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Hangbag</a></li>
                     <li><a href="#">Best Seller</a></li>
                     <li><a href="#">Top Seller</a></li>
                 </ul>

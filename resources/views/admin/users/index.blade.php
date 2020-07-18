@@ -1,6 +1,13 @@
 @extends('admin.layout')
 
 @section('header')
+
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <h1>
         USUARIOS
         <small>Listado</small>

@@ -25,9 +25,9 @@ class UserPolicy
      *
      * @param  \App\User  $user
      * @param  \App\User  $model
-     * @return mixed
+     * @return boolean
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model): bool
     {
         return $user->id === $model->id;
     }
@@ -48,9 +48,9 @@ class UserPolicy
      *
      * @param  \App\User  $user
      * @param  \App\User  $model
-     * @return mixed
+     * @return boolean
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model): bool
     {
         return $user->id === $model->id;
     }
