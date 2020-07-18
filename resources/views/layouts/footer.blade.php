@@ -14,8 +14,6 @@
             <div class="col-md-4">
                 <h4>Mi cuenta</h4>
                 <ul class="navbar-nav">
-<<<<<<< HEAD
-
                     <li><a href=
                            @auth()
                                "{{ route('pages.user-account.update', auth()->user()) }}"
@@ -24,9 +22,6 @@
                             @endauth
                         >Mi cuenta</a>
                     </li>
-=======
-                    <li><a href="#">Mi cuenta</a></li>
->>>>>>> master
                     <li><a href="#">Historial de compras</a></li>
                     <li><a href="#">Lista de deseos</a></li>
                 </ul>
@@ -48,21 +43,7 @@
         <span>Copyright 2013 bootstrap page template  All right reserved.</span>
     </section>
 </div>
-<script src="/shooper/themes/js/common.js"></script>
-<script src="/shooper/themes/js/jquery.flexslider-min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $(document).ready(function() {
-            $('.flexslider').flexslider({
-                animation: "fade",
-                slideshowSpeed: 4000,
-                animationSpeed: 600,
-                controlNav: false,
-                directionNav: true,
-                controlsContainer: ".flex-container" // the container that holds the flexslider
-            });
-        });
-    });
+</div>
 </script>
 </body>
 </html>

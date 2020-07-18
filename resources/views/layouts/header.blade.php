@@ -38,29 +38,15 @@
     @csrf
 </form>
 
-
+<div id="app">
 <div id="wrapper" class="container">
     <section class="navbar-nav">
         <div class="navbar-inner main-menu d-flex mb-4">
             <a href="{{ route('home') }}" class="mr-auto"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
             <nav id="menu" class="">
                 <ul>
-                    <li><a href="#_">Woman</a>
-                        <ul>
-                            <li><a href="#">Lacinia nibh</a></li>
-                            <li><a href="#">Eget molestie</a></li>
-                            <li><a href="#">Varius purus</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="#_">Woman</a></li>
                     <li><a href="#">Man</a></li>
-                    <li><a href="#">Sport</a>
-                        <ul>
-                            <li><a href="#">Gifts and Tech</a></li>
-                            <li><a href="#">Ties and Hats</a></li>
-                            <li><a href="#">Cold Weather</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Hangbag</a></li>
                     <li><a href="#">Best Seller</a></li>
                     <li><a href="#">Top Seller</a></li>
                 </ul>

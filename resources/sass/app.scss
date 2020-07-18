@@ -1,8 +1,18 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+strong {
+    font-weight: bold;
+}
+
+.address>strong {
+    display: block;
+    margin-bottom: 20px;
+    font-style: normal;
+    line-height: 20px;
+}

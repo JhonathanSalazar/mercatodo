@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.0 (https://getbootstrap.com/)
@@ -10926,5 +10926,16 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+strong {
+  font-weight: bold;
+}
+
+.address > strong {
+  display: block;
+  margin-bottom: 20px;
+  font-style: normal;
+  line-height: 20px;
 }
 
