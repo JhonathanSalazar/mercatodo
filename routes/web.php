@@ -32,7 +32,8 @@ Route::group(['prefix' => 'admin'],
 Route::get('account/{user}','Customer\UserDataController@edit')->name('pages.user-account.edit');
 Route::put('account/{user}', 'Customer\UserDataController@update')->name('pages.user-account.update');
 
-Route::view('/product-details','pages.product-details')->name('products.details');
+Route::view('/product-details','product.product-details')->name('products.details');
+Route::view('/product-list','product.product-list')->name('products.list');
 
 
 Route::get('/your-car','Customer\PagesController@yourCar')->name('pages.your-car');
