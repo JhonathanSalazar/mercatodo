@@ -48,6 +48,16 @@ class ProductsController extends Controller
     }
 
     /**
+     * Create a new product instance after a valid registration.
+     *
+     * @param  array  $data
+     */
+    public function create()
+    {
+        return view('admin.products.create');
+    }
+
+    /**
      * Store the specified resource.
      *
      * @param Request $request

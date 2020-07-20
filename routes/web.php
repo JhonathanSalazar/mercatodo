@@ -30,7 +30,8 @@ Route::group(['prefix' => 'admin'],
         ]);
 
     Route::get('products', 'Admin\ProductsController@index')->name('admin.products.index');
-    Route::post('products', 'Admin\ProductsController@store')->name('admin.products.create');
+    Route::get('products/create', 'Admin\ProductsController@create')->name('admin.products.create');
+    Route::post('products', 'Admin\ProductsController@store')->name('admin.products.store');
     Route::get('products/{product}','Admin\ProductsController@show')->name('admin.products.show');
 });
 

@@ -4,15 +4,38 @@ namespace Tests\Feature;
 
 use App\Product;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreateProductTest extends TestCase
+class ManageProductsTest extends TestCase
 {
 
     use WithFaker, RefreshDatabase;
+
+    /**
+     * @test
+     */
+    public function guestCanNotManageProducts()
+    {
+        //$this->withoutExceptionHandling();
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+
+        $product = factory(Product::class)->create();
+        Auth::logout();
+
+        $this->get(route('admin.products.index'))->assertRedirect(route('login'));
+        $this->get(route('admin.products.create'))->assertRedirect(route('login'));
+        $this->get($product->path())->assertRedirect(route('login'));
+        $this->post(route('admin.products.store'), $product->toArray())->assertRedirect(route('login'));
+
+    }
+
 
     /**
      * @test
@@ -26,15 +49,13 @@ class CreateProductTest extends TestCase
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
-        $attributes = [
-            'name' => $this->faker->name,
-            'branch' => $this->faker->name,
-            'price' => $this->faker->randomNumber(5)
-        ];
+        $this->get(route('admin.products.create'))->assertStatus(200);
+
+        $attributes = factory(Product::class)->raw();
 
 
         //2. When (Cuando)
-        $response = $this->post(route('admin.products.create'), $attributes);
+        $response = $this->post(route('admin.products.store'), $attributes);
 
         //3. Then (Comprobamos)
         $this->assertDatabaseHas('products', $attributes);
@@ -56,7 +77,7 @@ class CreateProductTest extends TestCase
 
         $attribute = factory(Product::class)->raw(['name' => '']);
 
-        $this->post(route('admin.products.create'), $attribute)->assertSessionHasErrors('name');
+        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('name');
     }
 
     /**
@@ -72,7 +93,7 @@ class CreateProductTest extends TestCase
 
         $attribute = factory(Product::class)->raw(['branch' => '']);
 
-        $this->post(route('admin.products.create'), $attribute)->assertSessionHasErrors('branch');
+        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('branch');
     }
 
     /**
@@ -88,7 +109,7 @@ class CreateProductTest extends TestCase
 
         $attribute = factory(Product::class)->raw(['price' => '']);
 
-        $this->post(route('admin.products.create'), $attribute)->assertSessionHasErrors('price');
+        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('price');
     }
 
     /**
