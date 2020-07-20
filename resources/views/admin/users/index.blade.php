@@ -59,19 +59,6 @@
                                    class="btn btn-xs btn-info">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-         <!--
-                                Destroy users
-
-                                <form method="{{ route('admin.users.destroy', $user) }}"
-                                      action="#"
-                                      style="display: inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-xs btn-danger"
-                                    onclick="return confirm('Esta seguro de querer eliminar este usuario')"
-                                    ><i class="fa fa-times"></i></button>
-                                </form>
-                                -->
                             </td>
                         </tr>
                     @endforeach

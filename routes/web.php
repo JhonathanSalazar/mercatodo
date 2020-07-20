@@ -22,11 +22,16 @@ Route::view('/','home')->name('home');
 Route::group(['prefix' => 'admin'],
     function() {
     Route::get('/', 'Admin\DashboardController@main')->name('admin.dashboard');
+
     Route::resource('users', 'Admin\UsersController',
         [
             'except' => ['create','store'],
             'as' => 'admin'
         ]);
+
+    Route::get('products', 'Admin\ProductsController@index')->name('admin.products.index');
+    Route::post('products', 'Admin\ProductsController@store')->name('admin.products.create');
+    Route::get('products/{product}','Admin\ProductsController@show')->name('admin.products.show');
 });
 
 Route::get('account/{user}','Customer\UserDataController@edit')->name('pages.user-account.edit');
