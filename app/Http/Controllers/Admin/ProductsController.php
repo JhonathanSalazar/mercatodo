@@ -30,10 +30,9 @@ class ProductsController extends Controller
      *
      * @return Illuminate\View\View
      */
-    public function index():View
+    public function index(Product $product):View
     {
         $products = Product::all();
-
         return view('admin.products.index', compact('products'));
     }
 
@@ -48,11 +47,11 @@ class ProductsController extends Controller
     }
 
     /**
-     * Create a new product instance after a valid registration.
+     * Display the create view.
      *
-     * @param  array  $data
+     * @return Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.products.create');
     }
@@ -63,11 +62,12 @@ class ProductsController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         //Validate
         $attributes = $request->validate([
             'name' => 'required',
+            'ean' => 'required|integer|digits_between:8,14',
             'branch' => 'required',
             'price' => 'required|integer'
         ]);

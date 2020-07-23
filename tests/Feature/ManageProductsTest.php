@@ -115,6 +115,22 @@ class ManageProductsTest extends TestCase
     /**
      * @test
      */
+    public function productRequiredAEAN()
+    {
+        //$this->withoutExceptionHandling();
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+
+        $attribute = factory(Product::class)->raw(['ean' => '']);
+
+        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('ean');
+    }
+
+    /**
+     * @test
+     */
     public function adminCanViewAProduct()
     {
         $this->withoutExceptionHandling();
