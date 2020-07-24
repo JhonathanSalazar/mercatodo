@@ -50,36 +50,68 @@ class ProductsController extends Controller
      * Display the create view.
      *
      * @return Illuminate\View\View
-     */
+
     public function create(): View
     {
         return view('admin.products.create');
     }
+    */
 
     /**
      * Store the specified resource.
-     *
-     * @param Request $request
-     * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        //Validate
-        $attributes = $request->validate([
+        $attributes = $this->validate($request, ['name' => 'required']);
+
+        $userId = array('user_id' => auth()->id());
+
+        $attributes = array_merge($attributes, $userId);
+
+        $product = Product::create($attributes);
+
+        return redirect()->route('admin.products.edit', $product);
+    }
+
+    /**
+     * Store the specified resource.
+     * @param Product $product
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Product $product ,Request $request)
+    {
+
+        $this->validate($request, [
             'name' => 'required',
             'ean' => 'required|integer|digits_between:8,14',
             'branch' => 'required',
             'price' => 'required|integer'
         ]);
 
-        $userId = array('user_id' => auth()->id());
+        //$userId = array('user_id' => auth()->id());
+        //$attributes = array_merge($attributes, $userId);
 
-        $attributes = array_merge($attributes, $userId);
-
-        //Presist
-        Product::create($attributes);
+        $product->name = $request->get('name');
+        $product->user_id = auth()->id();
+        $product->ean = $request->get('ean');
+        $product->branch = $request->get('branch');
+        $product->price = $request->get('price');
+        $product->save();
 
         //Redirect
-        return redirect(route('admin.products.index'));
+        return redirect()->route('admin.products.index')
+            ->with('status', 'Tu producto ha sido guardado');
+    }
+
+
+    /**
+     * @param Product $product
+     */
+    public function edit(Product $product)
+    {
+        return view('admin.products.edit', compact('product'));
     }
 }

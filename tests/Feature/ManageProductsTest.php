@@ -36,13 +36,37 @@ class ManageProductsTest extends TestCase
 
     }
 
+    /**
+     * @test
+    */
+    public function adminCanCreateProducts()
+    {
+        //$this->withoutExceptionHandling();
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+
+        $this->get(route('admin.products.index'))->assertStatus(200);
+
+        $attributes = [
+            'name' => $this->faker->firstName,
+            'user_id' => auth()->id()
+            ];
+
+        $response = $this->post(route('admin.products.store'), $attributes);
+        $product = Product::where($attributes)->first();
+
+        $this->assertDatabaseHas('products', $attributes);
+        $response->assertRedirect(route('admin.products.edit', $product));
+    }
 
     /**
      * @test
-     */
+
     public function adminCanCreateProducts()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         //1. Given (Obteniendo, creando el contexto)
         $adminRole = Role::create(['name' => 'Admin']);
@@ -63,6 +87,7 @@ class ManageProductsTest extends TestCase
         $this->get(route('admin.products.index'))
             ->assertSee($attributes['name']);
     }
+     */
 
     /**
      * @test
@@ -131,9 +156,9 @@ class ManageProductsTest extends TestCase
     /**
      * @test
      */
-    public function adminCanViewAProduct()
+    public function adminCanViewAnSpecificProduct()
     {
-        $this->withoutExceptionHandling();
+        //$this->withoutExceptionHandling();
 
         $adminRole = Role::create(['name' => 'Admin']);
         $admUser = factory(User::class)->create()->assignRole($adminRole);

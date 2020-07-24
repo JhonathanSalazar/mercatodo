@@ -15,11 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('ean');
-            $table->unsignedBigInteger('user_id');
             $table->string('name');
-            $table->string('branch');
-            $table->integer('price');
+            $table->unsignedBigInteger('user_id');
+            $table->string('ean')->nullable();
+            $table->string('branch')->nullable();
+            $table->integer('price')->nullable();
             $table->boolean('stock')->default(true);
             $table->timestamps();
 
