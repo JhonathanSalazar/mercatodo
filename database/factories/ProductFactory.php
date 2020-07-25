@@ -7,11 +7,11 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'user_id' => auth()->id(),
-        'ean' => $faker->randomNumber(8),
+        'user_id' => auth()->id() ? auth()->id() : '1',
         'name' => $faker->firstName,
-        'description' => $faker->paragraph,
+        'ean' => $faker->randomNumber(8),
         'branch' => $faker->lastName,
+        'description' => $faker->paragraph,
         'price' => $faker->randomNumber(3) * 100,
     ];
 });
