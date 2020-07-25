@@ -12,7 +12,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ManageProductsTest extends TestCase
 {
-
     use WithFaker, RefreshDatabase;
 
     /**
@@ -63,36 +62,8 @@ class ManageProductsTest extends TestCase
 
     /**
      * @test
-
-    public function adminCanCreateProducts()
-    {
-        //$this->withoutExceptionHandling();
-
-        //1. Given (Obteniendo, creando el contexto)
-        $adminRole = Role::create(['name' => 'Admin']);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
-        $this->actingAs($admUser);
-
-        $this->get(route('admin.products.create'))->assertStatus(200);
-
-        $attributes = factory(Product::class)->raw();
-
-
-        //2. When (Cuando)
-        $response = $this->post(route('admin.products.store'), $attributes);
-
-        //3. Then (Comprobamos)
-        $this->assertDatabaseHas('products', $attributes);
-        $response->assertRedirect(route('admin.products.index'));
-        $this->get(route('admin.products.index'))
-            ->assertSee($attributes['name']);
-    }
      */
-
-    /**
-     * @test
-     */
-    public function productRequiredAName()
+    public function productRequireANameToCreate()
     {
         //$this->withoutExceptionHandling();
 
@@ -108,7 +79,7 @@ class ManageProductsTest extends TestCase
     /**
      * @test
      */
-    public function productRequiredABranch()
+    public function productRequiredBranchToUpdate()
     {
         //$this->withoutExceptionHandling();
 
@@ -116,15 +87,19 @@ class ManageProductsTest extends TestCase
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
-        $attribute = factory(Product::class)->raw(['branch' => '']);
+        $product = factory(Product::class)->create();
+        $this->get(route('admin.products.edit', $product))->assertSee($product->branch);
 
-        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('branch');
+        $product->branch = '';
+        $this->put(route('admin.products.update', $product), compact('product'))
+            ->assertSessionHasErrors('branch');
+
     }
 
     /**
      * @test
      */
-    public function productRequiredAPrice()
+    public function productRequiredPriceToUpdate()
     {
         //$this->withoutExceptionHandling();
 
@@ -132,15 +107,19 @@ class ManageProductsTest extends TestCase
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
-        $attribute = factory(Product::class)->raw(['price' => '']);
+        $product = factory(Product::class)->create();
+        $this->get(route('admin.products.edit', $product))->assertSee($product->price);
 
-        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('price');
+        $product->price = '';
+        $this->put(route('admin.products.update', $product), compact('product'))
+            ->assertSessionHasErrors('price');
+
     }
 
     /**
      * @test
      */
-    public function productRequiredAEAN()
+    public function productRequiredEANToUpdate()
     {
         //$this->withoutExceptionHandling();
 
@@ -148,9 +127,13 @@ class ManageProductsTest extends TestCase
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
-        $attribute = factory(Product::class)->raw(['ean' => '']);
+        $product = factory(Product::class)->create();
+        $this->get(route('admin.products.edit', $product))->assertSee($product->price);
 
-        $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('ean');
+        $product->ean = '';
+        $this->put(route('admin.products.update', $product), compact('product'))
+            ->assertSessionHasErrors('ean');
+
     }
 
     /**

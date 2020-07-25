@@ -68,9 +68,13 @@
                                class="btn btn-xs btn-default">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <a href="#"
+                            <a href="{{ route('admin.products.edit', $product) }}"
                                class="btn btn-xs btn-info">
                                 <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="#"
+                               class="btn btn-xs btn-danger">
+                                <i class="fa fa-close"></i>
                             </a>
                         </td>
                     </tr>
