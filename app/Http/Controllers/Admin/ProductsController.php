@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Product;
+use App\Category;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -102,6 +103,7 @@ class ProductsController extends Controller
         $product->branch = $request->get('branch');
         $product->price = $request->get('price');
         $product->description = $request->get('description');
+        $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));
         $product->save();
 
@@ -116,6 +118,8 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        $categories = Category::all();
+
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 }

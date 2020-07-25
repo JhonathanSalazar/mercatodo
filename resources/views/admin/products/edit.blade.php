@@ -80,7 +80,7 @@
                                        type="text"
                                        class="form-control pull-right"
                                        id="datepicker"
-                                       value="{{ old('published_at', $product->published_at ? $product->published_at->format('d-m-Y') : null) }}">
+                                       value="{{ old('published_at', $product->published_at ? $product->published_at->format('m/d/Y') : null) }}">
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
@@ -98,7 +98,12 @@
                         <div class="form-group">
                             <label for="">Categoría</label>
                             <select name="category" class="form-control">
-                                <option value="">Selecciona una categoría</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                    {{ old('category'), $product->category_id == $category->id ? 'selected' : ''}}
+                                    > {{ $category->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
