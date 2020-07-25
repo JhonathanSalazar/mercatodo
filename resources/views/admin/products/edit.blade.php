@@ -53,6 +53,11 @@
                                    placeholder="Marca del producto">
                             {!! $errors->first('branch', '<span class="help-block">:message</span>') !!}
                         </div>
+                        <div class="form-group {{ $errors->has('description') ? 'has-error' : ''}}">
+                            <label>Description del producto</label>
+                            <textarea name="description" rows="4" class="form-control">{{old('description', $product->description) }}</textarea>
+                            {!! $errors->first('description', '<span class="help-block">:message</span>') !!}
+                        </div>
                         <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
                             <label for="ProductImage">Imagen producto:</label>
                             <input type="file" name="image" id="ProductImage">
@@ -65,6 +70,19 @@
             <div class="col-md-4">
                 <div class="box box-primary">
                     <div class="box-body">
+                        <div class="form-group">
+                            <label>Fecha para publicacion:</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input name="published_at"
+                                       type="text"
+                                       class="form-control pull-right"
+                                       id="datepicker"
+                                       value="{{ old('published_at', $product->published_at ? $product->published_at->format('d-m-Y') : null) }}">
+                            </div>
+                        </div>
                         <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
                             <label for="">Precio producto:</label>
                             <div class="input-group">
@@ -108,11 +126,19 @@
 
 @push('styles')
     <link rel="stylesheet" href="/adminlte/plugins/select2/select2.min.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="../../plugins/datepicker/datepicker3.css">
 @endpush
 
 @push('scripts')
     <script src="/adminlte/plugins/select2/select2.full.min.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="/adminlte/plugins/datepicker/bootstrap-datepicker.js"></script>
     <script>
         $('.select2').select2();
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
     </script>
 @endpush

@@ -10,6 +10,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'user_id' => auth()->id(),
         'ean' => $faker->randomNumber(8),
         'name' => $faker->firstName,
+        'description' => $faker->paragraph,
         'branch' => $faker->lastName,
         'price' => $faker->randomNumber(3) * 100,
     ];

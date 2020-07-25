@@ -63,6 +63,30 @@ class ManageProductsTest extends TestCase
     /**
      * @test
      */
+    public function adminCanUpdateProducts()
+    {
+        //$this->withoutExceptionHandling();
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+        $product = factory(Product::class)->create();
+
+
+        $this->get(route('admin.products.edit', $product))->assertStatus(200);
+        $product->name = $this->faker->firstName;
+        $product->description = $this->faker->sentence;
+        $product->ean = $this->faker->randomNumber(8);
+        $product->branch = $this->faker->lastName;
+
+
+        $this->put(route('admin.products.update', $product), compact('product'));
+        $this->assertDatabaseHas('products', compact($product));
+    }
+
+    /**
+     * @test
+     */
     public function productRequireANameToCreate()
     {
         //$this->withoutExceptionHandling();
@@ -77,8 +101,8 @@ class ManageProductsTest extends TestCase
     }
 
     /**
-     * @test
-     */
+ * @test
+ */
     public function productRequiredBranchToUpdate()
     {
         //$this->withoutExceptionHandling();
@@ -93,6 +117,26 @@ class ManageProductsTest extends TestCase
         $product->branch = '';
         $this->put(route('admin.products.update', $product), compact('product'))
             ->assertSessionHasErrors('branch');
+
+    }
+
+    /**
+     * @test
+     */
+    public function productRequiredDescriptionToUpdate()
+    {
+        //$this->withoutExceptionHandling();
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+
+        $product = factory(Product::class)->create();
+        $this->get(route('admin.products.edit', $product))->assertSee($product->branch);
+
+        $product->description = '';
+        $this->put(route('admin.products.update', $product), compact('product'))
+            ->assertSessionHasErrors('description');
 
     }
 

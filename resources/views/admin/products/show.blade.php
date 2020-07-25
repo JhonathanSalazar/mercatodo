@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="box box-primary">
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive"
@@ -23,6 +23,9 @@
                             <b>Precio</b> <a class="pull-right">{{ $product->price }}</a>
                         </li>
                         <li class="list-group-item">
+                            <b>Fecha para publicacion</b> <a class="pull-right">{{ $product->published_at->format('d-m-Y') }}</a>
+                        </li>
+                        <li class="list-group-item">
                             <b>Stock</b>
                             <a class="pull-right">
                                 @if( $product->stock )
@@ -32,15 +35,19 @@
                                 @endif
                             </a>
                         </li>
+                        <li class="list-group-item">
+                            <b>Descripcion</b>
+                            <p class="text-muted">{{ $product->description }}</p>
+                        </li>
                     </ul>
 
-                    <a href="#" class="btn btn-primary btn-block">
+                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary btn-block">
                         <b>Editar producto</b>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-primary">

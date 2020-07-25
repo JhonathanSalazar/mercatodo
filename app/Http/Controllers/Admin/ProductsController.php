@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -86,6 +87,7 @@ class ProductsController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
+            'description' => 'required',
             'ean' => 'required|integer|digits_between:8,14',
             'branch' => 'required',
             'price' => 'required|integer'
@@ -99,6 +101,8 @@ class ProductsController extends Controller
         $product->ean = $request->get('ean');
         $product->branch = $request->get('branch');
         $product->price = $request->get('price');
+        $product->description = $request->get('description');
+        $product->published_at = Carbon::parse($request->get('published_at'));
         $product->save();
 
         //Redirect

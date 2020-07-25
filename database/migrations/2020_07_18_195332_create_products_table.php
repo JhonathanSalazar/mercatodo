@@ -20,7 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('ean')->nullable();
             $table->string('branch')->nullable();
             $table->integer('price')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('stock')->default(true);
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
