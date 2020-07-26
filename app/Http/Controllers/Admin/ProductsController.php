@@ -93,6 +93,7 @@ class ProductsController extends Controller
         $product->ean = $request->get('ean');
         $product->branch = $request->get('branch');
         $product->price = $request->get('price');
+        $product->image = $request->file('image')->store('images');
         $product->description = $request->get('description');
         $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));

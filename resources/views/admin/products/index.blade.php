@@ -105,7 +105,7 @@
                                    type="text"
                                    value="{{ old('name') }}"
                                    class="form-control"
-                                   placeholder="Ingrese el nombre del producto">
+                                   placeholder="Ingrese el nombre del producto" required>
                             {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
                         </div>
                     </div>

@@ -21,7 +21,7 @@
 
 @section('content')
     <div class="row">
-        <form method="POST" action="{{ route('admin.products.update', $product) }}">
+        <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="col-md-8">
                 <div class="box box-primary">
