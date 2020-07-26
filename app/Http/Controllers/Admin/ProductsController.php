@@ -82,7 +82,11 @@ class ProductsController extends Controller
             'description' => 'required',
             'ean' => 'required|integer|digits_between:8,14',
             'branch' => 'required',
-            'price' => 'required|integer'
+            'price' => 'required|integer',
+            'image' => [
+                'required',
+                'mimes:jpeg,png',
+            ]
         ]);
 
         //$userId = array('user_id' => auth()->id());
