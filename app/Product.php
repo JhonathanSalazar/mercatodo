@@ -17,8 +17,19 @@ class Product extends Model
         return "/admin/products/{$this->id}";
     }
 
+    /**
+     * Return the relation product->category and category->product
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Return the relation product->tags and tags->product
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
