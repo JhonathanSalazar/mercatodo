@@ -23,10 +23,17 @@
                             <b>Precio</b> <a class="pull-right">{{ $product->price }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Fecha para publicacion</b> <a class="pull-right">{{ $product->published_at ? $product->published_at->format('d-m-Y') : null}}</a>
+                            <b>Fecha para publicacion</b> <a class="pull-right">{{ $product->published_at ? $product->published_at->format('m/d/Y') : null}}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Categoria producto</b> <a class="pull-right">{{ $product->category ? $product->category->name : 'No definida' }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Tags producto</b>
+                            <a class="pull-right"
+                            >@foreach($product->tags as $tag)
+                                <span class="label label-primary">{{ $tag->name }}</span>
+                             @endforeach</span></a>
                         </li>
                         <li class="list-group-item">
                             <b>Stock</b>

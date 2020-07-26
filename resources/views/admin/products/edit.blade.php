@@ -100,22 +100,22 @@
                             <select name="category" class="form-control">
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}"
-                                    {{ old('category'), $product->category_id == $category->id ? 'selected' : ''}}
-                                    > {{ $category->name }}
-                                    </option>
+                                    {{ old('category', $product->category_id) == $category->id ? 'selected' : ''}}
+                                    >{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <div class="">
                                 <label>Etiquetas</label>
-                                <select name="tags" class="form-control select2"
+                                <select name="tags[]" class="form-control select2"
                                         multiple="multiple"
                                         data-placeholder="Etiquetas"
                                         style="width: 100%">
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
-                                    <option>Option 3</option>
+                                        @foreach($tags as $tag)
+                                        <option {{ collect(old('tags', $product->tags->pluck('id')))->contains($tag->id) ? 'selected' : '' }}
+                                            value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
