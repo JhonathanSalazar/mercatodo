@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Tag;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
@@ -48,16 +49,6 @@ class ProductsController extends Controller
         return view('admin.products.show', compact('product'));
     }
 
-    /**
-     * Display the create view.
-     *
-     * @return Illuminate\View\View
-
-    public function create(): View
-    {
-        return view('admin.products.create');
-    }
-    */
 
     /**
      * Store the specified resource.
@@ -106,6 +97,7 @@ class ProductsController extends Controller
         $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));
         $product->save();
+        $product->tags()->sync($request->get('tags'));
 
         //Redirect
         return redirect()->route('admin.products.index')
@@ -119,7 +111,8 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }
 }
