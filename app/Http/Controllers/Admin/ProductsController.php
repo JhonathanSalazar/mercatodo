@@ -73,9 +73,8 @@ class ProductsController extends Controller
     /**
      * Store the specified resource.
      * @param Product $product
-     * @param Request $request
+     * @param UpdateProductRequest $request
      * @return RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Product $product ,UpdateProductRequest $request)
     {
@@ -116,6 +115,7 @@ class ProductsController extends Controller
 
 
     /**
+     *  Show the edit form of the specified resource.
      * @param Product $product
      */
     public function edit(Product $product)
@@ -124,5 +124,19 @@ class ProductsController extends Controller
         $tags = Tag::all();
 
         return view('admin.products.edit', compact('product', 'categories', 'tags'));
+    }
+
+    /**
+     *  Delete the resource and their relations.
+     * @param Product $product
+     */
+    public function destroy(Product $product)
+    {
+
+        $product->delete();
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('status', 'Tu producto ha sido eliminado');
     }
 }
