@@ -5,9 +5,12 @@
         <div class="col-md-5">
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive"
-                         src="/adminlte/dist/img/user4-128x128.jpg"
+
+                    @if($product->image)
+                    <img class="img-responsive center-block"
+                         src="/storage/{{ $product->image }}"
                          alt="{{ $product->name }}">
+                    @endif
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">

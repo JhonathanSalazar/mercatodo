@@ -7,10 +7,13 @@ use App\Tag;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\UpdateProductRequest;
+use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
@@ -74,19 +77,8 @@ class ProductsController extends Controller
      * @return RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Product $product ,Request $request)
+    public function update(Product $product ,UpdateProductRequest $request)
     {
-
-        $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required',
-            'ean' => 'required|integer|digits_between:8,14',
-            'branch' => 'required',
-            'price' => 'required|integer'
-        ]);
-
-        //$userId = array('user_id' => auth()->id());
-        //$attributes = array_merge($attributes, $userId);
 
         $product->name = $request->get('name');
         $product->user_id = auth()->id();
@@ -96,8 +88,26 @@ class ProductsController extends Controller
         $product->description = $request->get('description');
         $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));
+
+        if($request->file('image'))
+        {
+            if($product->image)
+            {
+                Storage::delete($product->image);
+            }
+            $product->image = $request->file('image')->store('images');
+        }
+
         $product->save();
         $product->tags()->sync($request->get('tags'));
+
+        $img = Image::make(Storage::get($product->image))
+            ->widen(250)
+            ->limitColors(255)
+            ->encode();
+
+        Storage::put($product->image, (string) $img);
+
 
         //Redirect
         return redirect()->route('admin.products.index')
