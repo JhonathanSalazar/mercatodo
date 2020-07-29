@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\UpdateProductRequest;
+use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
@@ -99,6 +100,14 @@ class ProductsController extends Controller
 
         $product->save();
         $product->tags()->sync($request->get('tags'));
+
+        $img = Image::make(Storage::get($product->image))
+            ->widen(250)
+            ->limitColors(255)
+            ->encode();
+
+        Storage::put($product->image, (string) $img);
+
 
         //Redirect
         return redirect()->route('admin.products.index')
