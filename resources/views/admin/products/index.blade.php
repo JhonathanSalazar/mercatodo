@@ -72,10 +72,15 @@
                                class="btn btn-xs btn-info">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            <a href="#"
-                               class="btn btn-xs btn-danger">
+                            <form method="POST"
+                                  action="{{ route('admin.products.destroy', $product) }}"
+                                  style="display: inline">
+                                @CSRF @method('DELETE')
+                            <button class="btn btn-xs btn-danger"
+                                onclick="return confirm('Estas seguro de eliminar el producto? ')">
                                 <i class="fa fa-close"></i>
-                            </a>
+                            </button>
+                            </form>
                         </td>
                     </tr>
                     @empty

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -31,5 +32,15 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($product){
+            Storage::delete($product->image);
+            $product->tags()->detach();
+        });
     }
 }
