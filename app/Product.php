@@ -55,6 +55,19 @@ class Product extends Model
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
             ->where('category_id', 2)
+            ->orderBy('published_at', 'desc')
+            ->limit(4);
+    }
+
+    /**
+     * Return the last products published
+     * @param Builder $query
+     */
+    public function scopeLastHome(Builder $query)
+    {
+        $query->whereNotNull('published_at')
+            ->where('published_at', '<=', Carbon::now())
+            ->orderBy('published_at', 'desc')
             ->limit(4);
     }
 }

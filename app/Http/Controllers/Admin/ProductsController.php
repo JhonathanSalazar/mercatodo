@@ -52,7 +52,6 @@ class ProductsController extends Controller
         return view('admin.products.show', compact('product'));
     }
 
-
     /**
      * Store the specified resource.
      * @throws \Illuminate\Validation\ValidationException
@@ -96,7 +95,7 @@ class ProductsController extends Controller
             }
             $product->image = $request->file('image')->store('images');
             $img = Image::make(Storage::get($product->image))
-                ->heighten(285)
+                ->heighten(250)
                 ->limitColors(255)
                 ->encode();
 
@@ -110,7 +109,6 @@ class ProductsController extends Controller
         return redirect()->route('admin.products.index')
             ->with('status', 'Tu producto ha sido guardado');
     }
-
 
     /**
      *  Show the edit form of the specified resource.
@@ -127,6 +125,8 @@ class ProductsController extends Controller
     /**
      *  Delete the resource and their relations.
      * @param Product $product
+     * @return RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Product $product)
     {

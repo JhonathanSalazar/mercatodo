@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
         Category::truncate();
 
         $defaultCategory = new Category;
-        $defaultCategory->name = 'Sin categoria';
+        $defaultCategory->name = 'Ultima Temporada';
         $defaultCategory->save();
 
         $topProductCategory = new Category;
@@ -24,6 +24,10 @@ class CategoriesTableSeeder extends Seeder
 
         $lastProductCategory = new Category;
         $lastProductCategory->name = 'Ultimos Productos';
+        $lastProductCategory->save();
+
+        $lastProductCategory = new Category;
+        $lastProductCategory->name = 'Temporada Pasada';
         $lastProductCategory->save();
 
     }

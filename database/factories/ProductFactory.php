@@ -14,7 +14,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'branch' => $faker->lastName,
         'description' => $faker->paragraph,
         'price' => $faker->randomNumber(3) * 100,
-        'image' => 'images/' . $faker->image('public/storage/images',300 ,342, null, false),
+        'image' => 'images/' . $faker->image('public/storage/images',250 ,250, null, false),
         'published_at' => Carbon::yesterday()
     ];
 });
