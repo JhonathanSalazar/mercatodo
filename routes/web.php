@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-Route::view('/','home')->name('home');
+Route::get('/','Customer\PagesController@home')->name('home');
 
 Route::group(['prefix' => 'admin'],
     function() {

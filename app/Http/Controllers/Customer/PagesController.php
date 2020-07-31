@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Product;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 
@@ -12,9 +13,11 @@ class PagesController extends Controller
      *
      * @return Illuminate\View\View
      */
-    public function home(): View
+    public function home()
     {
-        return view('home');
+        $featuredProductsHome = Product::featuredHome()->get();
+
+        return view('home', compact('featuredProductsHome'));
     }
 
     /**

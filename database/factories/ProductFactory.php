@@ -4,6 +4,7 @@
 
 use App\Product;
 use Faker\Generator as Faker;
+use Illuminate\Support\Carbon;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
@@ -13,6 +14,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'branch' => $faker->lastName,
         'description' => $faker->paragraph,
         'price' => $faker->randomNumber(3) * 100,
-        'image' => 'images/' . $faker->image('public/storage/images',400,400, null, false)
+        'image' => 'images/' . $faker->image('public/storage/images',300 ,342, null, false),
+        'published_at' => Carbon::yesterday()
     ];
 });

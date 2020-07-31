@@ -7,11 +7,11 @@ use App\Tag;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateProductRequest;
 use Intervention\Image\Facades\Image;
 
@@ -95,18 +95,16 @@ class ProductsController extends Controller
                 Storage::delete($product->image);
             }
             $product->image = $request->file('image')->store('images');
+            $img = Image::make(Storage::get($product->image))
+                ->heighten(285)
+                ->limitColors(255)
+                ->encode();
+
+            Storage::put($product->image, (string) $img);
         }
 
         $product->save();
         $product->tags()->sync($request->get('tags'));
-
-        $img = Image::make(Storage::get($product->image))
-            ->widen(250)
-            ->limitColors(255)
-            ->encode();
-
-        Storage::put($product->image, (string) $img);
-
 
         //Redirect
         return redirect()->route('admin.products.index')
