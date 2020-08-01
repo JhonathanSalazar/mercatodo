@@ -9,6 +9,7 @@ before_script:
   - cp .env.travis .env
   - composer self-update
   - composer install --no-interaction
+  - php artisan storage:link
 
 script:
   - php artisan key:generate
