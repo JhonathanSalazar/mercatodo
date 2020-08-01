@@ -1,6 +1,7 @@
 language: php
 php:
   - 7.4
+OS: linux
 cache:
   directories:
     - node_modules
