@@ -3,7 +3,7 @@
 @section('content')
     <section class="center">
         <img class="pageBanner" src="/shooper/themes/images/pageBanner.png" alt="New products">
-        <h2 class="py-3"><span>Product Detail</span></h2>
+        <h2 class="py-3"><span>Lista de Productos</span></h2>
     </section>
     <div class="col">
         <div class="row">

@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Product;
+
 
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoriesController extends Controller
 {
-    public function show(Category $category)
+    /**
+     * @param Category $category
+     * @return View
+     */
+    public function show(Category $category): View
     {
         $products = $category->products;
 
