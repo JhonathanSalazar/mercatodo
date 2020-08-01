@@ -32,11 +32,13 @@
                                 <div class="carousel-item active">
                                     <div class="thumbnails list-group d-flex flex-row">
                                         @forelse($featuredProductsHome as $product)
-                                            <x-product.home-carousel
-                                                name="{{ $product->name }}"
-                                                image="{{ $product->image }}"
-                                                price="{{ $product->price }}"
-                                                category="{{ $product->category->name }}"></x-product.home-carousel>
+                                            <div class="col-md-3">
+                                                <x-product.home-carousel
+                                                    name="{{ $product->name }}"
+                                                    image="{{ $product->image }}"
+                                                    price="{{ $product->price }}"
+                                                    category="{{ $product->category->name }}"></x-product.home-carousel>
+                                            </div>
                                         @empty
                                             No hay productos para mostrar
                                         @endforelse
@@ -60,11 +62,13 @@
                                 <div class="carousel-item active">
                                     <div class="thumbnails list-group d-flex flex-row">
                                         @forelse($lastProductsHome as $product)
-                                            <x-product.home-carousel
-                                                name="{{ $product->name }}"
-                                                image="{{ $product->image }}"
-                                                price="{{ $product->price }}"
-                                                category="{{ $product->category->name }}"></x-product.home-carousel>
+                                            <div class="col-md-3">
+                                                <x-product.home-carousel
+                                                    name="{{ $product->name }}"
+                                                    image="{{ $product->image }}"
+                                                    price="{{ $product->price }}"
+                                                    category="{{ $product->category->name }}"></x-product.home-carousel>
+                                            </div>
                                         @empty
                                             No hay productos para mostrar
                                         @endforelse

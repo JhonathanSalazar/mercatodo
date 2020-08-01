@@ -35,7 +35,6 @@ class HomeCarousel extends Component
      */
     public function __construct(string $name, string $image, string $price, string $category)
     {
-
         $this->name = $name;
         $this->image = $image;
         $this->price = $price;

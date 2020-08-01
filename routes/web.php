@@ -19,6 +19,8 @@ Auth::routes(['verify' => true]);
 
 Route::get('/','Customer\PagesController@home')->name('home');
 
+Route::get('categorias/{category}', 'Customer\CategoriesController@show')->name('pages.category.show');
+
 Route::group(['prefix' => 'admin'],
     function() {
     Route::get('/', 'Admin\DashboardController@main')->name('admin.dashboard');

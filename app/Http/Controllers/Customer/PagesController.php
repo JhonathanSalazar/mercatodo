@@ -18,7 +18,7 @@ class PagesController extends Controller
         $featuredProductsHome = Product::featuredHome()->get();
         $lastProductsHome = Product::lastHome()->get();
 
-        return view('home', compact('featuredProductsHome', 'lastProductsHome'));
+        return view('pages.home', compact('featuredProductsHome', 'lastProductsHome'));
     }
 
     /**
