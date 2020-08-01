@@ -14,7 +14,7 @@ class AddUrlToCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('url')->after('name');
+            $table->string('url')->after('name')->default(null);
         });
     }
 
