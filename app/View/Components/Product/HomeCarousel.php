@@ -12,18 +12,26 @@ class HomeCarousel extends Component
      * @var string
      */
     public $name;
+
     /**
      * @var string
      */
     public $image;
+
     /**
      * @var string
      */
     public $price;
+
     /**
      * @var string
      */
     public $category;
+
+    /**
+     * @var string
+     */
+    public $url;
 
 
     /**
@@ -32,13 +40,16 @@ class HomeCarousel extends Component
      * @param string $image
      * @param string $price
      * @param string $category
+     * @param string $url
      */
-    public function __construct(string $name, string $image, string $price, string $category)
+    public function __construct(string $name, string $image, string $price, string $category, string $url)
     {
         $this->name = $name;
         $this->image = $image;
         $this->price = $price;
         $this->category = $category;
+        $this->url = $url;
+
     }
 
     /**

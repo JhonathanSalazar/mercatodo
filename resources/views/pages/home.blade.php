@@ -37,7 +37,8 @@
                                                     name="{{ $product->name }}"
                                                     image="{{ $product->image }}"
                                                     price="{{ $product->price }}"
-                                                    category="{{ $product->category->name }}"></x-product.home-carousel>
+                                                    category="{{ $product->category->name }}"
+                                                    url="{{ $product->category->url }}"></x-product.home-carousel>
                                             </div>
                                         @empty
                                             No hay productos para mostrar
@@ -67,7 +68,8 @@
                                                     name="{{ $product->name }}"
                                                     image="{{ $product->image }}"
                                                     price="{{ $product->price }}"
-                                                    category="{{ $product->category->name }}"></x-product.home-carousel>
+                                                    category="{{ $product->category->name }}"
+                                                    url="{{ $product->category->url }}"></x-product.home-carousel>
                                             </div>
                                         @empty
                                             No hay productos para mostrar

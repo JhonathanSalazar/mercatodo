@@ -11,7 +11,7 @@ class Category extends Model
      */
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'url';
     }
 
     /**
