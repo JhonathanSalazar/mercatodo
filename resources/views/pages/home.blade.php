@@ -27,9 +27,26 @@
                                 <a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
                             </span>
                         </h4>
-
-                        @include('layouts.carousel')
-
+                        <div id="myCarousel" class="carousel slide">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="thumbnails list-group d-flex flex-row">
+                                        @forelse($featuredProductsHome as $product)
+                                            <div class="col-md-3">
+                                                <x-product.home-carousel
+                                                    name="{{ $product->name }}"
+                                                    image="{{ $product->image }}"
+                                                    price="{{ $product->price }}"
+                                                    category="{{ $product->category->name }}"
+                                                    url="{{ $product->category->url }}"></x-product.home-carousel>
+                                            </div>
+                                        @empty
+                                            No hay productos para mostrar
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br/>
@@ -41,7 +58,26 @@
                                 <a class="left button" href="#myCarousel-2" data-slide="prev"></a><a class="right button" href="#myCarousel-2" data-slide="next"></a>
                             </span>
                         </h4>
-                        @include('layouts.carousel')
+                        <div id="myCarousel" class="carousel slide">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="thumbnails list-group d-flex flex-row">
+                                        @forelse($lastProductsHome as $product)
+                                            <div class="col-md-3">
+                                                <x-product.home-carousel
+                                                    name="{{ $product->name }}"
+                                                    image="{{ $product->image }}"
+                                                    price="{{ $product->price }}"
+                                                    category="{{ $product->category->name }}"
+                                                    url="{{ $product->category->url }}"></x-product.home-carousel>
+                                            </div>
+                                        @empty
+                                            No hay productos para mostrar
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,5 +44,30 @@ class Product extends Model
             Storage::delete($product->image);
             $product->tags()->detach();
         });
+    }
+
+    /**
+     * Return the featured products published
+     * @param Builder $query
+     */
+    public function scopeFeaturedHome(Builder $query)
+    {
+        $query->whereNotNull('published_at')
+            ->where('published_at', '<=', Carbon::now())
+            ->where('category_id', 2)
+            ->orderBy('published_at', 'desc')
+            ->limit(4);
+    }
+
+    /**
+     * Return the last products published
+     * @param Builder $query
+     */
+    public function scopeLastHome(Builder $query)
+    {
+        $query->whereNotNull('published_at')
+            ->where('published_at', '<=', Carbon::now())
+            ->orderBy('published_at', 'desc')
+            ->limit(4);
     }
 }

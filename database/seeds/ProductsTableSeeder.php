@@ -16,20 +16,30 @@ class ProductsTableSeeder extends Seeder
         Product::truncate();
         Tag::truncate();
 
+        //Productos caracteristicos
+        $product1 = factory(Product::class)->create(['category_id' => 2]);
+        $product1->tags()->attach(Tag::create(['name' => 'mujer']));
 
-        $product1 = factory(Product::class)->create();
-        $product1->tags()->attach(Tag::create(['name' => 'Sin etiqueta']));
+        $product2 = factory(Product::class)->create(['category_id' => 2]);
+        $product2->tags()->sync(1);
 
-        $product2 = factory(Product::class)->create();
-        $product2->tags()->attach(Tag::create(['name' => 'Mujer']));
+        $product3 = factory(Product::class)->create(['category_id' => 2]);
+        $product3->tags()->sync(1);
 
-        $product3 = factory(Product::class)->create();
-        $product3->tags()->attach(Tag::create(['name' => 'Hombre']));
+        $product4 = factory(Product::class)->create(['category_id' => 2]);
+        $product4->tags()->sync(1);
 
-        $product4 = factory(Product::class)->create();
-        $product4->tags()->attach(Tag::create(['name' => 'Ropa']));
+        //Ultimos productos
+        $product5 = factory(Product::class)->create(['category_id' => 3]);
+        $product5->tags()->attach(Tag::create(['name' => 'hombre']));
 
-        $product5 = factory(Product::class)->create();
-        $product5->tags()->attach(Tag::create(['name' => 'Zapatos']));
+        $product6 = factory(Product::class)->create(['category_id' => 3]);
+        $product6->tags()->sync(2);
+
+        $product7 = factory(Product::class)->create(['category_id' => 3]);
+        $product7->tags()->sync(2);
+
+        $product8 = factory(Product::class)->create(['category_id' => 3]);
+        $product8->tags()->sync(2);
     }
 }

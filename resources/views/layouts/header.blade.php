@@ -24,7 +24,6 @@
                             <li><a href="{{ route('pages.your-car') }}">Tu carrito</a></li>
                             <li><a href="{{ route('pages.checkout') }}">Checkout</a></li>
                         @endif
-
                         <li>
                             <a href='#'
                                onclick="event.preventDefault();
@@ -48,10 +47,8 @@
             <a href="{{ route('home') }}" class="mr-auto"><img src="/shooper/themes/images/logo.png" class="site_logo" alt=""></a>
             <nav id="menu" class="">
                 <ul>
-                    <li><a href="#_">Woman</a></li>
-                    <li><a href="#">Man</a></li>
-                    <li><a href="#">Best Seller</a></li>
-                    <li><a href="#">Top Seller</a></li>
+                    <li><a href="{{ route('pages.tag.show', 'mujer') }}">Mujer</a></li>
+                    <li><a href="{{ route('pages.tag.show', 'hombre') }}">Hombre</a></li>
                 </ul>
             </nav>
         </div>
