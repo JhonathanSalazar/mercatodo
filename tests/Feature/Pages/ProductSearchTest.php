@@ -40,7 +40,7 @@ class ProductSearchTest extends TestCase
             $results = $this->getJson("/search?q={$search}")->json()['data'];
         } while( empty($results));
 
-        $this->assertCount(2, $results);
+        $this->assertCount(1, $results);
 
         Product::latest()->take(3)->unsearchable();
     }
