@@ -1,17 +1,22 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
     <li class="header">NAVEGACIÓN</li>
-    <li class="active treeview">
+    <li class="treeview {{ request()->is('admin') ? 'class = active' : ''}}">
         <a href="{{ route('home') }}">
             <i class="fa fa-home"></i
             ><span>Inicio</span>
         </a>
     </li>
-    <li class="active treeview">
+    <li class="treeview {{ request()->is('admin/users') ? 'class = active' : ''}}">
         <a href="{{ route('admin.users.index') }}">
             <i class="fa fa-users"></i>
-            <span>Administración de usuarios</span>
+            <span>Usuarios</span>
+        </a>
+    </li>
+    <li class="treeview {{ request()->is('admin/products') ? 'class = active' : ''}}">
+        <a href="{{ route('admin.products.index') }}">
+            <i class="fa fa-barcode"></i>
+            <span>Productos</span>
         </a>
     </li>
 </ul>
-

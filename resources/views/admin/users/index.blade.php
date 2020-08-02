@@ -12,9 +12,26 @@
 @endsection
 
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+
+
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Listado de usuarios</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -52,19 +69,6 @@
                                    class="btn btn-xs btn-info">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-         <!--
-                                Destroy users
-
-                                <form method="{{ route('admin.users.destroy', $user) }}"
-                                      action="#"
-                                      style="display: inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-xs btn-danger"
-                                    onclick="return confirm('Esta seguro de querer eliminar este usuario')"
-                                    ><i class="fa fa-times"></i></button>
-                                </form>
-                                -->
                             </td>
                         </tr>
                     @endforeach

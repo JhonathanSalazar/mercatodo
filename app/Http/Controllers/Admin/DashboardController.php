@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AdminController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -13,7 +15,10 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware([
+            'auth',
+            'role:Admin'
+        ]);
     }
 
     /**
@@ -21,7 +26,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function main()
+    public function main(): View
     {
         return view('admin.dashboard');
     }
