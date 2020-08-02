@@ -25,10 +25,7 @@ class ProductSearchTest extends TestCase
 
         $search = 'foobar';
 
-        $product1 = factory(Product::class)->create([
-            'description' => "A product with the {$search} term."
-        ]);
-        $product2 = factory(Product::class)->create([
+        factory(Product::class)->create([
             'description' => "A product with the {$search} term."
         ]);
         factory(Product::class)->create([
@@ -38,7 +35,7 @@ class ProductSearchTest extends TestCase
             ]);
 
         do {
-            sleep(1.2);
+            sleep(2);
 
             $results = $this->getJson("/search?q={$search}")->json()['data'];
         } while( empty($results));
