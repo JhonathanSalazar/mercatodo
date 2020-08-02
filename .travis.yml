@@ -1,17 +1,12 @@
 language: php
 php:
-  - 7.4
-OS: linux
-cache:
-  directories:
-    - node_modules
-    - vendor
+  - 7.2
 before_script:
   - cp .env.travis .env
   - composer self-update
   - composer install --no-interaction
-  - php artisan storage:link
-  - php artisan key:generate
 
 script:
+  - php artisan key:generate
+  - php artisan storage:link
   - vendor/bin/phpunit
