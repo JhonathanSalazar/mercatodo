@@ -3,12 +3,15 @@
 namespace App;
 
 use Carbon\Carbon;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
+    use Searchable;
+
     protected $guarded = [];
     protected $dates = ['published_at'];
 
