@@ -105,7 +105,6 @@ class ProductsController extends Controller
         $product->save();
         $product->tags()->sync($request->get('tags'));
 
-        //Redirect
         return redirect()->route('admin.products.index')
             ->with('status', 'Tu producto ha sido guardado');
     }

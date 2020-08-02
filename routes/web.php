@@ -19,6 +19,9 @@ Auth::routes(['verify' => true]);
 
 Route::get('/','Customer\PagesController@home')->name('home');
 
+Route::get('search','Page\SearchController@index')->name('pages.search.index');
+
+
 Route::get('categorias/{category}', 'Product\CategoriesController@show')->name('pages.category.show');
 Route::get('tags/{tag}', 'Product\TagsController@show')->name('pages.tag.show');
 
