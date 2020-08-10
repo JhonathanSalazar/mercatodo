@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchController extends Controller
 {
     /**
-     * @return View
+     * @return LengthAwarePaginator
      */
-    public function index(): View
+    public function index(): LengthAwarePaginator
     {
         $search = request('q');
 
