@@ -28,7 +28,7 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
     public function index(): View
     {
@@ -39,8 +39,8 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @return Illuminate\View\View
+     * @param User $user
+     * @return View
      */
     public function show(User $user): View
     {
@@ -50,8 +50,8 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User $user
-     * @return Illuminate\View\View
+     * @param User $user
+     * @return View
      */
     public function edit(User $user): View
     {
@@ -61,9 +61,9 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
      */
     public function update(Request $request, User $user): RedirectResponse
     {

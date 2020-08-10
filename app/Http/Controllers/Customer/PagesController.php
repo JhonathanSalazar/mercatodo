@@ -11,9 +11,9 @@ class PagesController extends Controller
     /**
      * Return the main view.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
-    public function home()
+    public function home(): View
     {
         $featuredProductsHome = Product::featuredHome()->get();
         $lastProductsHome = Product::lastHome()->get();
@@ -24,7 +24,7 @@ class PagesController extends Controller
     /**
      * Return the userAccount view.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
     public function userAccount(): View
     {
@@ -34,7 +34,7 @@ class PagesController extends Controller
     /**
      * Return the yourCar.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
     public function yourCar(): View
     {
@@ -44,7 +44,7 @@ class PagesController extends Controller
     /**
      * Return the checkout view.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
     public function checkout(): View
     {
@@ -54,7 +54,7 @@ class PagesController extends Controller
     /**
      * Return the checkout view.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
     public function aboutUs(): View
     {
@@ -64,7 +64,7 @@ class PagesController extends Controller
     /**
      * Return the checkout view.
      *
-     * @return Illuminate\View\View
+     * @return View
      */
     public function contactUs(): View
     {

@@ -54,9 +54,11 @@ class ProductsController extends Controller
 
     /**
      * Store the specified resource.
+     * @param Request $request
+     * @return RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $attributes = $this->validate($request, ['name' => 'required']);
 
@@ -75,7 +77,7 @@ class ProductsController extends Controller
      * @param UpdateProductRequest $request
      * @return RedirectResponse
      */
-    public function update(Product $product ,UpdateProductRequest $request)
+    public function update(Product $product ,UpdateProductRequest $request): RedirectResponse
     {
 
         $product->name = $request->get('name');
@@ -89,10 +91,10 @@ class ProductsController extends Controller
 
         if($request->file('image'))
         {
-            if($product->image)
-            {
+            if($product->image) {
                 Storage::delete($product->image);
             }
+
             $product->image = $request->file('image')->store('images');
             $img = Image::make(Storage::get($product->image))
                 ->heighten(250)
@@ -113,7 +115,7 @@ class ProductsController extends Controller
      *  Show the edit form of the specified resource.
      * @param Product $product
      */
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
         $categories = Category::all();
         $tags = Tag::all();
@@ -127,7 +129,7 @@ class ProductsController extends Controller
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
 
         $product->delete();
