@@ -10,6 +10,7 @@
             @forelse($products as $product)
                 <div class="col-md-3 py-3">
                     <x-product.home-carousel
+                        id="{{ $product->id }}"
                         name="{{ $product->name }}"
                         image="{{ $product->image }}"
                         price="{{ $product->price }}"

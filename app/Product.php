@@ -3,6 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +20,7 @@ class Product extends Model
     /**
      * Create the product route show
      */
-    public function path()
+    public function path(): string
     {
         return "/admin/products/{$this->id}";
     }
@@ -26,7 +28,7 @@ class Product extends Model
     /**
      * Return the relation product->category and category->product
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
@@ -34,7 +36,7 @@ class Product extends Model
     /**
      * Return the relation product->tags and tags->product
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
