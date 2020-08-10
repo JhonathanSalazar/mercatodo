@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Customer;
 
 use App\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -28,8 +28,9 @@ class UserDataController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
      */
     public function edit(User $user): View
     {
@@ -41,9 +42,10 @@ class UserDataController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user
-     * @return Illuminate\Http\Request
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(Request $request, User $user): RedirectResponse
     {

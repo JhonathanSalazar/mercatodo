@@ -33,6 +33,11 @@ class HomeCarousel extends Component
      */
     public $url;
 
+    /**
+     * @var int
+     */
+    public $id;
+
 
     /**
      * Create a new component instance.
@@ -41,15 +46,16 @@ class HomeCarousel extends Component
      * @param string $price
      * @param string $category
      * @param string $url
+     * @param int $id
      */
-    public function __construct(string $name, string $image, string $price, string $category, string $url)
+    public function __construct(string $name, string $image, string $price, string $category, string $url, int $id)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->image = $image;
         $this->price = $price;
         $this->category = $category;
         $this->url = $url;
-
     }
 
     /**

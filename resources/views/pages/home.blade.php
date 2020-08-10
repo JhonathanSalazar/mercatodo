@@ -32,6 +32,7 @@
                                 @forelse($featuredProductsHome as $product)
                                     <div class="col-md-3">
                                         <x-product.home-carousel
+                                            id="{{ $product->id }}"
                                             name="{{ $product->name }}"
                                             image="{{ $product->image }}"
                                             price="{{ $product->price }}"
@@ -63,6 +64,7 @@
                                 @forelse($lastProductsHome as $product)
                                     <div class="col-md-3">
                                         <x-product.home-carousel
+                                            id="{{ $product->id }}"
                                             name="{{ $product->name }}"
                                             image="{{ $product->image }}"
                                             price="{{ $product->price }}"
