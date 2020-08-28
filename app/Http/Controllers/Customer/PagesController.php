@@ -32,11 +32,11 @@ class PagesController extends Controller
     }
 
     /**
-     * Return the yourCar.
+     * Return the yourCart.
      *
      * @return View
      */
-    public function yourCar(): View
+    public function yourCart(): View
     {
         return view('pages.yourCar');
     }

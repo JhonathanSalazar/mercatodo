@@ -17,7 +17,6 @@ class ProductSearchTest extends TestCase
      */
     public function aBuyerCanSearchProducts()
     {
-        $this->withoutExceptionHandling();
         config(['scout.driver' => 'algolia']);
 
         $adminRole = Role::create(['name' => 'Admin']);
@@ -25,9 +24,10 @@ class ProductSearchTest extends TestCase
 
         $search = 'foobar';
 
-        factory(Product::class)->create([
+        $productA = factory(Product::class)->create([
             'description' => "A product with the {$search} term."
         ]);
+
         factory(Product::class)->create([
                 'name' => 'falseName',
                 'branch' => 'falseBranch',
@@ -35,13 +35,16 @@ class ProductSearchTest extends TestCase
             ]);
 
         do {
-            sleep(2);
+            sleep(1.5);
 
-            $results = $this->getJson("/search?q={$search}")->json()['data'];
+            $results = $this->get("/search?q={$search}");
         } while( empty($results));
 
-        $this->assertCount(1, $results);
+        $products = $results->getOriginalContent()['products'];
+        dd($products);
 
-        Product::latest()->take(3)->unsearchable();
+        $this->assertEquals($products->first()->id, $productA->id);
+
+        Product::latest()->take(2)->unsearchable();
     }
 }

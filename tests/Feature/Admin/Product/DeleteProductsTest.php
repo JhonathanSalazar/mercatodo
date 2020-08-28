@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Admin\Product;
 
-use App\Product;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
+use App\Product;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DeleteProductsTest extends TestCase
 {
@@ -24,6 +24,6 @@ class DeleteProductsTest extends TestCase
         $this->delete(route('admin.products.destroy', $product))
             ->assertRedirect(route('admin.products.index'));
 
-        $this->assertDatabaseMissing('products', $product->only('id'));
+        $this->assertDeleted($product);
     }
 }

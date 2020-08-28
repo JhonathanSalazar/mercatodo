@@ -13,7 +13,7 @@ class DetailsController extends Controller
      * @param Product $product
      * @return View
      */
-    public function show(Product $product):View
+    public function show(Product $product): View
     {
         return view('product.details', compact('product'));
     }

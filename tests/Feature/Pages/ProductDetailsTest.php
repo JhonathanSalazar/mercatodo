@@ -17,9 +17,6 @@ class ProductDetailsTest extends TestCase
      */
     public function aUserCanViewDetailedProduct()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
-        factory(User::class)->create()->assignRole($adminRole);
-
         $product = factory(Product::class)->create();
 
         $response = $this->get(route('products.details', compact('product')));

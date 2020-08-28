@@ -23,6 +23,6 @@ class ProductTest extends TestCase
 
         $product = factory(Product::class)->create();
 
-        $this->assertEquals('/admin/products/' . $product->id, $product->path());
+        $this->assertEquals('/admin/products/' . $product->id, $product->showUrl());
     }
 }

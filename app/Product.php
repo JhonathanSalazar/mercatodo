@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use Searchable;
+    use Searchable, SoftDeletes;
 
     protected $guarded = [];
     protected $dates = ['published_at'];
@@ -20,7 +21,7 @@ class Product extends Model
     /**
      * Create the product route show
      */
-    public function path(): string
+    public function showUrl(): string
     {
         return "/admin/products/{$this->id}";
     }

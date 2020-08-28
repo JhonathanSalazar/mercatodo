@@ -7,6 +7,7 @@ use App\Tag;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateProductRequest;
 use Intervention\Image\Facades\Image;
+use Illuminate\Validation\ValidationException;
+
 
 class ProductsController extends Controller
 {
@@ -34,9 +37,10 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Illuminate\View\View
+     * @param Product $product
+     * @return View
      */
-    public function index(Product $product):View
+    public function index(Product $product): View
     {
         $products = Product::all();
         return view('admin.products.index', compact('products'));
@@ -44,10 +48,10 @@ class ProductsController extends Controller
 
     /**
      * Display the specified resource.
-     * @param  \App\Product  $product
-     * @return Illuminate\View\View
+     * @param Product $product
+     * @return View
      */
-    public function show(Product $product):View
+    public function show(Product $product): View
     {
         return view('admin.products.show', compact('product'));
     }
@@ -56,7 +60,7 @@ class ProductsController extends Controller
      * Store the specified resource.
      * @param Request $request
      * @return RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -114,6 +118,7 @@ class ProductsController extends Controller
     /**
      *  Show the edit form of the specified resource.
      * @param Product $product
+     * @return View
      */
     public function edit(Product $product): View
     {
@@ -127,7 +132,7 @@ class ProductsController extends Controller
      *  Delete the resource and their relations.
      * @param Product $product
      * @return RedirectResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy(Product $product): RedirectResponse
     {
