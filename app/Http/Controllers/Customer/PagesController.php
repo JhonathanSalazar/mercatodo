@@ -38,7 +38,7 @@ class PagesController extends Controller
      */
     public function yourCart(): View
     {
-        return view('pages.yourCar');
+        return view('pages.yourCart');
     }
 
     /**

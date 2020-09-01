@@ -21,7 +21,7 @@
                             <span><a href="{{ route('pages.category.show', $product->category->url) }}">{{ $product->category->name }}</a></span><br>
                     </address>
                     <h4><strong>Precio: ${{ $product->price }}</strong></h4>
-                    <form action="" class="">
+                    <form action="{{ route('cart.add', $product->id) }}">
                         <div>
                             <strong>Cantidad:</strong>
                             <input type="text" class="input-small" placeholder="1">
