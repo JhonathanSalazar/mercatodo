@@ -25,51 +25,34 @@
                         @forelse($cartProducts as $product)
                         <tr>
                             <td>
-                                <a href="{{ route('cart.destroy', $product->id) }}"
-                                   class="btn btn-sm btn-danger">Borrar</a>
+                                <a href="{{ route('cart.destroy', $product->id) }}">Borrar</a>
                             </td>
                             <td><a href=""><img alt="" src=""></a></td>
                             <td>{{ $product->name }}</td>
-                            <td><input type="text" placeholder="1" class="input-mini" value="{{ $product->quantity }}"></td>
+                            <td>
+                                <form action="{{ route('cart.update', $product->id) }}">
+                                    <input name="quantity" type="number"  value="{{ $product->quantity }}">
+                                    <input type="submit" value="Guardar">
+                                </form>
+                            </td>
                             <td>$ {{ $product->price }}</td>
-                            <td>$2,350.00</td>
+                            <td>$ {{ Cart::session(auth()->id())->get($product->id)->getPriceSum() }}</td>
                         </tr>
+
                         @empty
-                            <h1>No hay productos en su carrito</h1>
-                        @endforelse
-                        <tr>
-                            <td><input type="checkbox" value="option1"></td>
-                            <td><a href=""><img alt="" src=""></a></td>
-                            <td>Luctus quam ultrices rutrum</td>
-                            <td><input type="text" placeholder="2" class="input-mini"></td>
-                            <td>$1,150.00</td>
-                            <td>$2,450.00</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" value="option1"></td>
-                            <td><a href=""><img alt="" src=""></a></td>
-                            <td>Wuam ultrices rutrum</td>
-                            <td><input type="text" placeholder="1" class="input-mini"></td>
-                            <td>$1,210.00</td>
-                            <td>$1,123.00</td>
-                        </tr>
-                        <tr>
-                            <td> </td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td><strong>$3,600.00</strong></td>
-                        </tr>
+                            <tr>
+                                No hay productos en su canasta aún.
+                            </tr>
+                         @endforelse
                         </tbody>
                     </table>
                 </div>
 
                 <hr>
                 <p class="cart-total float-right mr-5">
-                    <strong>Sub-Total</strong>:	$100.00<br>
-                    <strong>IVA (19%)</strong>: $17.50<br>
-                    <strong>Total</strong>: $119.50<br>
+                    <strong>Sub-Total</strong>:	$ {{ Cart::session(auth()->id())->getSubTotal() }}<br>
+                    <strong>IVA (19%)</strong>: $NA<br>
+                    <strong>Total</strong>: $NA<br>
                 </p>
 
                 <p class="buttons center">

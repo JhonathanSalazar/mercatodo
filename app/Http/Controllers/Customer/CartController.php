@@ -53,11 +53,29 @@ class CartController extends Controller
 
     /**
      * Delete the specific cart product
+     * @param $productId
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($productId)
     {
 
         \Cart::session(auth()->id())->remove($productId);
+
+        return back();
+    }
+
+    /**
+     *
+     */
+    public function update($productId)
+    {
+
+        \Cart::session(auth()->id())->update($productId, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => request('quantity')
+            ),
+        ));
 
         return back();
     }
