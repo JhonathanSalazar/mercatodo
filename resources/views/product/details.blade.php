@@ -27,7 +27,7 @@
                             <input type="text" class="input-small" placeholder="1">
                         </div>
                         <div class="py-3">
-                        <button class="btn btn-outline-dark" type="submit">Agregar al carrito</button>
+                        <button type="submit">Agregar al carrito</button>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <section class="center">
         <img class="pageBanner" src="/shooper/themes/images/pageBanner.png" alt="New products">
         <h2 class="py-3"><span>Carrito de compras</span></h2>
@@ -56,9 +61,8 @@
                 </p>
 
                 <p class="buttons center">
-                    <button class="btn btn-danger" type="button">Actualizar</button>
-                    <button class="btn btn-outline-primary" type="button">Continue</button>
-                    <button class="btn btn-primary" type="submit" id="checkout">Checkout</button>
+                    <a href="{{ route('home') }}" class="btn-sm">Continuar</a>
+                    <button type="submit" id="checkout">Checkout</button>
                 </p>
             </div>
         </div>

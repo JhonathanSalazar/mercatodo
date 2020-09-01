@@ -3,7 +3,7 @@
                 <div class="col-md-4">
                     <form method="GET" action="/search">
                         <div class="form-group">
-                            <input type="text" Placeholder="Buscar producto" name="q" class="form-control">
+                            <input type="text" Placeholder="Buscar producto" name="q">
                         </div>
                     </form>
                 </div>

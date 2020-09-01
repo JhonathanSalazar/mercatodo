@@ -37,7 +37,8 @@ class CartController extends Controller
             'associatedModel' => Product::class
         ));
 
-        return redirect()->route('cart.index');
+        return redirect()->route('cart.index')
+            ->with('status', 'Tu producto ha sido agregado');
     }
 
     /**
@@ -61,7 +62,7 @@ class CartController extends Controller
 
         \Cart::session(auth()->id())->remove($productId);
 
-        return back();
+        return back()->with('status', 'Tu producto ha sido eliminado');
     }
 
     /**
