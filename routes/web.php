@@ -50,8 +50,9 @@ Route::get('account/{user}','Customer\UserDataController@edit')->name('pages.use
 Route::put('account/{user}', 'Customer\UserDataController@update')->name('pages.user-account.update');
 
 Route::get('add-to-cart/{product}', 'Customer\CartController@add')->name('cart.add');
+Route::get('/cart','Customer\CartController@index')->name('cart.index');
+Route::get('/cart/destroy/{product}','Customer\CartController@destroy')->name('cart.destroy');
 
-Route::get('/your-cart','Customer\PagesController@yourCart')->name('pages.your-car');
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');
 Route::get('/about','Customer\PagesController@aboutUs')->name('pages.about');
 Route::get('/contact', 'Customer\PagesController@contactUs')->name('pages.contact');

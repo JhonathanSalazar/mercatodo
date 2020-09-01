@@ -13,7 +13,7 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Eliminar</th>
+                            <th> </th>
                             <th>Imagen</th>
                             <th>Nombre Producto</th>
                             <th>Cantidad</th>
@@ -22,14 +22,21 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @forelse($cartProducts as $product)
                         <tr>
-                            <td><input type="checkbox" value="option1"></td>
+                            <td>
+                                <a href="{{ route('cart.destroy', $product->id) }}"
+                                   class="btn btn-sm btn-danger">Borrar</a>
+                            </td>
                             <td><a href=""><img alt="" src=""></a></td>
-                            <td>Fusce id molestie massa</td>
-                            <td><input type="text" placeholder="1" class="input-mini"></td>
-                            <td>$2,350.00</td>
+                            <td>{{ $product->name }}</td>
+                            <td><input type="text" placeholder="1" class="input-mini" value="{{ $product->quantity }}"></td>
+                            <td>$ {{ $product->price }}</td>
                             <td>$2,350.00</td>
                         </tr>
+                        @empty
+                            <h1>No hay productos en su carrito</h1>
+                        @endforelse
                         <tr>
                             <td><input type="checkbox" value="option1"></td>
                             <td><a href=""><img alt="" src=""></a></td>

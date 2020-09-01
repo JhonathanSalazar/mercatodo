@@ -19,7 +19,7 @@
                             <li><a href={{ route('admin.dashboard') }}>Administración</a></li>
                             @else
 
-                                <li><a href="{{ route('pages.your-car') }}">Tu carrito</a></li>
+                                <li><a href="{{ route('cart.index') }}">Tu carrito</a></li>
                                 <li><a href="{{ route('pages.checkout') }}">Checkout</a></li>
                             @endif
                             <li>

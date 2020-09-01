@@ -7,7 +7,7 @@
                     <li><a href="{{ route('home') }}">Página inicio</a></li>
                     <li><a href="{{ route('pages.about') }}">Acerca de nosotros</a></li>
                     <li><a href="{{ route('pages.contact') }}">Contactanos</a></li>
-                    <li><a href="{{ route('pages.your-car') }}">Tu carrito</a></li>
+                    <li><a href="{{ route('cart.index') }}">Tu carrito</a></li>
                     <li><a href="{{ route('login') }}">Ingresa</a></li>
                 </ul>
             </div>
