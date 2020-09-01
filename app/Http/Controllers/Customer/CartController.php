@@ -32,7 +32,7 @@ class CartController extends Controller
             'id' => $product->id,
             'name' => $product->name,
             'price' => $product->price,
-            'quantity' => 1,
+            'quantity' => request('quantity'),
             'attributes' => array(),
             'associatedModel' => Product::class
         ));
@@ -66,7 +66,8 @@ class CartController extends Controller
     }
 
     /**
-     *
+     * @param $productId
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($productId)
     {
