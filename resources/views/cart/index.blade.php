@@ -28,22 +28,21 @@
                         </thead>
                         <tbody>
                         @forelse($cartProducts as $product)
-                        <tr>
-                            <td>
-                                <a href="{{ route('cart.destroy', $product->id) }}">Borrar</a>
-                            </td>
-                            <td><a href=""><img alt="" src=""></a></td>
-                            <td>{{ $product->name }}</td>
-                            <td>
-                                <form action="{{ route('cart.update', $product->id) }}">
-                                    <input name="quantity" type="number"  value="{{ $product->quantity }}">
-                                    <input type="submit" value="Guardar">
-                                </form>
-                            </td>
-                            <td>$ {{ $product->price }}</td>
-                            <td>$ {{ Cart::session(auth()->id())->get($product->id)->getPriceSum() }}</td>
-                        </tr>
-
+                            <tr>
+                                <td>
+                                    <a href="{{ route('cart.delete', $product->id) }}">Borrar</a>
+                                </td>
+                                <td><a href=""><img alt="" src=""></a></td>
+                                <td>{{ $product->name }}</td>
+                                <td>
+                                    <form action="{{ route('cart.update', $product->id) }}">
+                                        <input name="quantity" type="number"  value="{{ $product->quantity }}">
+                                        <input type="submit" value="Guardar">
+                                    </form>
+                                </td>
+                                <td>$ {{ $product->price }}</td>
+                                <td>$ {{ Cart::session(auth()->id())->get($product->id)->getPriceSum() }}</td>
+                            </tr>
                         @empty
                             <tr>
                                 No hay productos en su canasta aún.

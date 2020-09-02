@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Product;
-use Darryldecode\Cart\Cart;
-use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -24,21 +22,21 @@ class CartController extends Controller
     /**
      * Add a product to the Customer Cart
      * @param Product $product
-     * @throws \Exception
+     * @return View
      */
     public function add(Product $product)
     {
-        \Cart::session(auth()->id())->add(array(
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => request('quantity'),
-            'attributes' => array(),
-            'associatedModel' => Product::class
-        ));
+        $userId = auth()->id();
+
+        $id = $product->id;
+        $name = $product->name;
+        $price = $product->price;
+        $qty = request('quantity');
+
+        \Cart::session($userId)->add($id, $name, $price, $qty);
 
         return redirect()->route('cart.index')
-            ->with('status', 'Tu producto ha sido agregado');
+            ->with('status', 'El producto ha sido agregado a tu carrito');
     }
 
     /**
@@ -46,8 +44,9 @@ class CartController extends Controller
      */
     public function index()
     {
+        $userId = auth()->id();
 
-        $cartProducts = \Cart::session(auth()->id())->getContent();
+        $cartProducts = \Cart::session($userId)->getContent();
 
         return view('cart.index', compact('cartProducts'));
     }
@@ -55,30 +54,33 @@ class CartController extends Controller
     /**
      * Delete the specific cart product
      * @param $productId
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($productId)
+    public function delete($productId)
     {
+        $userId = auth()->id();
 
-        \Cart::session(auth()->id())->remove($productId);
+        \Cart::session($userId)->remove($productId);
 
-        return back()->with('status', 'Tu producto ha sido eliminado');
+
+        return back()->with('status', 'El producto ha sido eliminado de tu carrito');
+
     }
 
     /**
      * @param $productId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($productId)
     {
 
-        \Cart::session(auth()->id())->update($productId, array(
+        $userId = auth()->id();
+
+        \Cart::session($userId)->update($productId, array(
             'quantity' => array(
                 'relative' => false,
                 'value' => request('quantity')
             ),
         ));
 
-        return back();
+        return back()->with('status', 'El producto ha sido actualizado en tu carrito');
     }
 }

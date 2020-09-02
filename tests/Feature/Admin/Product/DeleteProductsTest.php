@@ -24,6 +24,6 @@ class DeleteProductsTest extends TestCase
         $this->delete(route('admin.products.destroy', $product))
             ->assertRedirect(route('admin.products.index'));
 
-        $this->assertDeleted($product);
+        $this->assertDeleted('products', array($product));
     }
 }
