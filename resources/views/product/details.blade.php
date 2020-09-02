@@ -21,13 +21,13 @@
                             <span><a href="{{ route('pages.category.show', $product->category->url) }}">{{ $product->category->name }}</a></span><br>
                     </address>
                     <h4><strong>Precio: ${{ $product->price }}</strong></h4>
-                    <form action="" class="">
+                    <form action="{{ route('cart.add', $product->id) }}">
                         <div>
                             <strong>Cantidad:</strong>
-                            <input type="text" class="input-small" placeholder="1">
+                            <input name="quantity" type="text" class="input-small" value="1">
                         </div>
                         <div class="py-3">
-                        <button class="btn btn-outline-dark" type="submit">Agregar al carrito</button>
+                        <button type="submit">Agregar al carrito</button>
                         </div>
                     </form>
                 </div>

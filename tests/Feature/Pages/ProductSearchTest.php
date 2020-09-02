@@ -41,7 +41,6 @@ class ProductSearchTest extends TestCase
         } while( empty($results));
 
         $products = $results->getOriginalContent()['products'];
-        dd($products);
 
         $this->assertEquals($products->first()->id, $productA->id);
 
