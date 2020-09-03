@@ -7,11 +7,19 @@ use Darryldecode\Cart\CartCollection;
 
 class DatabaseStorage
 {
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function has($key)
     {
         return DatabaseStorageModel::find($key);
     }
 
+    /**
+     * @param $key
+     * @return array|CartCollection
+     */
     public function get($key)
     {
         if($this->has($key))
@@ -24,6 +32,10 @@ class DatabaseStorage
         }
     }
 
+    /**
+     * @param $key
+     * @param $value
+     */
     public function put($key, $value)
     {
         if($row = DatabaseStorageModel::find($key))

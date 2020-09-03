@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70a565889aef805e57d8d7510ce6e703",
+    "content-hash": "73b1fd3b0251cb1b4cf7d6c337076fb3",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -294,6 +294,50 @@
                 "shopping cart"
             ],
             "time": "2020-03-04T06:52:40+00:00"
+        },
+        {
+            "name": "dnetix/redirection",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dnetix/redirection.git",
+                "reference": "93fce47930a8ae50a6d353f9bc5f0eb19cc6e85e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dnetix/redirection/zipball/93fce47930a8ae50a6d353f9bc5f0eb19cc6e85e",
+                "reference": "93fce47930a8ae50a6d353f9bc5f0eb19cc6e85e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-soap": "*",
+                "guzzlehttp/guzzle": ">=5.3",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.4",
+                "squizlabs/php_codesniffer": "3.*",
+                "symfony/var-dumper": "^4.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dnetix\\Redirection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Diego Calle",
+                    "email": "dnetix@gmail.com"
+                }
+            ],
+            "description": "Library to connect with PlacetoPay Redirection service",
+            "time": "2020-03-04T21:58:06+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
