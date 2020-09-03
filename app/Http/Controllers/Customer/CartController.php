@@ -61,7 +61,6 @@ class CartController extends Controller
 
         \Cart::session($userId)->remove($productId);
 
-
         return back()->with('status', 'El producto ha sido eliminado de tu carrito');
 
     }
@@ -82,5 +81,13 @@ class CartController extends Controller
         ));
 
         return back()->with('status', 'El producto ha sido actualizado en tu carrito');
+    }
+
+    /**
+     *
+     */
+    public function checkout()
+    {
+        return view('cart.checkout');
     }
 }

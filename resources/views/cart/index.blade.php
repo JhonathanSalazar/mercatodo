@@ -61,7 +61,7 @@
 
                 <p class="buttons center">
                     <a href="{{ route('home') }}" class="btn-sm">Continuar</a>
-                    <button type="submit" id="checkout">Checkout</button>
+                    <button type="submit" id="checkout"><a href="{{ route('cart.checkout') }}">Checkout</a></button>
                 </p>
             </div>
         </div>
