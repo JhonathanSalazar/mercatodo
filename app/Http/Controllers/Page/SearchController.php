@@ -19,6 +19,7 @@ class SearchController extends Controller
 
         $products = Product::search($search)->paginate();
 
+
         return view('product.list', compact('products'));
     }
 }

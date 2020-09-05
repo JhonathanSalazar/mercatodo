@@ -13,7 +13,7 @@ class OrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'payer_name' => 'required',
+            'payer_email' => 'required|email',
+            'payer_documentType' => 'required',
+            'payer_document' => 'required',
+            'payer_phone' => 'required|numeric',
+            'payer_address' => 'required',
+            'payer_state' => 'required',
+            'payer_city' => 'required',
+            'payer_postal' => 'required',
         ];
     }
 }

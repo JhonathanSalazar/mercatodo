@@ -17,6 +17,8 @@ class ProductSearchTest extends TestCase
      */
     public function aBuyerCanSearchProducts()
     {
+
+        $this->withoutExceptionHandling();
         config(['scout.driver' => 'algolia']);
 
         $adminRole = Role::create(['name' => 'Admin']);

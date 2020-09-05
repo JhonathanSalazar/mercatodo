@@ -16,20 +16,22 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->string('order_number');
+            $table->uuid('order_reference')->unique();
             $table->unsignedBigInteger('user_id');
             $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending');
             $table->float('grand_total');
             $table->integer('item_count');
             $table->boolean('is_paid')->default(false);
 
-            $table->string('shipping_name');
-            $table->string('shipping_email');
-            $table->string('shipping_phone');
-            $table->string('shipping_address');
-            $table->string('shipping_city');
-            $table->string('shipping_postal');
-            $table->string('shipping_country');
+            $table->string('payer_name');
+            $table->string('payer_email');
+            $table->enum('document_type',['CC', 'DI']);
+            $table->string('document_number');
+            $table->string('payer_phone');
+            $table->string('payer_address');
+            $table->string('payer_city');
+            $table->string('payer_state');
+            $table->string('payer_postal');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

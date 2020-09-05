@@ -11,41 +11,65 @@
                 <h4 class="title"><span class="text"><strong>CUENTA</strong> Y DATOS DE FACTURA</span></h4>
             </div>
         </div>
-        <form action="{{ route('orders.store') }}" method="POST">
+        @if($errors->any())
+            <ul class="list-group">
+                @foreach($errors->all() as $error)
+                    <li class="list-group-item list-group-item-danger">
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+        <form action="{{ route('orders.store') }}" method="POST" class="py-3">
             @CSRF
             <div class="row">
                 <div class="col-4 offset-1">
                     <h4>Información personal</h4>
-                        <div class="form-group">
-                            <label>Nombre Completo:</label>
-                            <input type="text" class="form-control form-control-sm" name="shipping_name" placeholder="Jhonathan Salazar">
-                        </div>
-                        <div class="form-group">
-                            <label>Correo electronico:</label>
-                            <input type="email" class="form-control form-control-sm" name="shipping_email" placeholder="me@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Celular:</label>
-                            <input type="text" class="form-control form-control-sm" name="shipping_phone" placeholder="3131112222">
-                        </div>
+                    <div class="form-group">
+                        <label>Nombre Completo:</label>
+                        <input type="text" class="form-control form-control-sm" name="payer_name" placeholder="Jhonathan Salazar">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electronico:</label>
+                        <input type="email" class="form-control form-control-sm" name="payer_email" placeholder="me@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de documento:</label>
+                        <select name="payer_documentType" class="form-control">
+                            <option value=""></option>
+                            <option value="CC">Cedula de ciudadania</option>
+                            <option value="DI">Documento de identidad</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de Documento:</label>
+                        <input type="text" class="form-control form-control-sm" name="payer_document">
+                    </div>
+                    <div class="form-group">
+                        <label>Celular:</label>
+                        <input type="text" class="form-control form-control-sm" name="payer_phone" placeholder="3131112222">
+                    </div>
                 </div>
                 <div class="col-4 offset-2">
                     <h4>Tu dirección</h4>
                     <div class="form-group">
                         <label>Dirección:</label>
-                        <input type="text" class="form-control form-control-sm" name="shipping_address" placeholder="Kr 99 N 99 - 99">
+                        <input type="text" class="form-control form-control-sm" name="payer_address" placeholder="Kr 99 N 99 - 99">
                     </div>
                     <div class="form-group">
                         <label>Ciudad:</label>
-                        <input type="text" class="form-control form-control-sm" name="shipping_city" placeholder="Medellin">
+                        <input type="text" class="form-control form-control-sm" name="payer_city" placeholder="Medellin">
+                    </div>
+                    <div class="form-group">
+                        <label>Departamento:</label>
+                        <input type="text" class="form-control form-control-sm" name="payer_state" placeholder="Antioquia">
                     </div>
                     <div class="form-group">
                         <label>Código Postal:</label>
-                        <input type="text" class="form-control form-control-sm" name="shipping_postal" placeholder="050030">
+                        <input type="text" class="form-control form-control-sm" name="payer_postal" placeholder="050030">
                     </div>
                     <div class="form-group">
-                        <label>País:</label>
-                        <input type="text" class="form-control form-control-sm" name="shipping_country" placeholder="Colombia">
+                    <p>Despachos dispones para Colombia solamente</p>
                     </div>
                 </div>
             </div>

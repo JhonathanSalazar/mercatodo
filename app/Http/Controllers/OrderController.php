@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\P2PRequest;
+use App\Http\Requests\OrderRequest;
 use App\Order;
+use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -11,6 +15,23 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    /**
+     * Save items and order in the table
+     * @param string $userId
+     * @param Order $order
+     */
+    public function saveItemsTable(string $userId, Order $order)
+    {
+        $cartItems = \Cart::session($userId)->getContent();
+
+        foreach($cartItems as $item) {
+            $order->items()->attach($item->id, [
+                'price' => $item->price,
+                'quantity' => $item->quantity
+            ]);
+        }
     }
 
     /**
@@ -39,52 +60,151 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        $userId = auth()->id();
 
-        $request->validate([
-            'shipping_name' => 'required',
-            'shipping_email' => 'required',
-            'shipping_phone' => 'required',
-            'shipping_address' => 'required',
-            'shipping_city' => 'required',
-            'shipping_postal' => 'required',
-            'shipping_country' => 'required',
-        ]);
+        $userId = auth()->id();
 
         $order = new Order();
 
-        $order->order_number= uniqid('O#');
+        $order->order_reference = Str::uuid();
 
         $order->user_id = $userId;
         $order->grand_total = \Cart::session($userId)->getTotal();
         $order->item_count = \Cart::session($userId)->getContent()->count();
 
-        $order->shipping_name = $request->get('shipping_name');
-        $order->shipping_email = $request->get('shipping_email');
-        $order->shipping_phone = $request->get('shipping_phone');
-        $order->shipping_address = $request->get('shipping_address');
-        $order->shipping_city = $request->get('shipping_city');
-        $order->shipping_postal = $request->get('shipping_postal');
-        $order->shipping_country = $request->get('shipping_country');
+        $order->payer_name = $request->get('payer_name');
+        $order->payer_email = $request->get('payer_email');
+        $order->document_type = $request->get('payer_documentType');
+        $order->document_number = $request->get('payer_document');
+        $order->payer_phone = $request->get('payer_phone');
+        $order->payer_address = $request->get('payer_address');
+        $order->payer_city = $request->get('payer_city');
+        $order->payer_state = $request->get('payer_state');
+        $order->payer_postal = $request->get('payer_postal');
 
         $order->save();
 
-        //Save order items
-        $cartItems = \Cart::session($userId)->getContent();
-
-        foreach($cartItems as $item) {
-            $order->items()->attach($item->id, [
-                'price' => $item->price,
-                'quantity' => $item->quantity
-            ]);
-        }
+        $this->saveItemsTable($userId, $order);
 
         \Cart::session($userId)->clear();
 
-        //send email to customer
 
+        return redirect()->route('orders.confirm', compact('order'));
+        //Process pay with PlaceToPay
+/*        $reference = 'TEST_' . time();
+
+        $request = [
+            "locale" => "es_CO",
+            "payer" => [
+                "name" => "Kellie Gerhold",
+                "surname" => "Kellie Gerhold",
+                "email" => "flowe@anderson.com",
+                "documentType" => "CC",
+                "document" => "1848839248",
+                "mobile" => "3006108300",
+                "address" => [
+                    "street" => "703 Dicki Island Apt. 609",
+                    "city" => "North Randallstad",
+                    "state" => "Antioquia",
+                    "postalCode" => "46292",
+                    "country" => "US",
+                    "phone" => "363-547-1441 x383"
+                ]
+            ],
+            "payment" => [
+                "reference" => $reference,
+                "description" => "Iusto sit et voluptatem.",
+                "amount" => [
+                    "taxes" => [
+                        [
+                            "kind" => "ice",
+                            "amount" => 56.4,
+                            "base" => 470
+                        ],
+                        [
+                            "kind" => "valueAddedTax",
+                            "amount" => 89.3,
+                            "base" => 470
+                        ]
+                    ],
+                    "details" => [
+                        [
+                            "kind" => "shipping",
+                            "amount" => 47
+                        ],
+                        [
+                            "kind" => "tip",
+                            "amount" => 47
+                        ],
+                        [
+                            "kind" => "subtotal",
+                            "amount" => 940
+                        ]
+                    ],
+                    "currency" => "USD",
+                    "total" => 1076.3
+                ],
+                "items" => [
+                    [
+                        "sku" => 26443,
+                        "name" => "Qui voluptatem excepturi.",
+                        "category" => "physical",
+                        "qty" => 1,
+                        "price" => 940,
+                        "tax" => 89.3
+                    ]
+                ],
+                "shipping" => [
+                    "name" => "Kellie Gerhold",
+                    "surname" => "Yost",
+                    "email" => "flowe@anderson.com",
+                    "documentType" => "CC",
+                    "document" => "1848839248",
+                    "mobile" => "3006108300",
+                    "address" => [
+                        "street" => "703 Dicki Island Apt. 609",
+                        "city" => "North Randallstad",
+                        "state" => "Antioquia",
+                        "postalCode" => "46292",
+                        "country" => "US",
+                        "phone" => "363-547-1441 x383"
+                    ]
+                ],
+                "allowPartial" => false
+            ],
+            "expiration" => date('c', strtotime('+1 hour')),
+            "ipAddress" => "127.0.0.1",
+            "userAgent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36",
+            "returnUrl" => "http://mercatodo.test/",
+            "cancelUrl" => "http://mercatodo.test/",
+            "skipResult" => false,
+            "noBuyerFill" => false,
+            "captureAddress" => false,
+            "paymentMethod" => null
+        ];
+
+        try {
+            $placetopay = new PlacetoPay([
+                'login' => config('placetopay.login'),
+                'tranKey' => config('placetopay.trankey'),
+                'url' => config('placetopay.url'),
+                'type' => config('placetopay.type'),
+            ]);
+
+            $response = $placetopay->request($request);
+
+            if ($response->isSuccessful()) {
+                // Redirect the client to the processUrl or display it on the JS extension
+                $response->processUrl();
+            } else {
+                // There was some error so check the message
+                $response->status()->message();
+            }
+            dd($response);
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }*/
 
     }
 

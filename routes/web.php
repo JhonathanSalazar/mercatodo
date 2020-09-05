@@ -55,7 +55,8 @@ Route::get('cart/delete/{product}','Customer\CartController@delete')->name('cart
 Route::get('cart/update/{product}','Customer\CartController@update')->name('cart.update');
 Route::get('cart/checkout','Customer\CartController@checkout')->name('cart.checkout');
 
-Route::resource('orders', 'OrderController');
+//Route::resource('orders', 'OrderController');
+Route::post('orders/store','OrderController@store')->name('orders.store');
 
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');
