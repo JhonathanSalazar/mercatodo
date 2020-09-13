@@ -8,6 +8,7 @@ use App\Order;
 use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -22,7 +23,7 @@ class OrderController extends Controller
      * @param string $userId
      * @param Order $order
      */
-    public function saveItemsTable(string $userId, Order $order)
+    public function saveOrderItems(string $userId, Order $order)
     {
         $cartItems = \Cart::session($userId)->getContent();
 
@@ -57,7 +58,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param OrderRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(OrderRequest $request)
@@ -85,12 +86,11 @@ class OrderController extends Controller
 
         $order->save();
 
-        $this->saveItemsTable($userId, $order);
+        $this->saveOrderItems($userId, $order);
 
         \Cart::session($userId)->clear();
 
-
-        return redirect()->route('orders.confirm', compact('order'));
+        return redirect()->route('order.confirm', compact('order'));
         //Process pay with PlaceToPay
 /*        $reference = 'TEST_' . time();
 
@@ -206,6 +206,17 @@ class OrderController extends Controller
             var_dump($e->getMessage());
         }*/
 
+    }
+
+    /**
+     * @param Order $order
+     * @return View
+     */
+    public function confirm(Order $order): View
+    {
+        $items = $order->items()->get();
+
+        return view('orders.confirm', compact('items','order'));
     }
 
     /**

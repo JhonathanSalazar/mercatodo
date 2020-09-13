@@ -17,14 +17,14 @@
                 <div class="col-md-12">
                     <table class="table table-striped">
                         <thead>
-                        <tr>
-                            <th> </th>
-                            <th>Imagen</th>
-                            <th>Nombre Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Total</th>
-                        </tr>
+                            <tr>
+                                <th> </th>
+                                <th>Imagen</th>
+                                <th>Nombre Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Total</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @forelse($cartProducts as $product)
