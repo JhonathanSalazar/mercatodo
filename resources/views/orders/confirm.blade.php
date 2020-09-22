@@ -91,9 +91,9 @@
             </div>
         </div>
         <div class="row mt-4 justify-content-center">
-            <a class="btn btn-danger mr-2" href="">Eliminar</a>
-            <a class="btn btn-outline-primary mr-2" href="">Editar</a>
-            <a class="btn btn-primary mr-2" href="">Pagar</a>
+            <a class="btn btn-danger mr-2" href="#">Eliminar</a>
+            <a class="btn btn-outline-primary mr-2" href="#">Editar</a>
+            <a class="btn btn-primary mr-2" href="#">Pagar</a>
         </div>
     </section>
 @endsection()

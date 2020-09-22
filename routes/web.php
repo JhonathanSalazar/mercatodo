@@ -49,11 +49,13 @@ Route::group(['prefix' => 'admin'],
 Route::get('account/{user}','Customer\UserDataController@edit')->name('pages.user-account.edit');
 Route::put('account/{user}', 'Customer\UserDataController@update')->name('pages.user-account.update');
 
+
 Route::get('add-to-cart/{product}', 'Customer\CartController@add')->name('cart.add');
 Route::get('cart','Customer\CartController@index')->name('cart.index');
 Route::get('cart/delete/{product}','Customer\CartController@delete')->name('cart.delete');
 Route::get('cart/update/{product}','Customer\CartController@update')->name('cart.update');
 Route::get('cart/checkout','Customer\CartController@checkout')->name('cart.checkout');
+
 
 //Route::resource('orders', 'OrderController');
 Route::post('order/store','OrderController@store')->name('order.store');

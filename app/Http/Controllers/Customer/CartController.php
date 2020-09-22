@@ -26,12 +26,13 @@ class CartController extends Controller
      */
     public function add(Product $product)
     {
+
         $userId = auth()->id();
 
         $id = $product->id;
         $name = $product->name;
         $price = $product->price;
-        $qty = request('quantity');
+        $qty = request('quantity') ? request('quantity') : $_REQUEST['quantity'];
 
         \Cart::session($userId)->add($id, $name, $price, $qty);
 
