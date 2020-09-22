@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Product;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -23,9 +25,9 @@ class CartController extends Controller
     /**
      * Add a product to the Customer Cart
      * @param Product $product
-     * @return View
+     * @return RedirectResponse
      */
-    public function add(Product $product)
+    public function add(Product $product): RedirectResponse
     {
 
         $userId = auth()->id();
@@ -42,9 +44,10 @@ class CartController extends Controller
     }
 
     /**
-     * Show the cart products
+     * Show the Cart Products
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $userId = auth()->id();
 
@@ -56,8 +59,9 @@ class CartController extends Controller
     /**
      * Delete the specific cart product
      * @param $productId
+     * @return RedirectResponse
      */
-    public function delete($productId)
+    public function delete($productId): RedirectResponse
     {
         $userId = auth()->id();
 
@@ -69,8 +73,9 @@ class CartController extends Controller
 
     /**
      * @param $productId
+     * @return RedirectResponse
      */
-    public function update($productId)
+    public function update($productId): RedirectResponse
     {
 
         $userId = auth()->id();
@@ -90,6 +95,14 @@ class CartController extends Controller
      */
     public function checkout()
     {
+        $userId = auth()->id();
+
+        $cartCount = \Cart::session($userId)->getContent()->count();
+
+        if($cartCount == 0) {
+            return redirect(route('home'));
+        }
+
         return view('cart.checkout');
     }
 }

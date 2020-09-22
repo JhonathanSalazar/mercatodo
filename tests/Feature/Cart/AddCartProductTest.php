@@ -5,35 +5,26 @@ namespace Tests\Feature\Cart;
 use App\Product;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class AddProductCartTest extends TestCase
+class AddCartProductTest extends TestCase
 {
 
     use RefreshDatabase;
 
+
     /**
      * @test
      */
-    public function aAdminCantAddCartProduct()
+    public function guestCantAddCartProduct()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
-        $adminUser = factory(User::class)->create()->assignRole($adminRole);
-        $this->actingAs($adminUser);
 
         $product = factory(Product::class)->create();
         $_REQUEST['quantity'] = 1;
 
-        $userId = auth()->id();
-
         $this->get(route('cart.add', compact('product')))
-            ->assertStatus(403);
-
-        $cartProducts = \Cart::session($userId)->getContent();
-
-        $this->assertEmpty($cartProducts);
+            ->assertRedirect(route('login'));
 
     }
 
@@ -41,7 +32,7 @@ class AddProductCartTest extends TestCase
     /**
      * @test
      */
-    public function aBuyerCanAddCartProduct()
+    public function buyerCanAddCartProduct()
     {
 
         $buyerRole = Role::create(['name' => 'Buyer']);
@@ -72,14 +63,24 @@ class AddProductCartTest extends TestCase
     /**
      * @test
      */
-    public function aGuestCantAddCartProduct()
+    public function adminCantAddCartProduct()
     {
+        $adminRole = Role::create(['name' => 'Admin']);
+        $adminUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($adminUser);
 
         $product = factory(Product::class)->create();
         $_REQUEST['quantity'] = 1;
 
+        $userId = auth()->id();
+
         $this->get(route('cart.add', compact('product')))
-            ->assertRedirect(route('login'));
+            ->assertStatus(403);
+
+        $cartProducts = \Cart::session($userId)->getContent();
+
+        $this->assertEmpty($cartProducts);
 
     }
+
 }
