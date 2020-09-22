@@ -16,6 +16,7 @@ class CartController extends Controller
     {
         $this->middleware([
             'auth',
+            'role:Buyer'
         ]);
     }
 

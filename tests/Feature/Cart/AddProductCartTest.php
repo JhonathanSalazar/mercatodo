@@ -17,6 +17,30 @@ class AddProductCartTest extends TestCase
     /**
      * @test
      */
+    public function aAdminCantAddCartProduct()
+    {
+        $adminRole = Role::create(['name' => 'Admin']);
+        $adminUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($adminUser);
+
+        $product = factory(Product::class)->create();
+        $_REQUEST['quantity'] = 1;
+
+        $userId = auth()->id();
+
+        $this->get(route('cart.add', compact('product')))
+            ->assertStatus(403);
+
+        $cartProducts = \Cart::session($userId)->getContent();
+
+        $this->assertEmpty($cartProducts);
+
+    }
+
+
+    /**
+     * @test
+     */
     public function aBuyerCanAddCartProduct()
     {
 
@@ -25,12 +49,12 @@ class AddProductCartTest extends TestCase
         $this->actingAs($buyerUser);
 
         $product = factory(Product::class)->create();
-
         $_REQUEST['quantity'] = 1;
 
         $userId = auth()->id();
 
-        $response = $this->get(route('cart.add', compact('product')))->assertStatus(302);
+        $this->get(route('cart.add', compact('product')))
+            ->assertStatus(302);
 
         $cartProducts = \Cart::session($userId)->getContent();
 
@@ -50,6 +74,12 @@ class AddProductCartTest extends TestCase
      */
     public function aGuestCantAddCartProduct()
     {
+
         $product = factory(Product::class)->create();
+        $_REQUEST['quantity'] = 1;
+
+        $this->get(route('cart.add', compact('product')))
+            ->assertRedirect(route('login'));
+
     }
 }
