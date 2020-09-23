@@ -59,7 +59,7 @@ Route::get('cart/checkout','Customer\CartController@checkout')->name('cart.check
 
 //Route::resource('orders', 'OrderController');
 Route::post('order/store','OrderController@store')->name('order.store');
-Route::get('order/{order}','OrderController@confirm')->name('order.confirm');
+Route::get('order/{order}','OrderController@show')->name('order.show');
 
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');

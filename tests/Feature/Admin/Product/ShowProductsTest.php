@@ -30,9 +30,11 @@ class ShowProductsTest extends TestCase
      */
     public function buyerCantShowProducts()
     {
-        $product = factory(Product::class)->create();
-        $buyerUser = factory(User::class)->create();
+        $buyerRole = Role::create(['name' => 'Buyer']);
+        $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
+
+        $product = factory(Product::class)->create();
 
         $response = $this->get(route('admin.products.edit', $product));
 

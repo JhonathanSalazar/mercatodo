@@ -65,6 +65,7 @@ class AddCartProductTest extends TestCase
      */
     public function adminCantAddCartProduct()
     {
+
         $adminRole = Role::create(['name' => 'Admin']);
         $adminUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($adminUser);

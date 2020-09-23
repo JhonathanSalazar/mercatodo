@@ -6,6 +6,7 @@ use App\Classes\P2PRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
 use Dnetix\Redirection\PlacetoPay;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -85,7 +86,8 @@ class OrderController extends Controller
 
         \Cart::session($userId)->clear();
 
-        return redirect()->route('order.confirm', compact('order'));
+
+        return redirect()->route('order.show', compact('order'));
         //Process pay with PlaceToPay
 /*        $reference = 'TEST_' . time();
 
@@ -206,23 +208,16 @@ class OrderController extends Controller
     /**
      * @param Order $order
      * @return View
+     * @throws AuthorizationException
      */
-    public function confirm(Order $order): View
+    public function show(Order $order): View
     {
+
+        $this->authorize('view', $order);
+
         $items = $order->items()->get();
 
         return view('orders.confirm', compact('items','order'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
-    {
-        //
     }
 
     /**
