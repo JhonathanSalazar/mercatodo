@@ -89,6 +89,7 @@ class ShowOrderTest extends TestCase
 
         $order = factory(Order::class)->create();
 
+        $this->assertNotEquals($buyerUser->id, $order->user_id);
         $this->get(route('order.show', compact('order')))
             ->assertStatus(403);
 
