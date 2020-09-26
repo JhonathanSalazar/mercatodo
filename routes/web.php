@@ -50,16 +50,17 @@ Route::get('account/{user}','Customer\UserDataController@edit')->name('pages.use
 Route::put('account/{user}', 'Customer\UserDataController@update')->name('pages.user-account.update');
 
 
-Route::get('add-to-cart/{product}', 'Customer\CartController@add')->name('cart.add');
-Route::get('cart','Customer\CartController@index')->name('cart.index');
-Route::get('cart/delete/{product}','Customer\CartController@delete')->name('cart.delete');
-Route::get('cart/update/{product}','Customer\CartController@update')->name('cart.update');
-Route::get('cart/checkout','Customer\CartController@checkout')->name('cart.checkout');
+Route::get('add-to-cart/{product}', 'Shopping\CartController@add')->name('cart.add');
+Route::get('cart','Shopping\CartController@index')->name('cart.index');
+Route::get('cart/delete/{product}','Shopping\CartController@delete')->name('cart.delete');
+Route::get('cart/update/{product}','Shopping\CartController@update')->name('cart.update');
+Route::get('cart/checkout','Shopping\CartController@checkout')->name('cart.checkout');
 
 
 //Route::resource('orders', 'OrderController');
-Route::post('order/store','OrderController@store')->name('order.store');
-Route::get('order/{order}','OrderController@show')->name('order.show');
+Route::post('order/store','Shopping\OrderController@store')->name('order.store');
+Route::get('order/{order}','Shopping\OrderController@show')->name('order.show');
+Route::get('order/edit/{order}','Shopping\OrderController@edit')->name('order.edit');
 
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');

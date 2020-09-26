@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Shopping;
 
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -103,6 +103,6 @@ class CartController extends Controller
             return redirect(route('home'));
         }
 
-        return view('cart.checkout');
+        return view('order.create');
     }
 }

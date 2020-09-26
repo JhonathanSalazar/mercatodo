@@ -11,16 +11,11 @@ class UpdateOrderTest extends TestCase
 
     use RefreshDatabase;
 
-
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @test
      */
-    public function testExample()
+    public function aGuestCantUpdateOrders()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        
     }
 }

@@ -31,25 +31,9 @@ class ShowOrderTest extends TestCase
     /**
      * @test
      */
-    public function aAdminCantShowOrders()
-    {
-
-        $adminRole = Role::create(['name' => 'Admin']);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
-        $this->actingAs($admUser);
-
-        $order = factory(Order::class)->create();
-
-        $this->get(route('order.show', compact('order')))
-            ->assertStatus(403);
-
-    }
-
-    /**
-     * @test
-     */
     public function aBuyerCanShowYourOrders()
     {
+
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
@@ -90,6 +74,23 @@ class ShowOrderTest extends TestCase
         $order = factory(Order::class)->create();
 
         $this->assertNotEquals($buyerUser->id, $order->user_id);
+        $this->get(route('order.show', compact('order')))
+            ->assertStatus(403);
+
+    }
+
+    /**
+     * @test
+     */
+    public function aAdminCantShowOrders()
+    {
+
+        $adminRole = Role::create(['name' => 'Admin']);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+
+        $order = factory(Order::class)->create();
+
         $this->get(route('order.show', compact('order')))
             ->assertStatus(403);
 

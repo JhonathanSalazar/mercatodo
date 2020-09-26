@@ -35,8 +35,8 @@
                     </div>
                     <div class="form-group">
                         <label>Tipo de documento:</label>
-                        <select name="payer_documentType" class="form-control">
-                            <option value=""></option>
+                        <select name="payer_documentType" class="form-control form-control-sm">
+                            <option value="">Seleccione un documento</option>
                             <option value="CC">Cedula de ciudadania</option>
                             <option value="DI">Documento de identidad</option>
                         </select>

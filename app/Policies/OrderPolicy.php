@@ -30,7 +30,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        return $user->id === $order->user_id;
+        return $user->id == $order->user_id;
     }
 
     /**
@@ -42,6 +42,18 @@ class OrderPolicy
     public function create(User $user)
     {
         //
+    }
+
+    /**
+     * Determine whether the user can edit the model.
+     *
+     * @param User $user
+     * @param Order $order
+     * @return mixed
+     */
+    public function edit(User $user, Order $order)
+    {
+        return $user->id == $order->user_id;
     }
 
     /**

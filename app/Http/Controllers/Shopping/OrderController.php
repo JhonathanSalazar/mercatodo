@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shopping;
 
 use App\Classes\P2PRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
 use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Auth\Access\AuthorizationException;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -217,25 +218,30 @@ class OrderController extends Controller
 
         $items = $order->items()->get();
 
-        return view('orders.confirm', compact('items','order'));
+        return view('order.confirm', compact('items','order'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the Order.
      *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Order $order)
+    public function edit(Order $order): View
     {
-        //
+        $this->authorize('edit', $order);
+
+        $items = $order->items()->get();
+
+        return view('order.edit', compact( 'items' ,'order' ));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param Order $order
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Order $order)
@@ -246,7 +252,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
+     * @param Order $order
      * @return \Illuminate\Http\Response
      */
     public function destroy(Order $order)

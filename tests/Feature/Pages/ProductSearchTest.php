@@ -13,7 +13,7 @@ class ProductSearchTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * @test
+     *
      */
     public function aBuyerCanSearchProducts()
     {
@@ -48,4 +48,17 @@ class ProductSearchTest extends TestCase
 
         Product::latest()->take(2)->unsearchable();
     }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function testExample()
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+    }
+
 }
