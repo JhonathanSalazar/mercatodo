@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shopping;
 use App\Classes\P2PRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
+use App\User;
 use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Http\Controllers\Controller;
@@ -43,12 +44,18 @@ class OrderController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return View
+     * @throws AuthorizationException
      */
-    public function index()
+    public function index(User $user): View
     {
-        //
+
+        $this->authorize('view', $user);
+
+        $orders = $user->orders;
+
+        return view('order.index', compact('orders'));
     }
 
 
@@ -56,16 +63,14 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param OrderRequest $request
-     * @return \Illuminate\Http\Response
      */
     public function store(OrderRequest $request)
     {
-
         $userId = auth()->id();
 
         $order = new Order();
 
-        $order->order_reference = Str::uuid();
+        $order->order_reference = Str::uuid(2);
 
         $order->user_id = $userId;
         $order->grand_total = \Cart::session($userId)->getTotal();
@@ -87,10 +92,13 @@ class OrderController extends Controller
 
         \Cart::session($userId)->clear();
 
-
         return redirect()->route('order.show', compact('order'));
+
+        /**
+
+
         //Process pay with PlaceToPay
-/*        $reference = 'TEST_' . time();
+        $reference = 'TEST_' . time();
 
         $request = [
             "locale" => "es_CO",
@@ -171,7 +179,7 @@ class OrderController extends Controller
                 ],
                 "allowPartial" => false
             ],
-            "expiration" => date('c', strtotime('+1 hour')),
+            "expiration" => date('c', strtotime('+2 hour')),
             "ipAddress" => "127.0.0.1",
             "userAgent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36",
             "returnUrl" => "http://mercatodo.test/",
@@ -188,21 +196,31 @@ class OrderController extends Controller
                 'tranKey' => config('placetopay.trankey'),
                 'url' => config('placetopay.url'),
                 'type' => config('placetopay.type'),
+                'rest' => [
+                    'timeout' => 45, // (optional) 15 by default
+                    'connect_timeout' => 30, // (optional) 5 by default
+                    ]
             ]);
 
             $response = $placetopay->request($request);
 
+            dd($response);
+
             if ($response->isSuccessful()) {
                 // Redirect the client to the processUrl or display it on the JS extension
-                $response->processUrl();
+                //$response->processUrl();
             } else {
                 // There was some error so check the message
-                $response->status()->message();
+                //$response->status()->message();
             }
+
             dd($response);
+
         } catch (Exception $e) {
             var_dump($e->getMessage());
-        }*/
+        }
+
+         **/
 
     }
 

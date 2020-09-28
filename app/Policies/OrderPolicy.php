@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Order;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Database\Eloquent\Model;
 
 class OrderPolicy
 {
@@ -20,6 +21,7 @@ class OrderPolicy
     {
         //
     }
+
 
     /**
      * Determine whether the user can view the model.

@@ -49,4 +49,20 @@ class EditOrderTest extends TestCase
             ->assertSee($order->payer_state)
             ->assertSee($order->payer_postal);
     }
+
+    /**
+     * @test
+     */
+    public function aBuyerCantEditOrdersFromOtherCustomers()
+    {
+        $buyerRole = Role::create(['name' => 'Buyer']);
+        $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
+        $this->actingAs($buyerUser);
+
+        $order = factory(Order::class)->create();
+
+        $this->assertNotEquals($buyerUser->id, $order->user_id);
+        $this->get(route('order.show', compact('order')))
+            ->assertStatus(403);
+    }
 }

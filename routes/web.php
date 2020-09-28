@@ -59,7 +59,8 @@ Route::get('cart/checkout','Shopping\CartController@checkout')->name('cart.check
 
 //Route::resource('orders', 'OrderController');
 Route::post('order/store','Shopping\OrderController@store')->name('order.store');
-Route::get('order/{order}','Shopping\OrderController@show')->name('order.show');
+Route::get('order/index/{user}','Shopping\OrderController@index')->name('order.index');
+Route::get('order/show/{order}','Shopping\OrderController@show')->name('order.show');
 Route::get('order/edit/{order}','Shopping\OrderController@edit')->name('order.edit');
 
 

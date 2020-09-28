@@ -9,7 +9,6 @@
     <div class="col">
         <div class="row">
             @forelse($products as $product)
-                {{ dd($product) }}
                 <div class="col-md-3 py-3">
                     <x-product.home-carousel
                         id="{{ $product->id }}"
