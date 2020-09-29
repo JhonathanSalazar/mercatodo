@@ -62,6 +62,7 @@ Route::post('order/store','Shopping\OrderController@store')->name('order.store')
 Route::get('order/index/{user}','Shopping\OrderController@index')->name('order.index');
 Route::get('order/show/{order}','Shopping\OrderController@show')->name('order.show');
 Route::get('order/edit/{order}','Shopping\OrderController@edit')->name('order.edit');
+Route::put('order/update/{order}','Shopping\OrderController@update')->name('order.update');
 
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');

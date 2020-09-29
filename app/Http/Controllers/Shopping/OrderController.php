@@ -262,9 +262,22 @@ class OrderController extends Controller
      * @param Order $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(OrderRequest $request, Order $order)
     {
-        //
+        $order->payer_name = $request->get('payer_name');
+        $order->payer_email = $request->get('payer_email');
+        $order->document_type = $request->get('payer_documentType');
+        $order->document_number = $request->get('payer_document');
+        $order->payer_phone = $request->get('payer_phone');
+        $order->payer_address = $request->get('payer_address');
+        $order->payer_city = $request->get('payer_city');
+        $order->payer_state = $request->get('payer_state');
+        $order->payer_postal = $request->get('payer_postal');
+
+        $order->save();
+
+        return redirect()->route('order.index', $order->user_id)
+            ->with('status', 'Tu orden a sido actualizada');
     }
 
     /**
