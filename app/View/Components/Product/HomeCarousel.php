@@ -2,8 +2,8 @@
 
 namespace App\View\Components\Product;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
+use Illuminate\View\View;
 
 class HomeCarousel extends Component
 {
@@ -61,7 +61,7 @@ class HomeCarousel extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function render()
     {

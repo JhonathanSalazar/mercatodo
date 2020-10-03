@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Admin\Product;
 
-use App\Product;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
+use App\Product;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 class EditProductsTest extends TestCase
 {
@@ -18,8 +18,6 @@ class EditProductsTest extends TestCase
      */
     public function guestCantEditProducts()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
 
         $this->get(route('admin.products.edit', $product))
@@ -31,9 +29,9 @@ class EditProductsTest extends TestCase
      */
     public function buyerCantEditProducts()
     {
+        $product = factory(Product::class)->create();
         $buyerUser = factory(User::class)->create();
         $this->actingAs($buyerUser);
-        $product = factory(Product::class)->create();
 
         $this->get(route('admin.products.edit', $product))
             ->assertStatus(403);

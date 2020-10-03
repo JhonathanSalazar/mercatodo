@@ -5,8 +5,8 @@ namespace Tests\Feature\Admin\Product;
 use App\Product;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ShowProductsTest extends TestCase
 {
@@ -17,8 +17,7 @@ class ShowProductsTest extends TestCase
      */
     public function guestCantShowProducts()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
+
         $product = factory(Product::class)->create();
 
          $response = $this->get(route('admin.products.show', $product));
@@ -31,8 +30,10 @@ class ShowProductsTest extends TestCase
      */
     public function buyerCantShowProducts()
     {
-        $buyerUser = factory(User::class)->create();
+        $buyerRole = Role::create(['name' => 'Buyer']);
+        $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
+
         $product = factory(Product::class)->create();
 
         $response = $this->get(route('admin.products.edit', $product));

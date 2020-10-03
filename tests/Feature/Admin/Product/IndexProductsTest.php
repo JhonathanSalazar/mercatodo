@@ -5,8 +5,8 @@ namespace Tests\Feature\Admin\Product;
 use App\Product;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class IndexProductsTest extends TestCase
 {
@@ -18,8 +18,6 @@ class IndexProductsTest extends TestCase
      */
     public function guestCantIndexProducts()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
 
         $response = $this->get(route('admin.products.index', compact('product')));
@@ -32,10 +30,8 @@ class IndexProductsTest extends TestCase
      */
     public function buyerCantIndexProducts()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
-        $buyerUser = factory(User::class)->create();
         $products = factory(Product::class)->create();
+        $buyerUser = factory(User::class)->create();
         $this->actingAs($buyerUser);
 
         $response = $this->get(route('admin.products.index', compact('products')));
@@ -48,22 +44,22 @@ class IndexProductsTest extends TestCase
      */
     public function adminCanIndexProducts()
     {
+        $products = factory(Product::class,30)->create();
+
         $adminRole = Role::create(['name' => 'Admin']);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
-        $products = factory(Product::class,3)->create();
         $this->actingAs($admUser);
 
         $response = $this->get(route('admin.products.index', compact('products')));
 
-        $response->assertStatus(200)
-            ->assertSee($products[0]->name)
-            ->assertSee($products[0]->ean)
-            ->assertSee($products[0]->price)
-            ->assertSee($products[1]->name)
-            ->assertSee($products[1]->ean)
-            ->assertSee($products[1]->price)
-            ->assertSee($products[2]->name)
-            ->assertSee($products[2]->ean)
-            ->assertSee($products[2]->price);
+        $responseProducts = $response->getOriginalContent()['products'];
+
+        $response->assertStatus(200);
+
+        $responseProducts->each(function($item) use ($response) {
+            $response->assertSee($item->name);
+            $response->assertSee($item->ean);
+            $response->assertSee($item->price);
+        });
     }
 }
