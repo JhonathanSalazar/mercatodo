@@ -10,6 +10,7 @@ use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -258,9 +259,9 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param OrderRequest $request
      * @param Order $order
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(OrderRequest $request, Order $order)
     {
@@ -284,10 +285,16 @@ class OrderController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Order $order
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @throws AuthorizationException
      */
     public function destroy(Order $order)
     {
-        //
+        $this->authorize('delete', $order);
+
+        $order->delete();
+
+        return redirect()->route('order.index', $order->user_id)
+            ->with('status', 'Tu orden a sido eliminada');
     }
 }

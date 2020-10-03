@@ -53,7 +53,7 @@ Route::put('account/{user}', 'Customer\UserDataController@update')->name('pages.
 Route::get('add-to-cart/{product}', 'Shopping\CartController@add')->name('cart.add');
 Route::get('cart','Shopping\CartController@index')->name('cart.index');
 Route::get('cart/delete/{product}','Shopping\CartController@delete')->name('cart.delete');
-Route::get('cart/update/{product}','Shopping\CartController@update')->name('cart.update');
+Route::get('cart/{product}','Shopping\CartController@update')->name('cart.update');
 Route::get('cart/checkout','Shopping\CartController@checkout')->name('cart.checkout');
 
 
@@ -63,7 +63,7 @@ Route::get('order/index/{user}','Shopping\OrderController@index')->name('order.i
 Route::get('order/show/{order}','Shopping\OrderController@show')->name('order.show');
 Route::get('order/edit/{order}','Shopping\OrderController@edit')->name('order.edit');
 Route::put('order/update/{order}','Shopping\OrderController@update')->name('order.update');
-
+Route::delete('order/delete/{order}', 'Shopping\OrderController@destroy')->name('order.delete');
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');
 Route::get('/about','Customer\PagesController@aboutUs')->name('pages.about');

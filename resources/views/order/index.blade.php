@@ -10,7 +10,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>Referencia</th>
+                    <th>Id de la orden</th>
                     <th># de Productos</th>
                     <th>Valor Total</th>
                     <th>Estado de pago</th>
@@ -20,11 +20,15 @@
             <tbody>
             @forelse($orders as $order)
                 <tr>
-                    <td><a href="{{ route('order.show', $order) }}">{{ $order->order_reference }}</a></td>
+                    <td><a href="{{ route('order.show', $order, $order->user_id) }}">{{ $order->id }}</a></td>
                     <td>{{ $order->item_count }}</td>
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ $order->status }}</td>
-                    <td><a href="">Borrar</a></td>
+                    <td>
+                        <form action="{{ route('order.delete', $order) }}" method="POST">
+                            @CSRF @METHOD('DELETE')
+                            <button>Eliminar</button>
+                        </form></td>
             @empty
                 Aún no tienes ordenes, sigue comprando
             @endforelse
