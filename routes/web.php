@@ -54,10 +54,10 @@ Route::get('add-to-cart/{product}', 'Shopping\CartController@add')->name('cart.a
 Route::get('cart','Shopping\CartController@index')->name('cart.index');
 Route::get('cart/delete/{product}','Shopping\CartController@delete')->name('cart.delete');
 Route::get('cart/{product}','Shopping\CartController@update')->name('cart.update');
-Route::get('cart/checkout','Shopping\CartController@checkout')->name('cart.checkout');
 
 
 //Route::resource('orders', 'OrderController');
+Route::get('order/create','Shopping\OrderController@create')->name('order.create');
 Route::post('order/store','Shopping\OrderController@store')->name('order.store');
 Route::get('order/index/{user}','Shopping\OrderController@index')->name('order.index');
 Route::get('order/show/{order}','Shopping\OrderController@show')->name('order.show');

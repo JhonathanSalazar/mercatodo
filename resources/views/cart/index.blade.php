@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -53,19 +53,16 @@
                     @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <hr>
-            <p class="cart-total float-right mr-5">
+            <p class="cart-total mr-5">
                 <strong>Sub-Total</strong>:	$ {{ Cart::session(auth()->id())->getSubTotal() }}<br>
                 <strong>IVA (19%)</strong>: $NA<br>
                 <strong>Total</strong>: $NA<br>
             </p>
-
             <p class="buttons center">
                 <a href="{{ route('home') }}" class="btn-sm">Continuar</a>
-                <button type="submit" id="checkout"><a href="{{ route('cart.checkout') }}">Checkout</a></button>
+                <button><a href="{{ route('order.create') }}">Checkout</a></button>
             </p>
         </div>
+    </div>
     </section>
 @endsection
