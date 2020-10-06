@@ -101,8 +101,8 @@ class OrderPolicy
      * @param Order $order
      * @return mixed
      */
-    public function forceDelete(User $user, Order $order)
+    public function pay(User $user, Order $order)
     {
-        //
+        return $user->id == $order->user_id;
     }
 }

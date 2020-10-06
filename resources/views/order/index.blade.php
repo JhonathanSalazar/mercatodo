@@ -20,7 +20,7 @@
             <tbody>
             @forelse($orders as $order)
                 <tr>
-                    <td><a href="{{ route('order.show', $order, $order->user_id) }}">{{ $order->id }}</a></td>
+                    <td><a href="{{ route('order.show', $order) }}">{{ $order->id }}</a></td>
                     <td>{{ $order->item_count }}</td>
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ $order->status }}</td>

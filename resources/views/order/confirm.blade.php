@@ -95,7 +95,7 @@
                     @CSRF @METHOD('DELETE')
                     <button class="btn btn-danger" type="submit">Eliminar</button>
                     <a class="btn btn-outline-primary mr-2" href="{{ route('order.edit', $order) }}">Editar</a>
-                    <a class="btn btn-primary mr-2" href="#">Pagar</a>
+                    <a class="btn btn-primary mr-2" href="{{ route('order.pay', $order) }}">Pagar</a>
                 </form>
         </div>
     </section>

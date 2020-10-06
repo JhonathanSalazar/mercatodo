@@ -5,6 +5,7 @@ namespace App\Classes;
 
 
 use App\Order;
+use http\Client\Request;
 
 class P2PRequest
 {
@@ -27,8 +28,8 @@ class P2PRequest
             ],
             'expiration' => date('c', strtotime('+2 days')),
             'returnUrl' => 'http://mercatodo.test/',
-            'ipAddress' => '127.0.0.1',
-            'userAgent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+            'ipAddress' => \Request::ip(),
+            'userAgent' => \Request::header('User-Agent'),
         ];
     }
 

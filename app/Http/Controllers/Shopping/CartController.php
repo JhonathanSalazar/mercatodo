@@ -89,18 +89,4 @@ class CartController extends Controller
 
         return back()->with('status', 'El producto ha sido actualizado en tu carrito');
     }
-
-    /** This function return the view to the checkout process
-     *
-     */
-    public function checkout()
-    {
-        //$userId = auth()->id();
-
-        //$cartCount = \Cart::session($userId)->getContent()->count();
-
-        //if($cartCount == 0) {
-        //    return redirect(route('home'));
-        //}
-    }
 }

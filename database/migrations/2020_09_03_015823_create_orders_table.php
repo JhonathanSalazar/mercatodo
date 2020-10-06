@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->uuid('order_reference')->unique();
+            $table->string('order_reference')->unique();
             $table->unsignedBigInteger('user_id');
             $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending');
             $table->bigInteger('grand_total');
