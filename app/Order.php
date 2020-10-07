@@ -13,6 +13,14 @@ class Order extends Model
     use SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     * @var array
+     */
+    protected $fillable = [
+        'processUrl', 'requestID'
+    ];
+
+    /**
      * @return BelongsToMany
      */
     public function items(): BelongsToMany

@@ -32,6 +32,8 @@ class CreateOrdersTable extends Migration
             $table->string('payer_city');
             $table->string('payer_state');
             $table->string('payer_postal');
+            $table->string('processUrl')->nullable();
+            $table->string('requestId')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

@@ -187,6 +187,7 @@ class OrderController extends Controller
      * @param Order $order
      * @param PlacetoPay $placetopay
      * @return Redirector
+     * @throws AuthorizationException
      * @throws PlacetoPayException
      */
     public function pay(Order $order, PlacetoPay $placetopay)
@@ -197,6 +198,14 @@ class OrderController extends Controller
 
         $response = $placetopay->request($requestUser->create());
 
-        return redirect($response->processUrl());
+        $order->update([
+            'processUrl' => $response->processUrl(),
+            'requestID' => $response->requestId(),
+            'status' => $response->status()->status(),
+        ]);
+
+        dd($order);
+
+        return redirect()->away($response->processUrl());
     }
 }
