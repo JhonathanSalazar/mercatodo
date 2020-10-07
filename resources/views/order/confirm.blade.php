@@ -91,12 +91,12 @@
             </div>
         </div>
         <div class="row mt-4 justify-content-center">
-                <form action="{{ route('order.delete', $order) }}" method="POST">
-                    @CSRF @METHOD('DELETE')
-                    <button class="btn btn-danger" type="submit">Eliminar</button>
-                    <a class="btn btn-outline-primary mr-2" href="{{ route('order.edit', $order) }}">Editar</a>
-                    <a class="btn btn-primary mr-2" href="{{ route('order.pay', $order) }}">Pagar</a>
-                </form>
+            <form action="{{ route('order.delete', $order) }}" method="POST">
+                @CSRF @METHOD('DELETE')
+                <button class="btn btn-danger" type="submit">Eliminar</button>
+                <a class="btn btn-outline-primary mr-2" href="{{ route('order.edit', $order) }}">Editar</a>
+                <a class="btn btn-primary mr-2" href="{{ route('payment.store', $order) }}">Pagar</a>
+            </form>
         </div>
     </section>
 @endsection()

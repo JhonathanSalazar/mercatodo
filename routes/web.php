@@ -64,7 +64,8 @@ Route::get('order/show/{order}','Shopping\OrderController@show')->name('order.sh
 Route::get('order/edit/{order}','Shopping\OrderController@edit')->name('order.edit');
 Route::put('order/update/{order}','Shopping\OrderController@update')->name('order.update');
 Route::delete('order/delete/{order}', 'Shopping\OrderController@destroy')->name('order.delete');
-Route::get('order/pay/{order}', 'Shopping\OrderController@pay')->name('order.pay');
+
+Route::get('order/pay/{order}', 'PaymentAttempController@store')->name('payment.store');
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');
 Route::get('/about','Customer\PagesController@aboutUs')->name('pages.about');
