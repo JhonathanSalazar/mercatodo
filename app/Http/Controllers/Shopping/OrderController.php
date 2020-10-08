@@ -12,6 +12,7 @@ use http\Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -49,10 +50,18 @@ class OrderController extends Controller
     }
 
     /**
-     * Create buyer order.
+     * Create buyer order (Checkout).
+     * @return RedirectResponse|View
      */
     public function create()
     {
+        $userId = auth()->id();
+
+        if (\Cart::session($userId)->getContent()->count() == 0)
+        {
+            return redirect()->route('home');
+        }
+
         return view('order.create');
     }
 

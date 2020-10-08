@@ -91,12 +91,17 @@
             </div>
         </div>
         <div class="row mt-4 justify-content-center">
-            <form action="{{ route('order.delete', $order) }}" method="POST">
-                @CSRF @METHOD('DELETE')
-                <button class="btn btn-danger" type="submit">Eliminar</button>
-                <a class="btn btn-outline-primary mr-2" href="{{ route('order.edit', $order) }}">Editar</a>
-                <a class="btn btn-primary mr-2" href="{{ route('payment.store', $order) }}">Pagar</a>
-            </form>
+            @if($order->status != 'APPROVED')
+                <form action="{{ route('payment.store', $order) }}">
+                    @CSRF
+                    <button type="submit">Pagar Orden</button>
+                    <a class="ml-2" href="{{ route('order.edit', $order) }}">Editar</a>
+                </form>
+            @else
+                <form action="{{ route('order.index', $order->user_id) }}">
+                    <button>Regresar</button>
+                </form>
+            @endif
         </div>
     </section>
 @endsection()

@@ -19,7 +19,7 @@ class CreatePaymentAttempsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('status')->nullable();
             $table->string('reason')->nullable();
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
             $table->bigInteger('grand_total')->nullable();
             $table->string('requestID')->nullable();
             $table->string('processUrl')->nullable();

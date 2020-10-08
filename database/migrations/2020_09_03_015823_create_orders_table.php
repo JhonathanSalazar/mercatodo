@@ -18,11 +18,12 @@ class CreateOrdersTable extends Migration
 
             $table->string('order_reference')->unique();
             $table->unsignedBigInteger('user_id');
-            $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending');
+            $table->string('status')->default('PENDING');
+            $table->string('reason')->nullable();
+            $table->text('message')->nullable();
             $table->bigInteger('grand_total');
             $table->integer('item_count');
-            $table->boolean('is_paid')->default(false);
-
+            $table->timestamp('paid_at')->nullable();
             $table->string('payer_name');
             $table->string('payer_email');
             $table->enum('document_type',['CC', 'DI']);
@@ -32,8 +33,6 @@ class CreateOrdersTable extends Migration
             $table->string('payer_city');
             $table->string('payer_state');
             $table->string('payer_postal');
-            $table->string('processUrl')->nullable();
-            $table->string('requestId')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

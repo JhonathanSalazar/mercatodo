@@ -27,7 +27,7 @@ class P2PRequest
                 ],
             ],
             'expiration' => date('c', strtotime('+2 days')),
-            'returnUrl' => 'http://mercatodo.test/',
+            'returnUrl' => route('payment.show', $order),
             'ipAddress' => \Request::ip(),
             'userAgent' => \Request::header('User-Agent'),
         ];

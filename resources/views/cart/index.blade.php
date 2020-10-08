@@ -39,7 +39,7 @@
                             <td>{{ $product->name }}</td>
                             <td>
                                 <form action="{{ route('cart.update', $product->id) }}">
-                                    <input name="quantity" type="number"  value="{{ $product->quantity }}">
+                                    <input name="quantity" type="number"  value="{{ $product->quantity }}" min="1">
                                     <input type="submit" value="Guardar">
                                 </form>
                             </td>

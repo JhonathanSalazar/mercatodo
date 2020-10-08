@@ -25,10 +25,13 @@
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ $order->status }}</td>
                     <td>
-                        <form action="{{ route('order.delete', $order) }}" method="POST">
-                            @CSRF @METHOD('DELETE')
-                            <button>Eliminar</button>
-                        </form></td>
+                        @if($order->status != 'APPROVED')
+                            <form action="{{ route('order.delete', $order) }}" method="POST">
+                                @CSRF @METHOD('DELETE')
+                                <button>Eliminar</button>
+                            </form>
+                        @endif
+                    </td>
             @empty
                 Aún no tienes ordenes, sigue comprando
             @endforelse

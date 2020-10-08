@@ -66,6 +66,7 @@ Route::put('order/update/{order}','Shopping\OrderController@update')->name('orde
 Route::delete('order/delete/{order}', 'Shopping\OrderController@destroy')->name('order.delete');
 
 Route::get('order/pay/{order}', 'PaymentAttempController@store')->name('payment.store');
+Route::get('order/pay/show/{order}', 'PaymentAttempController@show')->name('payment.show');
 
 Route::get('/checkout','Customer\PagesController@checkout')->name('pages.checkout');
 Route::get('/about','Customer\PagesController@aboutUs')->name('pages.about');
