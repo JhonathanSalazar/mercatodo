@@ -5,15 +5,16 @@
 use App\Order;
 use App\Product;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
-        'order_reference' => $faker->uuid,
+        'order_reference' => Str::random(10),
         'user_id' => factory(App\User::class),
         'status' => 'pending',
         'grand_total' => $faker->randomNumber(7),
         'item_count' => $faker->randomNumber(2),
-        'is_paid' => false,
+        'paid_at' => null,
         'payer_name' => $faker->name,
         'payer_email' => $faker->email,
         'document_type' => 'CC',

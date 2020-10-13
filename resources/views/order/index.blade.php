@@ -20,15 +20,18 @@
             <tbody>
             @forelse($orders as $order)
                 <tr>
-                    <td><a href="{{ route('order.show', $order, $order->user_id) }}">{{ $order->id }}</a></td>
+                    <td><a href="{{ route('order.show', $order) }}">{{ $order->id }}</a></td>
                     <td>{{ $order->item_count }}</td>
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ $order->status }}</td>
                     <td>
-                        <form action="{{ route('order.delete', $order) }}" method="POST">
-                            @CSRF @METHOD('DELETE')
-                            <button>Eliminar</button>
-                        </form></td>
+                        @if($order->status != 'APPROVED')
+                            <form action="{{ route('order.delete', $order) }}" method="POST">
+                                @CSRF @METHOD('DELETE')
+                                <button>Eliminar</button>
+                            </form>
+                        @endif
+                    </td>
             @empty
                 Aún no tienes ordenes, sigue comprando
             @endforelse

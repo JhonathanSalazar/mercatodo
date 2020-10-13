@@ -24,7 +24,7 @@
                     <form action="{{ route('cart.add', $product->id) }}">
                         <div>
                             <strong>Cantidad:</strong>
-                            <input name="quantity" type="text" class="input-small" value="1">
+                            <input name="quantity" type="text" class="input-small" value="1" min="1">
                         </div>
                         <div class="py-3">
                         <button type="submit">Agregar al carrito</button>

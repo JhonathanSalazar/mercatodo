@@ -6,11 +6,17 @@ use App\Classes\P2PRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
 use App\User;
+use Dnetix\Redirection\Exceptions\PlacetoPayException;
 use Dnetix\Redirection\PlacetoPay;
+use http\Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -44,6 +50,22 @@ class OrderController extends Controller
     }
 
     /**
+     * Create buyer order (Checkout).
+     * @return RedirectResponse|View
+     */
+    public function create()
+    {
+        $userId = auth()->id();
+
+        if (\Cart::session($userId)->getContent()->count() == 0)
+        {
+            return redirect()->route('home');
+        }
+
+        return view('order.create');
+    }
+
+    /**
      * Display a listing of the resource.
      * @param User $user
      * @return View
@@ -64,6 +86,7 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param OrderRequest $request
+     * @return RedirectResponse
      */
     public function store(OrderRequest $request)
     {
@@ -71,7 +94,7 @@ class OrderController extends Controller
 
         $order = new Order();
 
-        $order->order_reference = Str::uuid(2);
+        $order->order_reference = time() . '-' . $userId;
 
         $order->user_id = $userId;
         $order->grand_total = \Cart::session($userId)->getTotal();
@@ -93,136 +116,7 @@ class OrderController extends Controller
 
         \Cart::session($userId)->clear();
 
-        return redirect()->route('order.show', compact('order'));
-
-        /**
-
-
-        //Process pay with PlaceToPay
-        $reference = 'TEST_' . time();
-
-        $request = [
-            "locale" => "es_CO",
-            "payer" => [
-                "name" => "Kellie Gerhold",
-                "surname" => "Kellie Gerhold",
-                "email" => "flowe@anderson.com",
-                "documentType" => "CC",
-                "document" => "1848839248",
-                "mobile" => "3006108300",
-                "address" => [
-                    "street" => "703 Dicki Island Apt. 609",
-                    "city" => "North Randallstad",
-                    "state" => "Antioquia",
-                    "postalCode" => "46292",
-                    "country" => "US",
-                    "phone" => "363-547-1441 x383"
-                ]
-            ],
-            "payment" => [
-                "reference" => $reference,
-                "description" => "Iusto sit et voluptatem.",
-                "amount" => [
-                    "taxes" => [
-                        [
-                            "kind" => "ice",
-                            "amount" => 56.4,
-                            "base" => 470
-                        ],
-                        [
-                            "kind" => "valueAddedTax",
-                            "amount" => 89.3,
-                            "base" => 470
-                        ]
-                    ],
-                    "details" => [
-                        [
-                            "kind" => "shipping",
-                            "amount" => 47
-                        ],
-                        [
-                            "kind" => "tip",
-                            "amount" => 47
-                        ],
-                        [
-                            "kind" => "subtotal",
-                            "amount" => 940
-                        ]
-                    ],
-                    "currency" => "USD",
-                    "total" => 1076.3
-                ],
-                "items" => [
-                    [
-                        "sku" => 26443,
-                        "name" => "Qui voluptatem excepturi.",
-                        "category" => "physical",
-                        "qty" => 1,
-                        "price" => 940,
-                        "tax" => 89.3
-                    ]
-                ],
-                "shipping" => [
-                    "name" => "Kellie Gerhold",
-                    "surname" => "Yost",
-                    "email" => "flowe@anderson.com",
-                    "documentType" => "CC",
-                    "document" => "1848839248",
-                    "mobile" => "3006108300",
-                    "address" => [
-                        "street" => "703 Dicki Island Apt. 609",
-                        "city" => "North Randallstad",
-                        "state" => "Antioquia",
-                        "postalCode" => "46292",
-                        "country" => "US",
-                        "phone" => "363-547-1441 x383"
-                    ]
-                ],
-                "allowPartial" => false
-            ],
-            "expiration" => date('c', strtotime('+2 hour')),
-            "ipAddress" => "127.0.0.1",
-            "userAgent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36",
-            "returnUrl" => "http://mercatodo.test/",
-            "cancelUrl" => "http://mercatodo.test/",
-            "skipResult" => false,
-            "noBuyerFill" => false,
-            "captureAddress" => false,
-            "paymentMethod" => null
-        ];
-
-        try {
-            $placetopay = new PlacetoPay([
-                'login' => config('placetopay.login'),
-                'tranKey' => config('placetopay.trankey'),
-                'url' => config('placetopay.url'),
-                'type' => config('placetopay.type'),
-                'rest' => [
-                    'timeout' => 45, // (optional) 15 by default
-                    'connect_timeout' => 30, // (optional) 5 by default
-                    ]
-            ]);
-
-            $response = $placetopay->request($request);
-
-            dd($response);
-
-            if ($response->isSuccessful()) {
-                // Redirect the client to the processUrl or display it on the JS extension
-                //$response->processUrl();
-            } else {
-                // There was some error so check the message
-                //$response->status()->message();
-            }
-
-            dd($response);
-
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
-        }
-
-         **/
-
+        return redirect()->route('order.show', $order);
     }
 
     /**
@@ -296,5 +190,31 @@ class OrderController extends Controller
 
         return redirect()->route('order.index', $order->user_id)
             ->with('status', 'Tu orden a sido eliminada');
+    }
+
+    /**
+     * @param Order $order
+     * @param PlacetoPay $placetopay
+     * @return Redirector
+     * @throws AuthorizationException
+     * @throws PlacetoPayException
+     */
+    public function pay(Order $order, PlacetoPay $placetopay)
+    {
+        $this->authorize('pay', $order);
+
+        $requestUser = new P2PRequest($order);
+
+        $response = $placetopay->request($requestUser->create());
+
+        $order->update([
+            'processUrl' => $response->processUrl(),
+            'requestID' => $response->requestId(),
+            'status' => $response->status()->status(),
+        ]);
+
+        dd($order);
+
+        return redirect()->away($response->processUrl());
     }
 }

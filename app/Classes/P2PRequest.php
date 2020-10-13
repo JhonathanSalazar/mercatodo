@@ -4,52 +4,41 @@
 namespace App\Classes;
 
 
-use Illuminate\Http\Request;
+use App\Order;
+use http\Client\Request;
 
 class P2PRequest
 {
 
-    private $payerData = [];
-    private $paymentData = [];
+    /**
+     * @var array
+     */
+    private $p2pRequest;
 
-
-    public function __construct(Request $request)
+    public function __construct(Order $order)
     {
-
-        /*
-         | -------------------------------
-         | Payer data preparation
-         | -------------------------------
-         */
-        $this->payerData['name'] = $request->get('payer_name');
-        $this->payerData['surname'] = $request->get('payer_name');
-        $this->payerData['email'] = $request->get('payer_email');
-        $this->payerData['documentType'] = $request->get('payer_documentType');
-        $this->payerData['document'] = $request->get('payer_document');
-        $this->payerData['mobile'] = $request->get('payer_phone');
-        $this->payerData['address'] = [
-            'street' => $request->get('shipping_address'),
-            'city' => $request->get('shipping_city'),
-            'state' => $request->get('shipping_state'),
-            'postalCode' => $request->get('shipping_postal'),
-            'country' => 'CO',
-            'phone' => $request->get('payer_phone'),
+        $this->p2pRequest = [
+            'payment' => [
+                'reference' => $order->order_reference,
+                'description' => 'Payment of Mercatodo',
+                'amount' => [
+                    'currency' => 'COP',
+                    'total' => $order->grand_total,
+                ],
+            ],
+            'expiration' => date('c', strtotime('+2 days')),
+            'returnUrl' => route('payment.show', $order),
+            'ipAddress' => \Request::ip(),
+            'userAgent' => \Request::header('User-Agent'),
         ];
-
-        /*
-         | -------------------------------
-         | Payment data preparation
-         | -------------------------------
-         */
-//        $this->paymentData['reference'] =
     }
 
-    public function RedirectionRequest()
+    /** Return the requiered request to create a payment with PlaceToPay Redirection
+     * @return array
+     */
+    public function create()
     {
-        $p2pRequest = [
-            'locale' => 'es_CO',
-            'payer' => $this->payerData,
-        ];
+        return $this->p2pRequest;
     }
 
 }
