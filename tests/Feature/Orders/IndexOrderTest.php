@@ -18,6 +18,8 @@ class IndexOrderTest extends TestCase
      */
     public function aBuyerCanIndexYourOrders()
     {
+        $this->withoutExceptionHandling();
+
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
@@ -31,11 +33,12 @@ class IndexOrderTest extends TestCase
         $response->assertStatus(200);
 
         $orders->each(function ($order) use ($response) {
-            $response->assertSee($order->order_reference);
+            $response->assertSee($order->id);
             $response->assertSee($order->item_count);
             $response->assertSee($order->grand_total);
             $response->assertSee($order->status);
         });
+
     }
 
     /**
