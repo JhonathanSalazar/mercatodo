@@ -4,10 +4,10 @@ namespace Tests\Feature\Admin\Product;
 
 use App\Product;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateProductsTest extends TestCase
 {
@@ -25,13 +25,24 @@ class UpdateProductsTest extends TestCase
         $product = factory(Product::class)->create();
         $this->actingAs($admUser);
 
-        $product->name = $this->faker->firstName;
-        $product->description = $this->faker->sentence;
-        $product->ean = $this->faker->randomNumber(8);
-        $product->branch = $this->faker->lastName;
+        $name = $this->faker->firstName;
+        $description = $this->faker->sentence;
+        $ean = $this->faker->randomNumber(8);
+        $branch = $this->faker->lastName;
+
+        $product->name = $name;
+        $product->description = $description;
+        $product->ean = $ean;
+        $product->branch = $branch;
+
         $this->put(route('admin.products.update', $product));
 
-        $this->assertDatabaseHas('products', compact($product));
+        $product->fresh();
+
+        $this->assertEquals($name, $product->name);
+        $this->assertEquals($description, $product->description);
+        $this->assertEquals($ean, $product->ean);
+        $this->assertEquals($branch, $product->branch);
     }
 
     /**

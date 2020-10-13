@@ -6,21 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {
     /**
-     * @return LengthAwarePaginator
+     * @return View
      */
-    public function index(): LengthAwarePaginator
+    public function index(): View
     {
         $search = request('q');
 
         $products = Product::search($search)->paginate();
 
-        if (request()->expectsJson()) {
-            return $products;
-        }
 
         return view('product.list', compact('products'));
     }

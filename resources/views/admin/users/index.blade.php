@@ -87,10 +87,8 @@
 @endpush
 
 @push('scripts')
-
     <script src="/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
-
     <script>
         $(function () {
             $('#posts-table').DataTable({
@@ -103,5 +101,4 @@
             });
         });
     </script>
-
 @endpush
