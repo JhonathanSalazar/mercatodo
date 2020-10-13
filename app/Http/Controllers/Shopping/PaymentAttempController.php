@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Shopping;
 
 use App\Classes\P2PRequest;
+use App\Http\Controllers\Controller;
 use App\Order;
 use App\PaymentAttemp;
 use Carbon\Carbon;
 use Dnetix\Redirection\Exceptions\PlacetoPayException;
 use Dnetix\Redirection\PlacetoPay;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PaymentAttempController extends Controller
@@ -24,8 +22,6 @@ class PaymentAttempController extends Controller
      */
     public function store(Order $order, PlacetoPay $placetoPay): RedirectResponse
     {
-        //$this->authorize('pay', $order);
-
         $requestUser = new P2PRequest($order);
         $response = $placetoPay->request($requestUser->create());
 
@@ -50,6 +46,7 @@ class PaymentAttempController extends Controller
      */
     public function show(Order $order, PlacetoPay $placetoPay)
     {
+
         $paymentAttempt = $order->paymentAttemps()->latest()->first();
 
         $response = $placetoPay->query($paymentAttempt->requestID);
