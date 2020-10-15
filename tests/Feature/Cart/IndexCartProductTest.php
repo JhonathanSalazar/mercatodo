@@ -22,7 +22,6 @@ class IndexCartProductTest extends TestCase
         $this->get(route('cart.index'))->assertRedirect(route('login'));
     }
 
-
     /**
      * @test
      */
@@ -33,10 +32,11 @@ class IndexCartProductTest extends TestCase
         $this->actingAs($buyerUser);
 
         $product = factory(Product::class)->create();
-        $_REQUEST['quantity'] = 1;
 
-        $this->get(route('cart.add', compact('product')))
-            ->assertStatus(302);
+        $this->post(route('cart.add', [
+            'product' => $product,
+            'quantity' => 1
+        ]))->assertStatus(302);
 
         $response = $this->get(route('cart.index'));
 

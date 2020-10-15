@@ -21,7 +21,8 @@
                             <span><a href="{{ route('pages.category.show', $product->category->url) }}">{{ $product->category->name }}</a></span><br>
                     </address>
                     <h4><strong>Precio: ${{ $product->price }}</strong></h4>
-                    <form action="{{ route('cart.add', $product->id) }}">
+                    <form action="{{ route('cart.add', $product) }}" method="POST">
+                        @csrf
                         <div>
                             <strong>Cantidad:</strong>
                             <input name="quantity" type="text" class="input-small" value="1" min="1">

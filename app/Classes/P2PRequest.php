@@ -27,7 +27,7 @@ class P2PRequest
                 ],
             ],
             'expiration' => date('c', strtotime('+2 days')),
-            'returnUrl' => route('payment.show', $order),
+            'returnUrl' => route('payments.show', $order),
             'ipAddress' => \Request::ip(),
             'userAgent' => \Request::header('User-Agent'),
         ];

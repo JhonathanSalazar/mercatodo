@@ -35,7 +35,7 @@ class CartController extends Controller
         $id = $product->id;
         $name = $product->name;
         $price = $product->price;
-        $qty = request('quantity') ? request('quantity') : $_REQUEST['quantity'];
+        $qty = request('quantity');
 
         \Cart::session($userId)->add($id, $name, $price, $qty);
 

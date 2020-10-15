@@ -48,6 +48,6 @@ class Order extends Model
      */
     public function paymentAttemps(): HasMany
     {
-        return $this->hasMany(PaymentAttemp::class);
+        return $this->hasMany(PaymentAttempt::class);
     }
 }

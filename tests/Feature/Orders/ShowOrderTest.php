@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Orders;
 
-use App\Order;
-use App\Product;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
+use App\Order;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ShowOrderTest extends TestCase
 {
@@ -19,12 +18,10 @@ class ShowOrderTest extends TestCase
      */
     public function aGuestCantShowOrders()
     {
-
         $order = factory(Order::class)->create();
 
-        $this->get(route('order.show', compact('order')))
+        $this->get(route('orders.show', compact('order')))
             ->assertRedirect(route('login'));
-
     }
 
     /**
@@ -32,7 +29,6 @@ class ShowOrderTest extends TestCase
      */
     public function aBuyerCanShowYourOrders()
     {
-
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
@@ -41,9 +37,9 @@ class ShowOrderTest extends TestCase
             'user_id' => $buyerUser
         ]);
 
-        $productOrder = $order->items()->get()[0];
+        $productOrder = $order->items()->first();
 
-        $response = $this->get(route('order.show', compact('order')));
+        $response = $this->get(route('orders.show', compact('order')));
 
         $response->assertStatus(200)
             ->assertSee($productOrder->name)
@@ -57,7 +53,6 @@ class ShowOrderTest extends TestCase
             ->assertSee($order->payer_city)
             ->assertSee($order->payer_state)
             ->assertSee($order->payer_postal);
-
     }
 
     /**
@@ -73,7 +68,7 @@ class ShowOrderTest extends TestCase
         $order = factory(Order::class)->create();
 
         $this->assertNotEquals($buyerUser->id, $order->user_id);
-        $this->get(route('order.show', compact('order')))
+        $this->get(route('orders.show', compact('order')))
             ->assertStatus(403);
 
     }
@@ -83,15 +78,13 @@ class ShowOrderTest extends TestCase
      */
     public function aAdminCantShowOrders()
     {
-
         $adminRole = Role::create(['name' => 'Admin']);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
         $order = factory(Order::class)->create();
 
-        $this->get(route('order.show', compact('order')))
+        $this->get(route('orders.show', compact('order')))
             ->assertStatus(403);
-
     }
 }

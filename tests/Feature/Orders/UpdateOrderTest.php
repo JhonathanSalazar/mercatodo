@@ -4,10 +4,10 @@ namespace Tests\Feature\Orders;
 
 use App\Order;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateOrderTest extends TestCase
 {
@@ -46,7 +46,7 @@ class UpdateOrderTest extends TestCase
         $order->payer_state = $payer_state;
         $order->payer_postal = $payer_postal;
 
-        $this->put(route('order.update', $order));
+        $this->put(route('orders.update', $order));
 
         $order->fresh();
 

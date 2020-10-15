@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Classes\P2PRequest;
-use App\Http\Controllers\Controller;
 use App\Order;
-use App\PaymentAttemp;
 use Carbon\Carbon;
-use Dnetix\Redirection\Exceptions\PlacetoPayException;
-use Dnetix\Redirection\PlacetoPay;
-use Illuminate\Http\RedirectResponse;
+use App\PaymentAttempt;
 use Illuminate\View\View;
+use App\Classes\P2PRequest;
+use Dnetix\Redirection\PlacetoPay;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Dnetix\Redirection\Exceptions\PlacetoPayException;
 
-class PaymentAttempController extends Controller
+class PaymentAttemptController extends Controller
 {
     /**
      * @param Order $order
@@ -23,9 +23,10 @@ class PaymentAttempController extends Controller
     public function store(Order $order, PlacetoPay $placetoPay): RedirectResponse
     {
         $requestUser = new P2PRequest($order);
+
         $response = $placetoPay->request($requestUser->create());
 
-        $paymentAttemp = new PaymentAttemp();
+        $paymentAttemp = new PaymentAttempt();
         $paymentAttemp->order_id = $order->id;
         $paymentAttemp->user_id = $order->user_id;
         $paymentAttemp->status = $response->status()->status();
@@ -51,18 +52,15 @@ class PaymentAttempController extends Controller
 
         $response = $placetoPay->query($paymentAttempt->requestID);
 
+        $order->status = $response->status()->status();
+        $order->reason = $response->status()->reason();
+        $order->message = $response->status()->message();
+
         if($response->status()->status() == 'APPROVED') {
-            $order->status = $response->status()->status();
-            $order->reason = $response->status()->reason();
-            $order->message = $response->status()->message();
             $order->paid_at = Carbon::now();
-            $order->update();
-        } else {
-            $order->status = $response->status()->status();
-            $order->reason = $response->status()->reason();
-            $order->message = $response->status()->message();
-            $order->update();
         }
+
+        $order->update();
 
         return view('payment.show', compact('order', 'paymentAttempt'));
     }

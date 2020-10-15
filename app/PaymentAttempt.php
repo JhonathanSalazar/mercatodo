@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PaymentAttemp extends Model
+class PaymentAttempt extends Model
 {
     /**
      * @return BelongsTo
