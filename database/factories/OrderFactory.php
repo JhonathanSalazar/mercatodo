@@ -2,15 +2,15 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Order;
-use App\Product;
+use App\Models\Order;
+use App\Models\Product;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
         'order_reference' => Str::random(10),
-        'user_id' => factory(App\User::class),
+        'user_id' => factory(App\Models\User::class),
         'status' => 'pending',
         'grand_total' => $faker->randomNumber(7),
         'item_count' => $faker->randomNumber(2),

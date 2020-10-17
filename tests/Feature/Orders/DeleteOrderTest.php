@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Orders;
 
-use App\Order;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Order;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DeleteOrderTest extends TestCase
 {
@@ -17,6 +17,8 @@ class DeleteOrderTest extends TestCase
      */
     public function aBuyerCanDeleteYourOrders()
     {
+        $this->withExceptionHandling();
+
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);

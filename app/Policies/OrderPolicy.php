@@ -2,72 +2,55 @@
 
 namespace App\Policies;
 
-use App\Order;
-use App\User;
+use App\Models\User;
+use App\Models\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Database\Eloquent\Model;
 
 class OrderPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
-     *
-     * @param User $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-
-    /**
      * Determine whether the user can view the model.
-     *
      * @param User $user
      * @param Order $order
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, Order $order)
+    public function view(User $user, Order $order): bool
     {
         return $user->id == $order->user_id;
     }
 
     /**
      * Determine whether the user can create models.
-     *
      * @param User $user
-     * @return mixed
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
-        //
+        return $user->id == auth()->id();
     }
 
     /**
      * Determine whether the user can edit the model.
-     *
      * @param User $user
      * @param Order $order
      * @return mixed
      */
-    public function edit(User $user, Order $order)
+    public function edit(User $user, Order $order): bool
     {
         return $user->id == $order->user_id;
     }
 
     /**
      * Determine whether the user can update the model.
-     *
      * @param User $user
      * @param Order $order
-     * @return mixed
+     * @return bool
      */
-    public function update(User $user, Order $order)
+    public function update(User $user, Order $order): bool
     {
-        //
+        return $user->id == $order->user_id;
     }
 
     /**
@@ -78,30 +61,6 @@ class OrderPolicy
      * @return mixed
      */
     public function delete(User $user, Order $order)
-    {
-        return $user->id == $order->user_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param Order $order
-     * @return mixed
-     */
-    public function restore(User $user, Order $order)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param Order $order
-     * @return mixed
-     */
-    public function pay(User $user, Order $order)
     {
         return $user->id == $order->user_id;
     }

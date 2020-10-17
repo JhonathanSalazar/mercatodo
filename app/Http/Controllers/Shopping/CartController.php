@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Http\Controllers\Controller;
-use App\Product;
-use Illuminate\Http\RedirectResponse;
+
+use App\Models\Product;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
@@ -29,7 +29,6 @@ class CartController extends Controller
      */
     public function add(Product $product): RedirectResponse
     {
-
         $userId = auth()->id();
 
         $id = $product->id;
@@ -77,7 +76,6 @@ class CartController extends Controller
      */
     public function update($productId): RedirectResponse
     {
-
         $userId = auth()->id();
 
         \Cart::session($userId)->update($productId, array(

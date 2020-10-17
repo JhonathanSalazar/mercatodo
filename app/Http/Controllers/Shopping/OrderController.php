@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Order;
-use App\User;
+use App\Models\User;
+use App\Models\Order;
 use Illuminate\View\View;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 
 
 class OrderController extends Controller
 {
-
+    /**
+     * OrderController constructor.
+     */
     public function __construct()
     {
         $this->middleware([
@@ -75,13 +77,15 @@ class OrderController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param OrderRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function store(OrderRequest $request)
+    public function store(OrderRequest $request): RedirectResponse
     {
         $userId = auth()->id();
+
+        $this->authorize('create', $userId);
 
         $order = new Order();
 
@@ -117,7 +121,6 @@ class OrderController extends Controller
      */
     public function show(Order $order): View
     {
-
         $this->authorize('view', $order);
 
         $items = $order->items()->get();
@@ -127,11 +130,11 @@ class OrderController extends Controller
 
     /**
      * Show the form for editing the Order.
-     *
      * @param Order $order
+     * @return View
      * @throws AuthorizationException
      */
-    public function edit(Order $order)
+    public function edit(Order $order): View
     {
         $this->authorize('edit', $order);
 
@@ -142,13 +145,15 @@ class OrderController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param OrderRequest $request
      * @param Order $order
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(OrderRequest $request, Order $order): RedirectResponse
     {
+        $this->authorize('update', $order);
+
         $order->payer_name = $request->get('payer_name');
         $order->payer_email = $request->get('payer_email');
         $order->document_type = $request->get('payer_documentType');
@@ -167,7 +172,6 @@ class OrderController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param Order $order
      * @return RedirectResponse
      * @throws AuthorizationException

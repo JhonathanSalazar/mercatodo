@@ -2,24 +2,22 @@
 
 namespace Tests\Feature\Cart;
 
-use App\Product;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Product;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddCartProductTest extends TestCase
 {
 
     use RefreshDatabase;
 
-
     /**
      * @test
      */
     public function guestCantAddCartProduct()
     {
-
         $product = factory(Product::class)->create();
 
         $this->post(route('cart.add', [
@@ -34,7 +32,6 @@ class AddCartProductTest extends TestCase
      */
     public function buyerCanAddCartProduct()
     {
-
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);

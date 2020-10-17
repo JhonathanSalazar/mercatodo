@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Pages;
 
-use App\Product;
-use App\User;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;

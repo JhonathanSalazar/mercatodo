@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Orders;
 
-use App\User;
-use App\Order;
+use App\Models\User;
+use App\Models\Order;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;

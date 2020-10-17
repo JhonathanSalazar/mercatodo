@@ -1,6 +1,6 @@
 <?php
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -8,10 +8,9 @@ class CategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Category::truncate();
 

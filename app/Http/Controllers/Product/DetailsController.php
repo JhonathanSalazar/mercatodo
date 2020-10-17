@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Http\Controllers\Controller;
-use App\Product;
-use Illuminate\Http\Request;
+use App\Models\Product;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class DetailsController extends Controller
 {

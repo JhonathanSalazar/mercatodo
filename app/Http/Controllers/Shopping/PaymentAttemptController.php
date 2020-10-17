@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Order;
 use Carbon\Carbon;
-use App\PaymentAttempt;
+use App\Models\Order;
 use Illuminate\View\View;
+use App\Models\PaymentAttempt;
 use App\Classes\P2PRequest;
 use Dnetix\Redirection\PlacetoPay;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 use Dnetix\Redirection\Exceptions\PlacetoPayException;
 
 class PaymentAttemptController extends Controller
@@ -56,7 +56,7 @@ class PaymentAttemptController extends Controller
         $order->reason = $response->status()->reason();
         $order->message = $response->status()->message();
 
-        if($response->status()->status() == 'APPROVED') {
+        if ($response->status()->status() == 'APPROVED') {
             $order->paid_at = Carbon::now();
         }
 

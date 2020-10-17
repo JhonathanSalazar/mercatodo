@@ -1,16 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class DatabaseStorageModel extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'cart_storage';
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [

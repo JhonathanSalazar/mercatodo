@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Orders;
 
-use App\User;
-use App\Order;
+use App\Models\User;
+use App\Models\Order;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -59,6 +59,7 @@ class EditOrderTest extends TestCase
         $this->actingAs($buyerUser);
 
         $order = factory(Order::class)->create();
+
 
         $this->assertNotEquals($buyerUser->id, $order->user_id);
         $this->get(route('orders.show', compact('order')))

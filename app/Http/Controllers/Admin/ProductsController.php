@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-use App\Tag;
-use App\Product;
-use App\Category;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Tag;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateProductRequest;
-use Intervention\Image\Facades\Image;
+use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\UpdateProductRequest;
 
 
 class ProductsController extends Controller
@@ -23,7 +22,6 @@ class ProductsController extends Controller
 
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
@@ -36,13 +34,12 @@ class ProductsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Product $product
      * @return View
      */
-    public function index(Product $product): View
+    public function index(): View
     {
         $products = Product::all();
+
         return view('admin.products.index', compact('products'));
     }
 
@@ -67,7 +64,6 @@ class ProductsController extends Controller
         $attributes = $this->validate($request, ['name' => 'required']);
 
         $userId = array('user_id' => auth()->id());
-
         $attributes = array_merge($attributes, $userId);
 
         $product = Product::create($attributes);

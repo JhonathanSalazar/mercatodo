@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
+use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,8 +14,6 @@ class UsersController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -27,7 +25,6 @@ class UsersController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
      * @return View
      */
     public function index(): View
@@ -60,7 +57,6 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param User $user
      * @return RedirectResponse
