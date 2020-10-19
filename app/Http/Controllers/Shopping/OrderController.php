@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 
-
 class OrderController extends Controller
 {
     /**
@@ -34,7 +33,7 @@ class OrderController extends Controller
     {
         $cartItems = \Cart::session($userId)->getContent();
 
-        foreach($cartItems as $item) {
+        foreach ($cartItems as $item) {
             $order->items()->attach($item->id, [
                 'price' => $item->price,
                 'quantity' => $item->quantity
@@ -50,8 +49,7 @@ class OrderController extends Controller
     {
         $userId = auth()->id();
 
-        if (\Cart::session($userId)->getContent()->count() == 0)
-        {
+        if (\Cart::session($userId)->getContent()->count() == 0) {
             return redirect()->route('home');
         }
 
@@ -66,7 +64,6 @@ class OrderController extends Controller
      */
     public function index(User $user): View
     {
-
         $this->authorize('view', $user);
 
         $orders = $user->orders;
@@ -125,7 +122,7 @@ class OrderController extends Controller
 
         $items = $order->items()->get();
 
-        return view('order.show', compact('items','order'));
+        return view('order.show', compact('items', 'order'));
     }
 
     /**
@@ -140,7 +137,7 @@ class OrderController extends Controller
 
         $items = $order->items()->get();
 
-        return view('order.edit', compact( 'items' ,'order' ));
+        return view('order.edit', compact('items', 'order'));
     }
 
     /**

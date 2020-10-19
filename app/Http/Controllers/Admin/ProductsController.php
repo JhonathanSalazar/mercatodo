@@ -16,7 +16,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\UpdateProductRequest;
 
-
 class ProductsController extends Controller
 {
 
@@ -77,9 +76,8 @@ class ProductsController extends Controller
      * @param UpdateProductRequest $request
      * @return RedirectResponse
      */
-    public function update(Product $product ,UpdateProductRequest $request): RedirectResponse
+    public function update(Product $product, UpdateProductRequest $request): RedirectResponse
     {
-
         $product->name = $request->get('name');
         $product->user_id = auth()->id();
         $product->ean = $request->get('ean');
@@ -89,9 +87,8 @@ class ProductsController extends Controller
         $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));
 
-        if($request->file('image'))
-        {
-            if($product->image) {
+        if ($request->file('image')) {
+            if ($product->image) {
                 Storage::delete($product->image);
             }
 
@@ -132,7 +129,6 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
-
         $product->delete();
 
         return redirect()

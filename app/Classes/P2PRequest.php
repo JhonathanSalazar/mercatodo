@@ -39,5 +39,4 @@ class P2PRequest
     {
         return $this->p2pRequest;
     }
-
 }

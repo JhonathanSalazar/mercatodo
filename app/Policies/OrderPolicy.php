@@ -58,9 +58,9 @@ class OrderPolicy
      *
      * @param User $user
      * @param Order $order
-     * @return mixed
+     * @return bool
      */
-    public function delete(User $user, Order $order)
+    public function delete(User $user, Order $order): bool
     {
         return $user->id == $order->user_id;
     }

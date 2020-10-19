@@ -42,11 +42,14 @@ class LoginController extends Controller
     /**
      * Restrict access to disabled users.
      *
+     * @param Request $request
      * @return array
      */
     protected function credentials(Request $request): array
     {
-        return array_merge($request->only($this->username(), 'password'),
-            ['enable' => 1]);
+        return array_merge(
+            $request->only($this->username(), 'password'),
+            ['enable' => 1]
+        );
     }
 }

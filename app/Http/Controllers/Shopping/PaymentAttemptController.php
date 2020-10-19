@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Shopping;
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\View\View;
-use App\Models\PaymentAttempt;
 use App\Classes\P2PRequest;
+use App\Models\PaymentAttempt;
 use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
@@ -45,9 +45,8 @@ class PaymentAttemptController extends Controller
      * @param PlacetoPay $placetoPay
      * @return View
      */
-    public function show(Order $order, PlacetoPay $placetoPay)
+    public function show(Order $order, PlacetoPay $placetoPay): View
     {
-
         $paymentAttempt = $order->paymentAttemps()->latest()->first();
 
         $response = $placetoPay->query($paymentAttempt->requestID);

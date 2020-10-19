@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Shopping;
 
-
 use App\Models\Product;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -67,7 +66,6 @@ class CartController extends Controller
         \Cart::session($userId)->remove($productId);
 
         return back()->with('status', 'El producto ha sido eliminado de tu carrito');
-
     }
 
     /**

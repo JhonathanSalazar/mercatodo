@@ -59,6 +59,6 @@ class UserDataController extends Controller
 
         $user->update($data);
 
-        return back()->with('status','Información actualizada');
+        return back()->with('status', 'Información actualizada');
     }
 }

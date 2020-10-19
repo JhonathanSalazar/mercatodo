@@ -9,7 +9,6 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 
-
 class UsersController extends Controller
 {
     /**
@@ -35,7 +34,6 @@ class UsersController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param User $user
      * @return View
      */
@@ -46,7 +44,6 @@ class UsersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param User $user
      * @return View
      */
