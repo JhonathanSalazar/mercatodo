@@ -47,7 +47,7 @@ class PaymentAttemptController extends Controller
      */
     public function show(Order $order, PlacetoPay $placetoPay): View
     {
-        $paymentAttempt = $order->paymentAttemps()->latest()->first();
+        $paymentAttempt = $order->paymentAttempts()->latest()->first();
 
         $response = $placetoPay->query($paymentAttempt->requestID);
 

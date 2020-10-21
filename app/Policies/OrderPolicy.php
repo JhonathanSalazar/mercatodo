@@ -22,16 +22,6 @@ class OrderPolicy
     }
 
     /**
-     * Determine whether the user can create models.
-     * @param User $user
-     * @return bool
-     */
-    public function create(User $user): bool
-    {
-        return $user->id == auth()->id();
-    }
-
-    /**
      * Determine whether the user can edit the model.
      * @param User $user
      * @param Order $order

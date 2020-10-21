@@ -82,8 +82,6 @@ class OrderController extends Controller
     {
         $userId = auth()->id();
 
-        $this->authorize('create', $userId);
-
         $order = new Order();
 
         $order->order_reference = time() . '-' . $userId;
