@@ -22,7 +22,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'branch' => $faker->lastName,
         'description' => $faker->paragraph,
         'price' => $faker->randomNumber(3) * 100,
-        //'image' => 'images/' . $faker->image('storage/app/public/images',250 ,250, null, false),
+        'image' => 'images/default.jpg',
         'published_at' => Carbon::yesterday()
     ];
 });
