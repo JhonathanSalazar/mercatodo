@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use FontLib\TrueType\Collection;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
