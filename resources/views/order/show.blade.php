@@ -92,13 +92,13 @@
         </div>
         <div class="row mt-4 justify-content-center">
             @if($order->status != 'APPROVED')
-                <form action="{{ route('payment.store', $order) }}">
+                <form action="{{ route('payments.store', $order) }}">
                     @CSRF
                     <button type="submit">Pagar Orden</button>
-                    <a class="ml-2" href="{{ route('order.edit', $order) }}">Editar</a>
+                    <a class="ml-2" href="{{ route('orders.edit', $order) }}">Editar</a>
                 </form>
             @else
-                <form action="{{ route('order.index', $order->user_id) }}">
+                <form action="{{ route('orders.index', $order->user_id) }}">
                     <button>Regresar</button>
                 </form>
             @endif

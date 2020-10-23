@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
+use App\Entities\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\Support\Facades\Cache;
 
 class UsersController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -27,18 +26,26 @@ class UsersController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
      * @return View
      */
     public function index(): View
     {
-        $users = User::all();
+
+        $users = Cache::remember('users.all', 300 ,function () {
+            return User::query()
+                ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->select('users.id', 'users.name', 'users.email', 'users.enable','roles.name as role_name')
+                ->get();
+        });
+
+        Log::info('admin.users.index', ['user', auth()->id()]);
+
         return view('admin.users.index', compact('users'));
     }
 
     /**
      * Display the specified resource.
-     *
      * @param User $user
      * @return View
      */
@@ -49,7 +56,6 @@ class UsersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param User $user
      * @return View
      */
@@ -60,7 +66,6 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param User $user
      * @return RedirectResponse

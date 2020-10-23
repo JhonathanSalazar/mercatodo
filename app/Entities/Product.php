@@ -1,26 +1,33 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
     use Searchable, SoftDeletes;
 
+    /**
+     * @var array
+     */
     protected $guarded = [];
+
+    /**
+     * @var string[]
+     */
     protected $dates = ['published_at'];
 
     /**
      * Create the product route show
+     * @return string
      */
     public function showUrl(): string
     {
@@ -29,6 +36,7 @@ class Product extends Model
 
     /**
      * Return the relation product->category and category->product
+     * @return BelongsTo
      */
     public function category(): BelongsTo
     {
@@ -37,6 +45,7 @@ class Product extends Model
 
     /**
      * Return the relation product->tags and tags->product
+     * @return BelongsToMany
      */
     public function tags(): BelongsToMany
     {
@@ -64,7 +73,7 @@ class Product extends Model
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
-            ->where('category_id', 2)
+            ->where('category_id', '=',2)
             ->orderBy('published_at', 'desc')
             ->limit(4);
     }
@@ -77,7 +86,9 @@ class Product extends Model
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
+            ->where('category_id', '=',3)
             ->orderBy('published_at', 'desc')
+            ->with('category')
             ->limit(4);
     }
 }

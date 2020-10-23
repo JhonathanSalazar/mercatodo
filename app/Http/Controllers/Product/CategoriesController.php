@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Product;
 
-
-use App\Category;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Entities\Category;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {

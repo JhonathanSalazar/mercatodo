@@ -20,14 +20,14 @@
             <tbody>
             @forelse($orders as $order)
                 <tr>
-                    <td><a href="{{ route('order.show', $order) }}">{{ $order->id }}</a></td>
+                    <td><a href="{{ route('orders.show', $order) }}">{{ $order->id }}</a></td>
                     <td>{{ $order->item_count }}</td>
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ $order->status }}</td>
                     <td>
                         @if($order->status != 'APPROVED')
-                            <form action="{{ route('order.delete', $order) }}" method="POST">
-                                @CSRF @METHOD('DELETE')
+                            <form action="{{ route('orders.delete', $order) }}" method="POST">
+                                @csrf @method('DELETE')
                                 <button>Eliminar</button>
                             </form>
                         @endif

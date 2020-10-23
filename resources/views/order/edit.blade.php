@@ -6,7 +6,7 @@
         <h2 class="py-3"><span>Editar Orden</span></h2>
     </section>
     <section class="main-content">
-        <form action="{{ route('order.update', $order) }}" method="POST">
+        <form action="{{ route('orders.update', $order) }}" method="POST">
             @CSRF @method('PUT')
             <div class="row">
                 <div class="col-12">

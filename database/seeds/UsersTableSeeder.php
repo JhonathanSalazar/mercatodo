@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\Entities\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -8,10 +8,9 @@ class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Role::truncate();
         User::truncate();
@@ -28,7 +27,7 @@ class UsersTableSeeder extends Seeder
         $admin->assignRole($adminRole);
 
         $buyer = new User;
-        $buyer->name = 'Buyer';
+        $buyer->name = 'Jhon';
         $buyer->email = 'buyer@gmail.com';
         $buyer->password = bcrypt('123123');
         $buyer->save();
@@ -36,11 +35,19 @@ class UsersTableSeeder extends Seeder
         $buyer->assignRole($buyerRole);
 
         $buyer1 = new User;
-        $buyer1->name = 'Buyer';
+        $buyer1->name = 'Ana';
         $buyer1->email = 'buyer1@gmail.com';
         $buyer1->password = bcrypt('123123');
         $buyer1->save();
 
         $buyer1->assignRole($buyerRole);
+
+        $buyer2 = new User;
+        $buyer2->name = 'Ana';
+        $buyer2->email = 'buyer2@gmail.com';
+        $buyer2->password = bcrypt('123123');
+        $buyer2->save();
+
+        $buyer2->assignRole($buyerRole);
     }
 }
