@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin\Product;
 
-use App\Product;
-use App\User;
+use App\Entities\Product;
+use App\Entities\User;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;

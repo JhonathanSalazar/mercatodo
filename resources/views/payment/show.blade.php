@@ -27,8 +27,8 @@
         </div>
         <div class="row mt-4">
             <div class="col-12 center">
-                <form action="{{ route('payment.store', $order) }}">
-                    <a class="mr-3" href="{{ route('order.index', $order->user_id) }}">Regresar</a>
+                <form action="{{ route('payments.store', $order) }}">
+                    <a class="mr-3" href="{{ route('orders.index', $order->user_id) }}">Regresar</a>
                     @if($order->status != 'APPROVED')
                         <button>Reintentar Pago</button>
                     @endif

@@ -20,7 +20,7 @@
                 @endforeach
             </ul>
         @endif
-        <form action="{{ route('order.store') }}" method="POST" class="py-3">
+        <form action="{{ route('orders.store') }}" method="POST" class="py-3">
             @CSRF
             <div class="row">
                 <div class="col-4 offset-1">

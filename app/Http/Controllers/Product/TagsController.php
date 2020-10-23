@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Tag;
+use App\Entities\Tag;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TagsController extends Controller

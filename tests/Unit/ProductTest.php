@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\User;
-use App\Product;
+use App\Entities\User;
+use App\Entities\Product;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -33,12 +33,16 @@
                     @forelse($cartProducts as $product)
                         <tr>
                             <td>
-                                <a href="{{ route('cart.delete', $product->id) }}">Borrar</a>
+                                <form action="{{route('cart.delete', $product->id)}}" method="POST">
+                                    @csrf @method("DELETE")
+                                    <button type="submit">Borrar</button>
+                                </form>
                             </td>
                             <td><a href=""><img alt="" src=""></a></td>
                             <td>{{ $product->name }}</td>
                             <td>
-                                <form action="{{ route('cart.update', $product->id) }}">
+                                <form action="{{ route('cart.update', $product->id) }}" method="POST">
+                                    @csrf @method("PUT")
                                     <input name="quantity" type="number"  value="{{ $product->quantity }}" min="1">
                                     <input type="submit" value="Guardar">
                                 </form>
@@ -60,7 +64,7 @@
             </p>
             <p class="buttons center">
                 <a href="{{ route('home') }}" class="btn-sm">Continuar</a>
-                <button><a href="{{ route('order.create') }}">Checkout</a></button>
+                <button><a href="{{ route('orders.create') }}">Checkout</a></button>
             </p>
         </div>
     </div>

@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\User;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Entities\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class UserDataController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
@@ -27,7 +26,6 @@ class UserDataController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param User $user
      * @return View
      * @throws AuthorizationException
@@ -41,7 +39,6 @@ class UserDataController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param User $user
      * @return RedirectResponse
@@ -62,6 +59,6 @@ class UserDataController extends Controller
 
         $user->update($data);
 
-        return back()->with('status','Información actualizada');
+        return back()->with('status', 'Información actualizada');
     }
 }

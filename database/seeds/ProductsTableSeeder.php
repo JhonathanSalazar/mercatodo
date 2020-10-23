@@ -1,17 +1,16 @@
 <?php
 
-use App\Tag;
-use App\Product;
+use App\Entities\Tag;
+use App\Entities\Product;
 use Illuminate\Database\Seeder;
 
 class ProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Product::truncate();
         Tag::truncate();

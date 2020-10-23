@@ -9,7 +9,6 @@ class Place2PayProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
      * @return void
      */
     public function register()
@@ -29,7 +28,6 @@ class Place2PayProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
      * @return void
      */
     public function boot()
