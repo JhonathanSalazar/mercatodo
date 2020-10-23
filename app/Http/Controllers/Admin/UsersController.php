@@ -39,8 +39,6 @@ class UsersController extends Controller
                 ->get();
         });
 
-
-
         Log::info('admin.users.index', ['user', auth()->id()]);
 
         return view('admin.users.index', compact('users'));
