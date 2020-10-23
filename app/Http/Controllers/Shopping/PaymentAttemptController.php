@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Shopping;
 
 use Carbon\Carbon;
-use App\Models\Order;
+use App\Entities\Order;
 use Illuminate\View\View;
 use App\Classes\P2PRequest;
-use App\Models\PaymentAttempt;
+use App\Entities\PaymentAttempt;
 use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;

@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Tag;
-use App\Models\Product;
+use App\Entities\Tag;
+use App\Entities\Product;
 use Illuminate\Database\Seeder;
 
 class ProductsTableSeeder extends Seeder

@@ -59,7 +59,7 @@
                                     <span class="label label-danger">Inhabilitada</span>
                                 @endif
                             </td>
-                            <td>{{ $user->getRoleNames()->implode(', ') }}</td>
+                            <td>{{ $user->role_name}}</td>
                             <td>
                                 <a href="{{ route('admin.users.show', $user) }}"
                                    class="btn btn-xs btn-default">

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Page;
 
-use App\Models\Product;
+use App\Entities\Product;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Models\User;
-use App\Models\Order;
+use App\Entities\User;
+use App\Entities\Order;
 use Illuminate\View\View;
 use App\Http\Requests\OrderRequest;
 use App\Http\Controllers\Controller;
@@ -76,7 +76,6 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      * @param OrderRequest $request
      * @return RedirectResponse
-     * @throws AuthorizationException
      */
     public function store(OrderRequest $request): RedirectResponse
     {

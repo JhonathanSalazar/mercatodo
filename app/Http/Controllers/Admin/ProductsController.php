@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\Tag;
-use App\Models\Product;
-use App\Models\Category;
+use App\Entities\Tag;
+use App\Entities\Product;
+use App\Entities\Category;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Validation\ValidationException;
 
 class ProductsController extends Controller
 {
@@ -38,6 +40,8 @@ class ProductsController extends Controller
     public function index(): View
     {
         $products = Product::all();
+
+        Log::info('admin.products.index', ['id' => auth()->id()]);
 
         return view('admin.products.index', compact('products'));
     }

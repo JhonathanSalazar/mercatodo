@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Models\Product;
+use App\Entities\Product;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class PagesController extends Controller
 {
@@ -14,8 +15,9 @@ class PagesController extends Controller
      */
     public function home(): View
     {
-        $featuredProductsHome = Product::featuredHome()->get();
-        $lastProductsHome = Product::lastHome()->get();
+        $featuredProductsHome = Product::with('category')->featuredHome()->get();
+
+        $lastProductsHome = Product::with('category')->lastHome()->get();
 
         return view('pages.home', compact('featuredProductsHome', 'lastProductsHome'));
     }

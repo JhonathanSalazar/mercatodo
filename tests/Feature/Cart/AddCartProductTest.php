@@ -3,8 +3,8 @@
 namespace Tests\Feature\Cart;
 
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Product;
+use App\Entities\User;
+use App\Entities\Product;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

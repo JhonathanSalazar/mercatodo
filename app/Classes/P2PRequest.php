@@ -3,7 +3,7 @@
 
 namespace App\Classes;
 
-use App\Models\Order;
+use App\Entities\Order;
 use http\Client\Request;
 
 class P2PRequest

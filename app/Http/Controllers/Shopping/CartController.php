@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Models\Product;
+use App\Entities\Product;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
@@ -29,7 +29,6 @@ class CartController extends Controller
     public function add(Product $product): RedirectResponse
     {
         $userId = auth()->id();
-
         $id = $product->id;
         $name = $product->name;
         $price = $product->price;

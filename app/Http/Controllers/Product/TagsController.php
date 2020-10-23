@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Models\Tag;
+use App\Entities\Tag;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 

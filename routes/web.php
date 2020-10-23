@@ -54,7 +54,7 @@ Route::delete('cart/delete/{product}','Shopping\CartController@delete')->name('c
 Route::get('orders/create','Shopping\OrderController@create')->name('orders.create');
 Route::post('orders/store','Shopping\OrderController@store')->name('orders.store');
 Route::get('orders/index/{user}','Shopping\OrderController@index')->name('orders.index');
-Route::get('orders/show/{order}','Shopping\OrderController@show')->name('orders.show');
+Route::get('orders/{order}','Shopping\OrderController@show')->name('orders.show');
 Route::get('orders/edit/{order}','Shopping\OrderController@edit')->name('orders.edit');
 Route::put('orders/update/{order}','Shopping\OrderController@update')->name('orders.update');
 Route::delete('orders/delete/{order}', 'Shopping\OrderController@destroy')->name('orders.delete');

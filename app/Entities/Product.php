@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
 
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
@@ -73,7 +73,7 @@ class Product extends Model
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
-            ->where('category_id', 2)
+            ->where('category_id', '=',2)
             ->orderBy('published_at', 'desc')
             ->limit(4);
     }
@@ -86,7 +86,9 @@ class Product extends Model
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
+            ->where('category_id', '=',3)
             ->orderBy('published_at', 'desc')
+            ->with('category')
             ->limit(4);
     }
 }

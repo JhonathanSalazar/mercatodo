@@ -3,7 +3,7 @@
 
 namespace App\Classes;
 
-use App\Models\DatabaseStorageModel;
+use App\Entities\DatabaseStorageModel;
 use Darryldecode\Cart\CartCollection;
 
 class DatabaseStorage

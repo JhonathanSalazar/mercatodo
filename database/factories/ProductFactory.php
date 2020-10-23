@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Product;
+use App\Entities\Product;
 use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
@@ -16,7 +16,7 @@ $factory->define(Product::class, function (Faker $faker) {
     }
 
     return [
-        'user_id' =>  factory(App\Models\User::class),
+        'user_id' =>  factory(App\Entities\User::class),
         'name' => $faker->firstName,
         'ean' => $faker->randomNumber(8),
         'branch' => $faker->lastName,

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Orders;
 
-use App\Models\Order;
-use App\Models\User;
+use App\Entities\Order;
+use App\Entities\User;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
