@@ -14,7 +14,7 @@ class TagsController extends Controller
      */
     public function show(Tag $tag): View
     {
-        $products = $tag->products()->paginate(5);
+        $products = $tag->products()->with('category')->paginate(5);
 
         return view('product.list', compact('products'));
     }

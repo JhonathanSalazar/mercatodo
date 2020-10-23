@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shopping;
 
 use App\Entities\Product;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
@@ -36,6 +37,8 @@ class CartController extends Controller
 
         \Cart::session($userId)->add($id, $name, $price, $qty);
 
+        Log::info('cart.product.add', ['user' => auth()->user()]);
+
         return redirect()->route('cart.index')
             ->with('status', 'El producto ha sido agregado a tu carrito');
     }
@@ -64,6 +67,8 @@ class CartController extends Controller
 
         \Cart::session($userId)->remove($productId);
 
+        Log::info('cart.product.delete', ['user' => auth()->user()]);
+
         return back()->with('status', 'El producto ha sido eliminado de tu carrito');
     }
 
@@ -81,6 +86,8 @@ class CartController extends Controller
                 'value' => request('quantity')
             ),
         ));
+
+        Log::info('cart.product.update', ['user' => auth()->user()]);
 
         return back()->with('status', 'El producto ha sido actualizado en tu carrito');
     }
