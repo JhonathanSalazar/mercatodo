@@ -22,7 +22,6 @@
                     <thead>
                     <tr>
                         <th> </th>
-                        <th>Imagen</th>
                         <th>Nombre Producto</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
@@ -38,8 +37,7 @@
                                     <button type="submit">Borrar</button>
                                 </form>
                             </td>
-                            <td><a href=""><img alt="" src=""></a></td>
-                            <td>{{ $product->name }}</td>
+                            <td><a href="{{ route('products.details', $product->id)  }}">{{ $product->name }}</a></td>
                             <td>
                                 <form action="{{ route('cart.update', $product->id) }}" method="POST">
                                     @csrf @method("PUT")

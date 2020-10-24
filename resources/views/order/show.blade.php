@@ -15,7 +15,6 @@
                     <thead>
                         <tr>
                             <th>Producto</th>
-                            <th>Imagen</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>SubTotal</th>
@@ -24,8 +23,7 @@
                     <tbody>
                         @forelse($items as $item)
                             <tr>
-                                <td>{{ $item->name }}</td>
-                                <td></td>
+                                <td><a href="{{ route('products.details', $item->id) }}">{{ $item->name }}</a></td>
                                 <td>{{ $item->pivot->quantity }}</td>
                                 <td>$ {{ $item->pivot->price }}</td>
                                 <td>$ {{ $item->pivot->quantity*$item->price }}</td>
