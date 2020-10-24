@@ -13,7 +13,7 @@
                 @elseif($order->status == \App\Classes\PaymentStatus::PENDING)
                     <h5>TU TRANSACCIÓN ESTA PENDIENTE DE APROBACIÓN</h5>
                 @else
-                    h5>TU TRANSACCIÓN HA SIDO RECHAZADA</h5>
+                    <h5>TU TRANSACCIÓN HA SIDO RECHAZADA</h5>
                 @endif
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="col-12 center">
                 <form action="{{ route('payments.store', $order) }}">
                     <a class="mr-3" href="{{ route('orders.index', $order->user_id) }}">Regresar</a>
-                    @if($order->status != 'APPROVED')
+                    @if($order->status == \App\Classes\PaymentStatus::REJECTED)
                         <button>Reintentar Pago</button>
                     @endif
                 </form>
