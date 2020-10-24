@@ -18,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify' => true]);
 
 Route::get('/','Customer\PagesController@home')->name('home');
+
 Route::get('search','Page\SearchController@index')->name('pages.search.index');
-Route::get('products/{product}','Product\DetailsController@show')->name('products.details');
-Route::get('categories/{category}', 'Product\CategoriesController@show')->name('pages.category.show');
 Route::get('tags/{tag}', 'Product\TagsController@show')->name('pages.tag.show');
+Route::get('categories/{category}', 'Product\CategoriesController@show')->name('pages.category.show');
+Route::get('products/{product}','Product\DetailsController@show')->name('products.details');
 
 Route::group(['prefix' => 'admin'],
     function() {

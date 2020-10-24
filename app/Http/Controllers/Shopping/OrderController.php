@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shopping;
 
 use App\Entities\User;
 use App\Entities\Order;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use App\Http\Requests\OrderRequest;
 use App\Http\Controllers\Controller;
@@ -42,6 +43,26 @@ class OrderController extends Controller
     }
 
     /**
+     * @param Order $order
+     * @param OrderRequest $request
+     * @return Order
+     */
+    private function getOrderDataFromRequest(Order $order, OrderRequest $request): Order
+    {
+        $order->payer_name = $request->get('payer_name');
+        $order->payer_email = $request->get('payer_email');
+        $order->document_type = $request->get('payer_documentType');
+        $order->document_number = $request->get('payer_document');
+        $order->payer_phone = $request->get('payer_phone');
+        $order->payer_address = $request->get('payer_address');
+        $order->payer_city = $request->get('payer_city');
+        $order->payer_state = $request->get('payer_state');
+        $order->payer_postal = $request->get('payer_postal');
+
+        return $order;
+    }
+
+    /**
      * Create buyer order (Checkout).
      * @return RedirectResponse|View
      */
@@ -68,6 +89,8 @@ class OrderController extends Controller
 
         $orders = $user->orders;
 
+        Log::info('order.index', ['user' => auth()->user()]);
+
         return view('order.index', compact('orders'));
     }
 
@@ -88,22 +111,14 @@ class OrderController extends Controller
         $order->user_id = $userId;
         $order->grand_total = \Cart::session($userId)->getTotal();
         $order->item_count = \Cart::session($userId)->getContent()->count();
-
-        $order->payer_name = $request->get('payer_name');
-        $order->payer_email = $request->get('payer_email');
-        $order->document_type = $request->get('payer_documentType');
-        $order->document_number = $request->get('payer_document');
-        $order->payer_phone = $request->get('payer_phone');
-        $order->payer_address = $request->get('payer_address');
-        $order->payer_city = $request->get('payer_city');
-        $order->payer_state = $request->get('payer_state');
-        $order->payer_postal = $request->get('payer_postal');
-
+        $order = $this->getOrderDataFromRequest($order, $request);
         $order->save();
 
         $this->saveOrderItems($userId, $order);
 
         \Cart::session($userId)->clear();
+
+        Log::info('order.store', ['user' => auth()->user(), 'order' => $order->id]);
 
         return redirect()->route('orders.show', $order);
     }
@@ -118,6 +133,8 @@ class OrderController extends Controller
         $this->authorize('view', $order);
 
         $items = $order->items()->get();
+
+        Log::info('order.show', ['user' => auth()->user(), 'order' => $order->id]);
 
         return view('order.show', compact('items', 'order'));
     }
@@ -148,17 +165,10 @@ class OrderController extends Controller
     {
         $this->authorize('update', $order);
 
-        $order->payer_name = $request->get('payer_name');
-        $order->payer_email = $request->get('payer_email');
-        $order->document_type = $request->get('payer_documentType');
-        $order->document_number = $request->get('payer_document');
-        $order->payer_phone = $request->get('payer_phone');
-        $order->payer_address = $request->get('payer_address');
-        $order->payer_city = $request->get('payer_city');
-        $order->payer_state = $request->get('payer_state');
-        $order->payer_postal = $request->get('payer_postal');
+        $order = $this->getOrderDataFromRequest($order, $request);
+        $order->update();
 
-        $order->save();
+        Log::info('order.update', ['user' => auth()->user(), 'order' => $order->id]);
 
         return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido actualizada');
@@ -169,12 +179,15 @@ class OrderController extends Controller
      * @param Order $order
      * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws \Exception
      */
     public function destroy(Order $order): RedirectResponse
     {
         $this->authorize('delete', $order);
 
         $order->delete();
+
+        Log::warning('order.delete', ['user' => auth()->user(), 'order' => $order->id]);
 
         return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido eliminada');

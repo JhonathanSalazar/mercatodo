@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Entities\User;
+use App\Http\Requests\UserDataRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class UserDataController extends Controller
@@ -34,30 +34,27 @@ class UserDataController extends Controller
     {
         $this->authorize('view', $user);
 
+        Log::info('pages.userAccount', ['user', auth()->id()]);
+
         return view('pages.userAccount', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param UserDataRequest $request
      * @param User $user
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UserDataRequest $request, User $user): RedirectResponse
     {
         $this->authorize('update', $user);
 
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user->id)
-            ],
-        ]);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->update();
 
-        $user->update($data);
+        Log::info('pages.userAccount.update', ['user', auth()->id()]);
 
         return back()->with('status', 'Información actualizada');
     }

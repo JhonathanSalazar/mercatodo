@@ -181,5 +181,18 @@ return [
         'title'                 => 'título',
         'username'              => 'usuario',
         'year'                  => 'año',
+        'enable'                => 'habilitación',
+        'ean'                   => 'código producto',
+        'branch'                => 'marca',
+        'image'                 => 'imagen',
+        'payer_name'            => 'Nombre Completo',
+        'payer_email'           => 'Correo Electrónico',
+        'payer_documentType'    => 'Tipo Documento',
+        'payer_document'        => 'Número Documento',
+        'payer_phone'           => 'Celular',
+        'payer_address'         => 'Dirección',
+        'payer_city'            => 'Ciudad',
+        'payer_state'           => 'Departamento',
+        'payer_postal'           => 'Código Postal'
     ],
 ];

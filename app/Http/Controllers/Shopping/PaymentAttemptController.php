@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Shopping;
 
+use App\Classes\PaymentStatus;
 use Carbon\Carbon;
 use App\Entities\Order;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use App\Classes\P2PRequest;
 use App\Entities\PaymentAttempt;
@@ -37,6 +39,9 @@ class PaymentAttemptController extends Controller
         $paymentAttemp->processUrl = $response->processUrl();
         $paymentAttemp->save();
 
+        Log::info('paymentAttempt.store', ['user' => auth()->user(), 'order' => $order->id]);
+
+
         return redirect()->away($response->processUrl());
     }
 
@@ -55,11 +60,13 @@ class PaymentAttemptController extends Controller
         $order->reason = $response->status()->reason();
         $order->message = $response->status()->message();
 
-        if ($response->status()->status() == 'APPROVED') {
+        if ($response->status()->status() == PaymentStatus::APPROVED) {
             $order->paid_at = Carbon::now();
         }
 
         $order->update();
+
+        Log::info('paymentAttempt.show', ['user' => auth()->user(), 'order' => $order->id]);
 
         return view('payment.show', compact('order', 'paymentAttempt'));
     }

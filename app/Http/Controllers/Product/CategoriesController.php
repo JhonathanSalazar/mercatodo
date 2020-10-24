@@ -14,7 +14,7 @@ class CategoriesController extends Controller
      */
     public function show(Category $category): View
     {
-        $products = $category->products()->paginate(5);
+        $products = $category->products()->with('category')->paginate(5);
 
         return view('product.list', compact('products'));
     }

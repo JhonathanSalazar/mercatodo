@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Customer;
 use App\Entities\Product;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class PagesController extends Controller
 {
