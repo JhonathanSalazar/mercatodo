@@ -8,17 +8,19 @@
     <section class="main-content">
         <div class="row">
             <div class="col-12 center">
-                @if($order->status == 'APPROVED')
+                @if($order->status == \App\Classes\PaymentStatus::APPROVED)
                     <h5>TU TRANSACCIÓN HA SIDO APROBADA</h5>
+                @elseif($order->status == \App\Classes\PaymentStatus::PENDING)
+                    <h5>TU TRANSACCIÓN ESTA PENDIENTE DE APROBACIÓN</h5>
                 @else
-                    <h5>TU TRANSACCIÓN HA SIDO RECHAZADA</h5>
+                    h5>TU TRANSACCIÓN HA SIDO RECHAZADA</h5>
                 @endif
             </div>
         </div>
         <div class="row">
             <div class="col-4 offset-4">
                 <p class="mt-3">
-                    <strong>Estado</strong>: {{ $order->status }}<br>
+                    <strong>Estado</strong>: {{ __($order->status) }}<br>
                     <strong>Razón</strong>: {{ $order->message }}<br>
                     <strong># Transacción</strong>: {{ $paymentAttempt->requestID }}<br>
                     <strong>Total</strong>: $ {{ $order->grand_total }} COP<br>

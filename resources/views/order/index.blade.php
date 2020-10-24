@@ -23,9 +23,9 @@
                     <td><a href="{{ route('orders.show', $order) }}">{{ $order->id }}</a></td>
                     <td>{{ $order->item_count }}</td>
                     <td>{{ $order->grand_total }}</td>
-                    <td>{{ $order->status }}</td>
+                    <td>{{ __($order->status) }}</td>
                     <td>
-                        @if($order->status != 'APPROVED')
+                        @if($order->status == null || $order->status == \App\Classes\PaymentStatus::REJECTED)
                             <form action="{{ route('orders.delete', $order) }}" method="POST">
                                 @csrf @method('DELETE')
                                 <button>Eliminar</button>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Shopping;
 
+use App\Classes\PaymentStatus;
 use Carbon\Carbon;
 use App\Entities\Order;
 use Illuminate\Support\Facades\Log;
@@ -59,7 +60,7 @@ class PaymentAttemptController extends Controller
         $order->reason = $response->status()->reason();
         $order->message = $response->status()->message();
 
-        if ($response->status()->status() == 'APPROVED') {
+        if ($response->status()->status() == PaymentStatus::APPROVED) {
             $order->paid_at = Carbon::now();
         }
 
