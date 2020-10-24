@@ -5,10 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserDataRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @return bool
      */
     public function authorize(): bool
@@ -24,10 +25,11 @@ class UserDataRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'enable' => 'required',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($this->user())
+                Rule::unique('users')->ignore($this->user)
             ],
         ];
     }

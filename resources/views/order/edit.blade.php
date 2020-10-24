@@ -49,10 +49,10 @@
                         <label>Nombre Completo:</label>
                         <input name="payer_name"
                                type="text"
-                               value="{{ old('name', $order->payer_name) }}"
+                               value="{{ old('payer_name', $order->payer_name) }}"
                                class="form-control form-control-sm"
                                placeholder="Nombre completo">
-                        {!! $errors->first('payer_name', '<span class="help-block">:message</span>') !!}
+                        {!! $errors->first('payer_name', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Correo electronico:</label>
@@ -61,7 +61,7 @@
                                value="{{ old('payer_email', $order->payer_email) }}"
                                class="form-control form-control-sm"
                                placeholder="Dirección correo electrónico">
-                        {!! $errors->first('payer_email', '<span class="help-block">:message</span>') !!}
+                        {!! $errors->first('payer_email', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Tipo de documento:</label>
@@ -76,10 +76,10 @@
                         <label>Número de Documento:</label>
                         <input name="payer_document"
                                type="text"
-                               value="{{ old('document_number', $order->document_number) }}"
+                               value="{{ old('payer_document', $order->document_number) }}"
                                class="form-control form-control-sm"
                                placeholder="# Documento">
-                        {!! $errors->first('document_number', '<span class="help-block">:message</span>') !!}
+                        {!! $errors->first('payer_document', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Celular:</label>
@@ -88,7 +88,7 @@
                                value="{{ old('payer_phone', $order->payer_phone) }}"
                                class="form-control form-control-sm"
                                placeholder="Número de celular">
-                        {!! $errors->first('payer_phone', '<span class="help-block">:message</span>') !!}
+                        {!! $errors->first('payer_phone', '<span class="alert-danger">:message</span>') !!}
                     </div>
                 </div>
                 <div class="col-4 offset-2">
@@ -100,7 +100,7 @@
                                value="{{ old('payer_address', $order->payer_address) }}"
                                class="form-control form-control-sm"
                                placeholder="Dirección envío">
-                        {!! $errors->first('payer_address', '<span class="help-block">:message</span>') !!}
+                        {!! $errors->first('payer_address', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Ciudad:</label>
@@ -108,8 +108,8 @@
                                type="text"
                                value="{{ old('payer_city', $order->payer_city) }}"
                                class="form-control form-control-sm"
-                               placeholder="Dirección envío">
-                        {!! $errors->first('payer_city', '<span class="help-block">:message</span>') !!}
+                               placeholder="Ciudad de envío">
+                        {!! $errors->first('payer_city', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Departamento:</label>
@@ -117,8 +117,8 @@
                                type="text"
                                value="{{ old('payer_state', $order->payer_state) }}"
                                class="form-control form-control-sm"
-                               placeholder="Dirección envío">
-                        {!! $errors->first('payer_state', '<span class="help-block">:message</span>') !!}
+                               placeholder="Departamento de envío">
+                        {!! $errors->first('payer_state', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Código Postal:</label>
@@ -126,8 +126,8 @@
                                type="text"
                                value="{{ old('payer_postal', $order->payer_postal) }}"
                                class="form-control form-control-sm"
-                               placeholder="Dirección envío">
-                        {!! $errors->first('payer_postal', '<span class="help-block">:message</span>') !!}
+                               placeholder="Código postal">
+                        {!! $errors->first('payer_postal', '<span class="alert-danger">:message</span>') !!}
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\User;
+use App\Http\Requests\UserRequest;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -30,8 +31,7 @@ class UsersController extends Controller
      */
     public function index(): View
     {
-
-        $users = Cache::remember('users.all', 300 ,function () {
+        $users = Cache::remember('users.all', 60 ,function () {
             return User::query()
                 ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                 ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -66,23 +66,16 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
+     * @param UserRequest $request
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user->id)
-            ],
-            'enable' => 'required'
-        ]);
-
-        $user->update($data);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->enable = $request->get('enable');
+        $user->update();
 
         return redirect()->route('admin.users.index')
             ->with('status', 'Perfil actualizado satisfactoriamente');
