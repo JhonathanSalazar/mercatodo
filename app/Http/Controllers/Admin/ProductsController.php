@@ -119,6 +119,7 @@ class ProductsController extends Controller
      */
     public function edit(Product $product): View
     {
+        // Tomarlo desde Cache
         $categories = Category::all();
         $tags = Tag::all();
 

@@ -193,6 +193,7 @@ return [
         'payer_address'         => 'Dirección',
         'payer_city'            => 'Ciudad',
         'payer_state'           => 'Departamento',
-        'payer_postal'           => 'Código Postal'
+        'payer_postal'          => 'Código Postal',
+        'productsImport'        => 'El archivo de productos'
     ],
 ];

@@ -33,4 +33,16 @@ return [
      * the configuration for cart events
      */
     'events' => null,
+
+    /*
+     * ---------------------------------------------------------------
+     * tax
+     * ---------------------------------------------------------------
+     */
+    'tax' => [
+        'name' => 'iva 19%',
+        'type' => 'tax',
+        'target' => 'subtotal', // this condition will be applied to cart's subtotal when getSubTotal() is called.
+        'value' => '19%',
+    ]
 ];

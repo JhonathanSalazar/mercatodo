@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Shopping;
 
 use App\Entities\Product;
+use Darryldecode\Cart\CartCondition;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -35,7 +36,9 @@ class CartController extends Controller
         $price = $product->price;
         $qty = request('quantity');
 
-        \Cart::session($userId)->add($id, $name, $price, $qty);
+        $condition = new CartCondition( config('shopping_cart.tax'));
+
+        \Cart::session($userId)->condition($condition)->add($id, $name, $price, $qty);
 
         Log::info('cart.product.add', ['user' => auth()->user()]);
 

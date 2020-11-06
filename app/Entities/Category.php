@@ -24,4 +24,9 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public static function getCategoryFromCache() {
+
+        //return
+    }
 }

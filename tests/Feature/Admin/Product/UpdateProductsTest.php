@@ -19,7 +19,6 @@ class UpdateProductsTest extends TestCase
      */
     public function adminCanUpdateProducts()
     {
-
         $adminRole = Role::create(['name' => 'Admin']);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
@@ -38,7 +37,7 @@ class UpdateProductsTest extends TestCase
         $this->put(route('admin.products.update', $product));
 
         $product->fresh();
-
+        
         $this->assertEquals($name, $product->name);
         $this->assertEquals($description, $product->description);
         $this->assertEquals($ean, $product->ean);

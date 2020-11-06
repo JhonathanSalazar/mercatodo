@@ -31,6 +31,7 @@ class UsersController extends Controller
      */
     public function index(): View
     {
+        //Refactorizar no hacer cache a usuarios
         $users = Cache::remember('users.all', 60 ,function () {
             return User::query()
                 ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
