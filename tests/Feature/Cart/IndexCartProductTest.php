@@ -33,7 +33,6 @@ class IndexCartProductTest extends TestCase
 
         $product = factory(Product::class)->create();
 
-
         //For each en caso de usar 10 products en el trait.
         $this->addCart($product, $buyerUser);
 

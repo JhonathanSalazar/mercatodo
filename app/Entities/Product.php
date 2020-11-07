@@ -91,4 +91,16 @@ class Product extends Model
             ->with('category')
             ->limit(4);
     }
+
+
+    public function getImageUrlAttribute() {
+
+        if ($this->image == null) {
+            return "/storage/images/default.jpeg";
+        }
+
+        return "/storage/" . $this->image;
+    }
+
+
 }

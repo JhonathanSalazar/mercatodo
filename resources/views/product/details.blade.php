@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <img src="/storage/{{ $product->image }}" alt="{{ $product->name }}" class="img-thumbnail border-0">
+                    <img src="{{ $product->getImageUrlAttribute() }}" alt="{{ $product->name }}" class="img-thumbnail border-0">
                 </div>
                 <div class="col-md-3">
                     <address>

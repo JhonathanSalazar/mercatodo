@@ -47,8 +47,7 @@ class HomeCarousel extends Component
     {
         $this->id = $product->id;
         $this->name = $product->name;
-        //Crear un accesor para la imagen
-        $this->image = $product->image;
+        $this->image = $product->getImageUrlAttribute();
         $this->price = $product->price;
         $this->category = $product->category->name;
         $this->url = $product->category->url;
