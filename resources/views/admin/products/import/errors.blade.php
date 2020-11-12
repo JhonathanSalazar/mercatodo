@@ -12,17 +12,15 @@
 @endsection
 
 @section('content')
-    @if (session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-    @endif
+    <div class="alert @if($cant == 0) alert-danger @else alert-success @endif">
+        {{ $cant }} productos fueron importados.
+    </div>
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Listado de errores</h3>
         </div>
         <div class="box-body">
-            <table id="admin-table" class="table table-bordered table-striped">
+            <table id="admin-table" class="table table-bordered table-striped center">
                 <thead>
                 <tr>
                     <th>Fila</th>
@@ -31,14 +29,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{dd($importErrors)}}
-                @forelse($importErrors as $row => $errors)
+                @forelse($failures as $failure)
                     <tr>
-                        <td>{{ $product->id }}</td>
-                        <td>{{ $product->ean }}</td>
-                        <td>{{ $product->name }}</td>
+                        <td>{{ $failure['row'] }}</td>
+                        <td>{{ $failure['attribute'] }}</td>
+                        <td>{{ $failure['error'][0] }}</td>
                 @empty
-                    <h5>No hay productos registrados aún</h5>
+                    <p>No hay errores</p>
                 @endforelse
                 </tbody>
             </table>
