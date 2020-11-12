@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('user_id');
-            $table->string('ean')->nullable();
+            $table->string('ean')->unique()->nullable();
             $table->string('branch')->nullable();
             $table->integer('price')->nullable();
             $table->text('description')->nullable();

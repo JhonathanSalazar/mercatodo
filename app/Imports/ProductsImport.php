@@ -2,20 +2,23 @@
 
 namespace App\Imports;
 
+use App\Concerns\HasProductValidationRules;
 use App\Entities\Product;
+use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\SkipsErrors;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Validators\Failure;
-use Throwable;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ProductsImport implements ToModel, WithHeadingRow, SkipsOnFailure, SkipsOnError
+class ProductsImport implements ToModel, WithHeadingRow, WithValidation
 {
-    use Importable, SkipsErrors;
+    use Importable;
+    use HasProductValidationRules;
 
+    /**
+     * @param array $row
+     * @return Model|Model[]|null
+     */
     public function model(array $row)
     {
         return Product::updateOrCreate(
@@ -35,10 +38,5 @@ class ProductsImport implements ToModel, WithHeadingRow, SkipsOnFailure, SkipsOn
                 'user_id'       => auth()->id(),
             ]
         );
-    }
-
-    public function onFailure(Failure ...$failures)
-    {
-        // TODO: Implement onFailure() method.
     }
 }
