@@ -7,8 +7,6 @@ use App\Http\Requests\ImportProductRequest;
 use App\Imports\ProductsImport;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsImportController extends Controller
 {
@@ -19,12 +17,13 @@ class ProductsImportController extends Controller
     public function import(ImportProductRequest $request)
     {
         $file = $request->file('productsImport');
+
         $import = new ProductsImport;
         $import->import($file);
         $cant = $import->getRowCount();
 
         if (count($import->failures()) > 0) {
-            $failures = $this->displayError($import->failures());
+            $failures = $this->getFailures($import->failures());
             return response()->view('admin.products.import.errors', [
                 'failures' => $failures,
                 'cant' => $cant
@@ -33,17 +32,16 @@ class ProductsImportController extends Controller
             return redirect()->route('admin.products.index')
                 ->with('status', "Se importarón $cant registros satisfactoriamente");
         }
-
     }
 
     /**
      * Show the import error in a admin view.
      *
      * @param $failures
+     * @return array
      */
-    private function displayError($failures)
+    private function getFailures($failures)
     {
-
         $validationError = [];
 
         foreach ($failures as $failure) {

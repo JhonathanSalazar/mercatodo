@@ -19,7 +19,10 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     use Importable;
     use SkipsFailures;
 
-    private $rows = 0;
+    /**
+     * @var int
+     */
+    private int $rows = 0;
 
     /**
      * @param array $row
