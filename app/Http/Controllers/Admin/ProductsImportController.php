@@ -20,6 +20,7 @@ class ProductsImportController extends Controller
 
         $import = new ProductsImport;
         $import->import($file);
+
         $cant = $import->getRowCount();
 
         if (count($import->failures()) > 0) {

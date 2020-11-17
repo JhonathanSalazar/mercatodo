@@ -2,15 +2,14 @@
 
 namespace App\Imports;
 
-use App\Concerns\HasProductValidationRules;
 use App\Entities\Product;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
@@ -51,14 +50,6 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     }
 
     /**
-     * @return int
-     */
-    public function getRowCount(): int
-    {
-        return $this->rows;
-    }
-
-    /**
      * @return string[]
      */
     public function rules(): array
@@ -72,4 +63,13 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
             'precio' => 'required|integer',
         ];
     }
+
+    /**
+     * @return int
+     */
+    public function getRowCount(): int
+    {
+        return $this->rows;
+    }
+
 }

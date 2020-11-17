@@ -53,6 +53,8 @@ class ProductImportTest extends TestCase
         ->assertSee('El campo id_categoria es obligatorio.')
         ->assertSee('El campo precio es obligatorio.');
 
+        $this->assertDatabaseCount('products', 0);
+
     }
 
     /**

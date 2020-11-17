@@ -19,6 +19,13 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithCo
 
     use Exportable;
 
+    protected $authUser;
+
+    public function __construct($authUser)
+    {
+        $this->authUser = $authUser;
+    }
+
     /**
     * @return Collection
     */
