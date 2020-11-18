@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Report;
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -23,7 +25,7 @@ class ReportsController extends Controller
     }
 
     /**
-     * Download the report.
+     * Download the specific report.
      *
      * @param Report $report
      * @return StreamedResponse
@@ -31,6 +33,20 @@ class ReportsController extends Controller
     public function download(Report $report): StreamedResponse
     {
         return Storage::download($report->file_path);
+    }
+
+    /**
+     * @param Report $report
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function destroy(Report $report): RedirectResponse
+    {
+        Storage::delete($report->file_path);
+
+        $report->delete();
+
+        return back()->with('status', 'Su reporte a sido eliminado');
     }
 
 }

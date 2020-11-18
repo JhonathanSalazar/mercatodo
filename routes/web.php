@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin'],
 
         Route::get('reports', 'Admin\ReportsController@index')->name('admin.reports.index');
         Route::get('reports/download/{report}', 'Admin\ReportsController@download')->name('admin.reports.download');
+        Route::delete('reports/download/{report}', 'Admin\ReportsController@destroy')->name('admin.reports.destroy');
 
     });
 

@@ -52,7 +52,7 @@
                                 <i class="fa fa-download"></i> Descargar
                             </a>
                             <form method="POST"
-                                  action="#"
+                                  action="{{ route('admin.reports.destroy', $report->id) }}"
                                   style="display: inline">
                                 @CSRF @method('DELETE')
                                 <button class="btn btn-xs btn-danger"
