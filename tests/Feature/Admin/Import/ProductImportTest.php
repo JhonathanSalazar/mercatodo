@@ -15,6 +15,28 @@ class ProductImportTest extends TestCase
     /**
      * @test
      */
+    public function guestCantImportProducts()
+    {
+        $this->post($this->getImportRoute())
+            ->assertRedirect(route('login'));
+    }
+
+    /**
+     * @test
+     */
+    public function aBuyerCantImportProducts()
+    {
+        $buyerRole = Role::create(['name' => 'Buyer']);
+        $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
+        $this->actingAs($buyerUser);
+
+        $this->post($this->getImportRoute())
+            ->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
     public function aAdminCanImportProduct()
     {
         $adminRole = Role::create(['name' => 'Admin']);
@@ -22,7 +44,7 @@ class ProductImportTest extends TestCase
         $this->actingAs($admUser);
 
         $importFile = $this->getFile('products-import-file.xlsx');
-        $response = $this->post($this->getRoute(), ['productsImport' => $importFile]);
+        $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
 
         $response->assertRedirect(route('admin.products.index'));
         $this->assertDatabaseHas('products', [
@@ -44,14 +66,14 @@ class ProductImportTest extends TestCase
         $this->actingAs($admUser);
 
         $importFile = $this->getFile('products-not-validate-import-file.xlsx');
-        $response = $this->post($this->getRoute(), ['productsImport' => $importFile]);
+        $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
 
         $response->assertViewIs('admin.products.import.errors')
-        ->assertSee('El campo nombre es obligatorio.')
-        ->assertSee('El campo marca es obligatorio.')
-        ->assertSee('El campo descripcion es obligatorio.')
-        ->assertSee('El campo id_categoria es obligatorio.')
-        ->assertSee('El campo precio es obligatorio.');
+            ->assertSee('El campo nombre es obligatorio.')
+            ->assertSee('El campo marca es obligatorio.')
+            ->assertSee('El campo descripcion es obligatorio.')
+            ->assertSee('El campo id_categoria es obligatorio.')
+            ->assertSee('El campo precio es obligatorio.');
 
         $this->assertDatabaseCount('products', 0);
 
@@ -62,7 +84,7 @@ class ProductImportTest extends TestCase
      *
      * @return string
      */
-    private function getRoute(): string
+    private function getImportRoute(): string
     {
         return route('admin.products.import');
     }

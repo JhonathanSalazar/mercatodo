@@ -69,7 +69,7 @@ class Product extends Model
      * Return the featured products published
      * @param Builder $query
      */
-    public function scopeFeaturedHome(Builder $query)
+    public function scopeFeaturedHome(Builder $query): void
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())

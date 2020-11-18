@@ -10,6 +10,20 @@ use Illuminate\Http\Response;
 
 class ProductsImportController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware([
+            'auth',
+            'role:Admin'
+        ]);
+    }
+
     /**
      * @param ImportProductRequest $request
      * @return RedirectResponse|Response
