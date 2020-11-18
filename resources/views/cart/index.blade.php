@@ -22,7 +22,6 @@
                     <thead>
                     <tr>
                         <th> </th>
-                        <th>Imagen</th>
                         <th>Nombre Producto</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
@@ -33,12 +32,15 @@
                     @forelse($cartProducts as $product)
                         <tr>
                             <td>
-                                <a href="{{ route('cart.delete', $product->id) }}">Borrar</a>
+                                <form action="{{route('cart.delete', $product->id)}}" method="POST">
+                                    @csrf @method("DELETE")
+                                    <button type="submit">Borrar</button>
+                                </form>
                             </td>
-                            <td><a href=""><img alt="" src=""></a></td>
-                            <td>{{ $product->name }}</td>
+                            <td><a href="{{ route('products.details', $product->id)  }}">{{ $product->name }}</a></td>
                             <td>
-                                <form action="{{ route('cart.update', $product->id) }}">
+                                <form action="{{ route('cart.update', $product->id) }}" method="POST">
+                                    @csrf @method("PUT")
                                     <input name="quantity" type="number"  value="{{ $product->quantity }}" min="1">
                                     <input type="submit" value="Guardar">
                                 </form>
@@ -56,11 +58,11 @@
             <p class="cart-total mr-5">
                 <strong>Sub-Total</strong>:	$ {{ Cart::session(auth()->id())->getSubTotal() }}<br>
                 <strong>IVA (19%)</strong>: $NA<br>
-                <strong>Total</strong>: $NA<br>
+                <strong>Total</strong>: $ {{ Cart::session(auth()->id())->getTotal() }}<br>
             </p>
             <p class="buttons center">
                 <a href="{{ route('home') }}" class="btn-sm">Continuar</a>
-                <button><a href="{{ route('order.create') }}">Checkout</a></button>
+                <button><a href="{{ route('orders.create') }}">Checkout</a></button>
             </p>
         </div>
     </div>

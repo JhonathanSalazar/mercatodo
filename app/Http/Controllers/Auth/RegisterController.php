@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Spatie\Permission\Models\Role;
+use App\Entities\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -44,11 +43,10 @@ class RegisterController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return Illuminate\Support\Facades\Validator
+     * @param array $data
+     * @return Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data):Validator
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
@@ -61,7 +59,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return User
      */
     protected function create(array $data): User
     {

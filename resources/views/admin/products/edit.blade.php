@@ -61,7 +61,6 @@
                         <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
                             <label for="ProductImage">Imagen producto:</label>
                             <input type="file" name="image" id="ProductImage">
-                            <p class="help-block">Imagen del producto en buena resolución</p>
                             {!! $errors->first('image', '<span class="help-block">:message</span>') !!}
                         </div>
                     </div>

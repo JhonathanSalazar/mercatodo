@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin\Product;
 
-use App\Product;
-use App\User;
+use App\Entities\Product;
+use App\Entities\User;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -19,7 +19,6 @@ class UpdateProductsTest extends TestCase
      */
     public function adminCanUpdateProducts()
     {
-
         $adminRole = Role::create(['name' => 'Admin']);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
@@ -38,7 +37,7 @@ class UpdateProductsTest extends TestCase
         $this->put(route('admin.products.update', $product));
 
         $product->fresh();
-
+        
         $this->assertEquals($name, $product->name);
         $this->assertEquals($description, $product->description);
         $this->assertEquals($ean, $product->ean);

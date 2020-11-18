@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Classes\P2PRequest;
-use App\Http\Requests\OrderRequest;
-use App\Order;
-use App\User;
-use Dnetix\Redirection\Exceptions\PlacetoPayException;
-use Dnetix\Redirection\PlacetoPay;
-use http\Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Str;
+use App\Entities\User;
+use App\Entities\Order;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use App\Http\Requests\OrderRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class OrderController extends Controller
 {
-
+    /**
+     * OrderController constructor.
+     */
     public function __construct()
     {
         $this->middleware([
@@ -41,12 +34,32 @@ class OrderController extends Controller
     {
         $cartItems = \Cart::session($userId)->getContent();
 
-        foreach($cartItems as $item) {
+        foreach ($cartItems as $item) {
             $order->items()->attach($item->id, [
                 'price' => $item->price,
                 'quantity' => $item->quantity
             ]);
         }
+    }
+
+    /**
+     * @param Order $order
+     * @param OrderRequest $request
+     * @return Order
+     */
+    private function getOrderDataFromRequest(Order $order, OrderRequest $request): Order
+    {
+        $order->payer_name = $request->get('payer_name');
+        $order->payer_email = $request->get('payer_email');
+        $order->document_type = $request->get('payer_documentType');
+        $order->document_number = $request->get('payer_document');
+        $order->payer_phone = $request->get('payer_phone');
+        $order->payer_address = $request->get('payer_address');
+        $order->payer_city = $request->get('payer_city');
+        $order->payer_state = $request->get('payer_state');
+        $order->payer_postal = $request->get('payer_postal');
+
+        return $order;
     }
 
     /**
@@ -57,8 +70,7 @@ class OrderController extends Controller
     {
         $userId = auth()->id();
 
-        if (\Cart::session($userId)->getContent()->count() == 0)
-        {
+        if (\Cart::session($userId)->getContent()->count() == 0) {
             return redirect()->route('home');
         }
 
@@ -73,10 +85,11 @@ class OrderController extends Controller
      */
     public function index(User $user): View
     {
-
         $this->authorize('view', $user);
 
         $orders = $user->orders;
+
+        Log::info('order.index', ['user' => auth()->user()]);
 
         return view('order.index', compact('orders'));
     }
@@ -84,11 +97,10 @@ class OrderController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param OrderRequest $request
      * @return RedirectResponse
      */
-    public function store(OrderRequest $request)
+    public function store(OrderRequest $request): RedirectResponse
     {
         $userId = auth()->id();
 
@@ -99,24 +111,16 @@ class OrderController extends Controller
         $order->user_id = $userId;
         $order->grand_total = \Cart::session($userId)->getTotal();
         $order->item_count = \Cart::session($userId)->getContent()->count();
-
-        $order->payer_name = $request->get('payer_name');
-        $order->payer_email = $request->get('payer_email');
-        $order->document_type = $request->get('payer_documentType');
-        $order->document_number = $request->get('payer_document');
-        $order->payer_phone = $request->get('payer_phone');
-        $order->payer_address = $request->get('payer_address');
-        $order->payer_city = $request->get('payer_city');
-        $order->payer_state = $request->get('payer_state');
-        $order->payer_postal = $request->get('payer_postal');
-
+        $order = $this->getOrderDataFromRequest($order, $request);
         $order->save();
 
         $this->saveOrderItems($userId, $order);
 
         \Cart::session($userId)->clear();
 
-        return redirect()->route('order.show', $order);
+        Log::info('order.store', ['user' => auth()->user(), 'order' => $order->id]);
+
+        return redirect()->route('orders.show', $order);
     }
 
     /**
@@ -126,17 +130,17 @@ class OrderController extends Controller
      */
     public function show(Order $order): View
     {
-
         $this->authorize('view', $order);
 
         $items = $order->items()->get();
 
-        return view('order.confirm', compact('items','order'));
+        Log::info('order.show', ['user' => auth()->user(), 'order' => $order->id]);
+
+        return view('order.show', compact('items', 'order'));
     }
 
     /**
      * Show the form for editing the Order.
-     *
      * @param Order $order
      * @return View
      * @throws AuthorizationException
@@ -147,74 +151,45 @@ class OrderController extends Controller
 
         $items = $order->items()->get();
 
-        return view('order.edit', compact( 'items' ,'order' ));
+        return view('order.edit', compact('items', 'order'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
      * @param OrderRequest $request
      * @param Order $order
-     * @return Response
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(OrderRequest $request, Order $order)
+    public function update(OrderRequest $request, Order $order): RedirectResponse
     {
-        $order->payer_name = $request->get('payer_name');
-        $order->payer_email = $request->get('payer_email');
-        $order->document_type = $request->get('payer_documentType');
-        $order->document_number = $request->get('payer_document');
-        $order->payer_phone = $request->get('payer_phone');
-        $order->payer_address = $request->get('payer_address');
-        $order->payer_city = $request->get('payer_city');
-        $order->payer_state = $request->get('payer_state');
-        $order->payer_postal = $request->get('payer_postal');
+        $this->authorize('update', $order);
 
-        $order->save();
+        $order = $this->getOrderDataFromRequest($order, $request);
+        $order->update();
 
-        return redirect()->route('order.index', $order->user_id)
+        Log::info('order.update', ['user' => auth()->user(), 'order' => $order->id]);
+
+        return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido actualizada');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param Order $order
-     * @return Response
+     * @return RedirectResponse
      * @throws AuthorizationException
+     * @throws \Exception
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order): RedirectResponse
     {
         $this->authorize('delete', $order);
 
         $order->delete();
 
-        return redirect()->route('order.index', $order->user_id)
+        Log::warning('order.delete', ['user' => auth()->user(), 'order' => $order->id]);
+
+        return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido eliminada');
-    }
-
-    /**
-     * @param Order $order
-     * @param PlacetoPay $placetopay
-     * @return Redirector
-     * @throws AuthorizationException
-     * @throws PlacetoPayException
-     */
-    public function pay(Order $order, PlacetoPay $placetopay)
-    {
-        $this->authorize('pay', $order);
-
-        $requestUser = new P2PRequest($order);
-
-        $response = $placetopay->request($requestUser->create());
-
-        $order->update([
-            'processUrl' => $response->processUrl(),
-            'requestID' => $response->requestId(),
-            'status' => $response->status()->status(),
-        ]);
-
-        dd($order);
-
-        return redirect()->away($response->processUrl());
     }
 }

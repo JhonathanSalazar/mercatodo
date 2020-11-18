@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
 
             $table->string('order_reference')->unique();
             $table->unsignedBigInteger('user_id');
-            $table->string('status')->default('PENDING');
+            $table->string('status')->nullable();
             $table->string('reason')->nullable();
             $table->text('message')->nullable();
             $table->bigInteger('grand_total');

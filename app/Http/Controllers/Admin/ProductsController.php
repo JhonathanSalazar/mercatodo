@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-use App\Tag;
-use App\Product;
-use App\Category;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Entities\Tag;
+use App\Entities\Product;
+use App\Entities\Category;
+use Illuminate\Session\Store;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateProductRequest;
-use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
-
 
 class ProductsController extends Controller
 {
@@ -37,17 +37,20 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Product $product
      * @return View
      */
-    public function index(Product $product): View
+    public function index(): View
     {
         $products = Product::all();
+
+        Log::info('admin.products.index', ['id' => auth()->id()]);
+
         return view('admin.products.index', compact('products'));
     }
 
     /**
      * Display the specified resource.
+     *
      * @param Product $product
      * @return View
      */
@@ -58,6 +61,7 @@ class ProductsController extends Controller
 
     /**
      * Store the specified resource.
+     *
      * @param Request $request
      * @return RedirectResponse
      * @throws ValidationException
@@ -67,7 +71,6 @@ class ProductsController extends Controller
         $attributes = $this->validate($request, ['name' => 'required']);
 
         $userId = array('user_id' => auth()->id());
-
         $attributes = array_merge($attributes, $userId);
 
         $product = Product::create($attributes);
@@ -77,13 +80,13 @@ class ProductsController extends Controller
 
     /**
      * Store the specified resource.
+     *
      * @param Product $product
      * @param UpdateProductRequest $request
      * @return RedirectResponse
      */
-    public function update(Product $product ,UpdateProductRequest $request): RedirectResponse
+    public function update(Product $product, UpdateProductRequest $request): RedirectResponse
     {
-
         $product->name = $request->get('name');
         $product->user_id = auth()->id();
         $product->ean = $request->get('ean');
@@ -93,9 +96,8 @@ class ProductsController extends Controller
         $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));
 
-        if($request->file('image'))
-        {
-            if($product->image) {
+        if ($request->file('image')) {
+            if ($product->image) {
                 Storage::delete($product->image);
             }
 
@@ -105,7 +107,7 @@ class ProductsController extends Controller
                 ->limitColors(255)
                 ->encode();
 
-            Storage::put($product->image, (string) $img);
+            Storage::put($product->image, (string)$img);
         }
 
         $product->save();
@@ -117,11 +119,13 @@ class ProductsController extends Controller
 
     /**
      *  Show the edit form of the specified resource.
+     *
      * @param Product $product
      * @return View
      */
     public function edit(Product $product): View
     {
+        // Tomarlo desde Cache
         $categories = Category::all();
         $tags = Tag::all();
 
@@ -130,13 +134,13 @@ class ProductsController extends Controller
 
     /**
      *  Delete the resource and their relations.
+     *
      * @param Product $product
      * @return RedirectResponse
      * @throws Exception
      */
     public function destroy(Product $product): RedirectResponse
     {
-
         $product->delete();
 
         return redirect()

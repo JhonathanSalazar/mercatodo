@@ -3,8 +3,7 @@
 
 namespace App\Classes;
 
-
-use App\Order;
+use App\Entities\Order;
 use http\Client\Request;
 
 class P2PRequest
@@ -27,7 +26,7 @@ class P2PRequest
                 ],
             ],
             'expiration' => date('c', strtotime('+2 days')),
-            'returnUrl' => route('payment.show', $order),
+            'returnUrl' => route('payments.show', $order),
             'ipAddress' => \Request::ip(),
             'userAgent' => \Request::header('User-Agent'),
         ];
@@ -40,5 +39,4 @@ class P2PRequest
     {
         return $this->p2pRequest;
     }
-
 }

@@ -11,27 +11,28 @@
                 <h4 class="title"><span class="text"><strong>CUENTA</strong> Y DATOS DE FACTURA</span></h4>
             </div>
         </div>
-        @if($errors->any())
-            <ul class="list-group">
-                @foreach($errors->all() as $error)
-                    <li class="list-group-item list-group-item-danger">
-                        {{ $error }}
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-        <form action="{{ route('order.store') }}" method="POST" class="py-3">
+        <form action="{{ route('orders.store') }}" method="POST" class="py-3">
             @CSRF
             <div class="row">
                 <div class="col-4 offset-1">
                     <h4>Información personal</h4>
                     <div class="form-group">
                         <label>Nombre Completo:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_name" placeholder="Jhonathan Salazar">
+                        <input name="payer_name"
+                               type="text"
+                               value="{{ old('payer_name') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Nombre completo">
+                        {!! $errors->first('payer_name', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Correo electronico:</label>
-                        <input type="email" class="form-control form-control-sm" name="payer_email" placeholder="me@email.com">
+                        <input name="payer_email"
+                               type="email"
+                               value="{{ old('payer_email') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Dirección correo electrónico">
+                        {!! $errors->first('payer_email', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Tipo de documento:</label>
@@ -40,33 +41,64 @@
                             <option value="CC">Cedula de ciudadania</option>
                             <option value="DI">Documento de identidad</option>
                         </select>
+                        {!! $errors->first('payer_documentType', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Número de Documento:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_document">
+                        <input name="payer_document"
+                               type="text"
+                               value="{{ old('payer_document') }}"
+                               class="form-control form-control-sm"
+                               placeholder="# Documento">
+                        {!! $errors->first('payer_document', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Celular:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_phone" placeholder="3131112222">
+                        <input name="payer_phone"
+                               type="text"
+                               value="{{ old('payer_phone') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Número de celular">
+                        {!! $errors->first('payer_phone', '<span class="alert-danger">:message</span>') !!}
                     </div>
                 </div>
                 <div class="col-4 offset-2">
                     <h4>Tu dirección</h4>
                     <div class="form-group">
                         <label>Dirección:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_address" placeholder="Kr 99 N 99 - 99">
+                        <input name="payer_address"
+                               type="text"
+                               value="{{ old('payer_address') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Dirección de envío">
+                        {!! $errors->first('payer_address', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Ciudad:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_city" placeholder="Medellin">
+                        <input name="payer_city"
+                               type="text"
+                               value="{{ old('payer_city') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Ciudad de envío">
+                        {!! $errors->first('payer_city', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Departamento:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_state" placeholder="Antioquia">
+                        <input name="payer_state"
+                               type="text"
+                               value="{{ old('payer_state') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Departamento de envío">
+                        {!! $errors->first('payer_state', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                         <label>Código Postal:</label>
-                        <input type="text" class="form-control form-control-sm" name="payer_postal" placeholder="050030">
+                        <input name="payer_postal"
+                               type="text"
+                               value="{{ old('payer_postal') }}"
+                               class="form-control form-control-sm"
+                               placeholder="Código postal">
+                        {!! $errors->first('payer_postal', '<span class="alert-danger">:message</span>') !!}
                     </div>
                     <div class="form-group">
                     <p>Despachos dispones para Colombia solamente</p>

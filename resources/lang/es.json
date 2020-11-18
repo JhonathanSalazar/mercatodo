@@ -13,5 +13,9 @@
  "E-Mail Address": "Correo electronico",
  "Password": "Contraseña",
  "Confirm Password": "Confirma la contraseña",
- "Send Password Reset Link": "Reestablecer contraseña"
+ "Send Password Reset Link": "Reestablecer contraseña",
+ "APPROVED": "Aprobado",
+ "PENDING": "Pendiente",
+ "REJECTED": "Rechazado",
+ "product-export": "Exportación de producto"
 }
