@@ -33,11 +33,11 @@
         <div class="box-body">
             <table id="users-table" class="table table-bordered table-striped text-center">
                 <thead>
-                    <tr>
-                        <th>Tipo</th>
-                        <th>Fecha Creación</th>
-                        <th>Acción</th>
-                    </tr>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Fecha Creación</th>
+                    <th>Acción</th>
+                </tr>
                 </thead>
                 <tbody>
                 @foreach($reports as $report)

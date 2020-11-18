@@ -12,6 +12,19 @@ use Illuminate\Support\Carbon;
 class ProductsExportController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware([
+            'auth',
+            'role:Admin'
+        ]);
+    }
+
+    /**
      * @return RedirectResponse
      */
     public function export(): RedirectResponse

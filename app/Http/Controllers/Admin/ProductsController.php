@@ -23,6 +23,7 @@ class ProductsController extends Controller
 
     /**
      * Create a new controller instance.
+     *
      * @return void
      */
     public function __construct()
@@ -35,6 +36,7 @@ class ProductsController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @return View
      */
     public function index(): View
@@ -48,6 +50,7 @@ class ProductsController extends Controller
 
     /**
      * Display the specified resource.
+     *
      * @param Product $product
      * @return View
      */
@@ -58,6 +61,7 @@ class ProductsController extends Controller
 
     /**
      * Store the specified resource.
+     *
      * @param Request $request
      * @return RedirectResponse
      * @throws ValidationException
@@ -76,6 +80,7 @@ class ProductsController extends Controller
 
     /**
      * Store the specified resource.
+     *
      * @param Product $product
      * @param UpdateProductRequest $request
      * @return RedirectResponse
@@ -102,7 +107,7 @@ class ProductsController extends Controller
                 ->limitColors(255)
                 ->encode();
 
-            Storage::put($product->image, (string) $img);
+            Storage::put($product->image, (string)$img);
         }
 
         $product->save();
@@ -114,6 +119,7 @@ class ProductsController extends Controller
 
     /**
      *  Show the edit form of the specified resource.
+     *
      * @param Product $product
      * @return View
      */
@@ -128,6 +134,7 @@ class ProductsController extends Controller
 
     /**
      *  Delete the resource and their relations.
+     *
      * @param Product $product
      * @return RedirectResponse
      * @throws Exception

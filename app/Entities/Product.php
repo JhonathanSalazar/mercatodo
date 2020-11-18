@@ -108,5 +108,4 @@ class Product extends Model
         return "/storage/" . $this->image;
     }
 
-
 }

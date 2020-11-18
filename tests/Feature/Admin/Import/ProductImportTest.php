@@ -58,6 +58,8 @@ class ProductImportTest extends TestCase
     }
 
     /**
+     * Return the products import route.
+     *
      * @return string
      */
     private function getRoute(): string
@@ -66,6 +68,8 @@ class ProductImportTest extends TestCase
     }
 
     /**
+     * Return the UploadedFile.
+     *
      * @param string $filename
      * @return UploadedFile
      */
