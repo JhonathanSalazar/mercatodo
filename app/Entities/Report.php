@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Report extends Model
 {
-    protected $fillable  = [
+    protected $fillable = [
         'type',
         'file_path',
         'created_by',
@@ -21,5 +21,15 @@ class Report extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Get the report file route correctly.
+     *
+     * @return string
+     */
+    public function getFileRoute(): string
+    {
+        return '/storage/' . $this->file_path;
     }
 }

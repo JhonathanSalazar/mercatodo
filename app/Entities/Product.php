@@ -59,7 +59,7 @@ class Product extends Model
     {
         parent::boot();
 
-        static::deleting(function($product){
+        static::deleting(function ($product) {
             Storage::delete($product->image);
             $product->tags()->detach();
         });
@@ -73,7 +73,7 @@ class Product extends Model
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
-            ->where('category_id', '=',2)
+            ->where('category_id', '=', 2)
             ->orderBy('published_at', 'desc')
             ->limit(4);
     }
@@ -82,18 +82,24 @@ class Product extends Model
      * Return the last products published
      * @param Builder $query
      */
-    public function scopeLastHome(Builder $query)
+    public function scopeLastHome(Builder $query): void
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
-            ->where('category_id', '=',3)
+            ->where('category_id', '=', 3)
             ->orderBy('published_at', 'desc')
             ->with('category')
             ->limit(4);
     }
 
 
-    public function getImageUrlAttribute() {
+    /**
+     * Get the url attribute correctly.
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute(): string
+    {
 
         if ($this->image == null) {
             return "/storage/images/default.jpeg";

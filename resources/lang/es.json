@@ -16,5 +16,6 @@
  "Send Password Reset Link": "Reestablecer contraseña",
  "APPROVED": "Aprobado",
  "PENDING": "Pendiente",
- "REJECTED": "Rechazado"
+ "REJECTED": "Rechazado",
+ "product-export": "Exportación de producto"
 }

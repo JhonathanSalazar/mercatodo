@@ -36,7 +36,7 @@ class NotifyUserOfCompletedExport implements ShouldQueue
     public function handle(): void
     {
         Report::create([
-            'type' => 'export',
+            'type' => 'product-export',
             'file_path' => $this->filePath,
             'created_by' => $this->user->id
         ]);

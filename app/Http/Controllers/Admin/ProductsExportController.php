@@ -17,7 +17,7 @@ class ProductsExportController extends Controller
     public function export(): RedirectResponse
     {
         $user = auth()->user();
-        $now = Carbon::now()->isoFormat('YYYY-MM-DD');
+        $now = Carbon::now()->isoFormat('YYYY-MM-DD_HH-mm');
         $filePath = 'exports/products-' . $now . '.xlsx';
 
         (new ProductExport(auth()->user()))->store($filePath)
