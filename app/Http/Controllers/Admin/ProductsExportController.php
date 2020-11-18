@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Report;
 use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
 use App\Jobs\NotifyUserOfCompletedExport;
@@ -15,13 +16,14 @@ class ProductsExportController extends Controller
      */
     public function export(): RedirectResponse
     {
+        $user = auth()->user();
         $now = Carbon::now()->isoFormat('YYYY-MM-DD');
-        $filePath = 'exports/' . 'products-' . $now . '.xlsx';
+        $filePath = 'exports/products-' . $now . '.xlsx';
 
         (new ProductExport(auth()->user()))->store($filePath)
-            ->chain([new NotifyUserOfCompletedExport(auth()->user(), $filePath) ]);
+            ->chain([new NotifyUserOfCompletedExport($user, $filePath)]);
 
-        return back()->with('status','La lista de productos se ha descargado');
+        return back()->with('status','Será notificado cuando el proceso termine');
     }
 
 }

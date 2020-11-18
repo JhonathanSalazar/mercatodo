@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Entities\User;
+use App\Entities\Report;
 use App\Notifications\ExportReady;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,29 +14,33 @@ class NotifyUserOfCompletedExport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
-    public $user;
-    public $filePath;
+    protected $user;
+    protected $filePath;
 
     /**
      * Create a new job instance.
-     * @param User $auth
+     *
+     * @param $user
      * @param string $filePath
      */
-    public function __construct(User $auth, string $filePath)
+    public function __construct($user, string $filePath)
     {
-        $this->user = $auth;
+        $this->user = $user;
         $this->filePath = $filePath;
     }
 
 
     /**
-     * Notified the export ready.
-     *
-     * @return void
+     * Execute the job.
      */
-    public function handle()
+    public function handle(): void
     {
+        Report::create([
+            'type' => 'export',
+            'file_path' => $this->filePath,
+            'created_by' => $this->user->id
+        ]);
+
         $this->user->notify(new ExportReady());
     }
 }

@@ -42,7 +42,7 @@ class ExportReady extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Su exportación ha finalizado, descargue en sección de reportes'
+            'message' => 'Exportación finalizada, ver en reportes.',
         ];
     }
 }

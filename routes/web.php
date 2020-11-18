@@ -44,6 +44,11 @@ Route::group(['prefix' => 'admin'],
         Route::put('products/{product}', 'Admin\ProductsController@update')->name('admin.products.update');
         Route::delete('products/{product}','Admin\ProductsController@destroy')->name('admin.products.destroy');
 
+        Route::get('notifications', 'Admin\NotificationsController@index')->name('admin.notification.index');
+        Route::patch('notifications/{notification}', 'Admin\NotificationsController@read')->name('admin.notification.read');
+
+        Route::get('reports','Admin\ReportsController@index')->name('admin.reports.index');
+
     });
 
 Route::get('accounts/{user}','Customer\UserDataController@edit')->name('pages.user-account.edit');

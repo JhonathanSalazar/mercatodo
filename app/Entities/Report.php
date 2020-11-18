@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Report extends Model
 {
-    protected $fillable  = ['file_path', 'created_by'];
-
+    protected $fillable  = [
+        'type',
+        'file_path',
+        'created_by',
+    ];
 
     /**
      * Relation belong to Users
