@@ -2,7 +2,10 @@
 
 namespace App\Entities;
 
+use App\Traits\HasSorts;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +16,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
-    use Searchable, SoftDeletes;
+    use Searchable, SoftDeletes, HasSorts;
+
+
+    /**
+     * Allowed sorts fields for API.
+     *
+     * @var array|string[]
+     */
+    //public array $allowedSorts = ['name', 'branch'];
+
 
     /**
      * @var array
@@ -55,7 +67,7 @@ class Product extends Model
     /**
      * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -69,7 +81,7 @@ class Product extends Model
      * Return the featured products published
      * @param Builder $query
      */
-    public function scopeFeaturedHome(Builder $query): void
+    public function scopeFeaturedHome(Builder $query)
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
@@ -82,7 +94,7 @@ class Product extends Model
      * Return the last products published
      * @param Builder $query
      */
-    public function scopeLastHome(Builder $query): void
+    public function scopeLastHome(Builder $query)
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())

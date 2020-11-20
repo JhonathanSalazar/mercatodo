@@ -6,14 +6,23 @@ use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
 
 
-    public function index()
+    /**
+     * Return the models via API.
+     *
+     * @return ProductCollection
+     */
+    public function index(): ProductCollection
+
     {
-        return ProductCollection::make(Product::all());
+        $products = Product::applySorts(request('sort'))->get();
+
+        return ProductCollection::make($products);
     }
 
     /**
