@@ -23,7 +23,7 @@ class SortProductTest extends TestCase
             'sort' => 'name'
         ]);
 
-        $this->getJson($url)->assertSeeInOrder([
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'A Name',
             'B Name',
             'C Name',
@@ -43,7 +43,7 @@ class SortProductTest extends TestCase
             'sort' => '-name'
         ]);
 
-        $this->getJson($url)->assertSeeInOrder([
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'C Name',
             'B Name',
             'A Name',
@@ -70,7 +70,7 @@ class SortProductTest extends TestCase
 
         $url = route('api.v1.products.index') . '?sort=name,branch';
 
-        $this->getJson($url)->assertSeeInOrder([
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'A Name',
             'B Name',
             'C Name',
@@ -78,7 +78,7 @@ class SortProductTest extends TestCase
 
         $url = route('api.v1.products.index') . '?sort=-branch,name';
 
-        $this->getJson($url)->assertSeeInOrder([
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'C branch',
             'B branch',
             'A branch',
@@ -94,7 +94,7 @@ class SortProductTest extends TestCase
 
         $url = route('api.v1.products.index') . '?sort=unknown';
 
-        $this->getJson($url)->assertStatus(400);
+        $this->jsonApi()->get($url)->assertStatus(400);
     }
 
 }

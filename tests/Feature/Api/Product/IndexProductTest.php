@@ -18,7 +18,7 @@ class IndexProductTest extends TestCase
     {
         $product = factory(Product::class)->create();
 
-        $response = $this->getJson(route('api.v1.products.show', $product));
+        $response = $this->jsonApi()->get(route('api.v1.products.read', $product));
 
         $response->assertExactJson([
             'data' => [
@@ -29,10 +29,12 @@ class IndexProductTest extends TestCase
                     'ean' => (string)$product->ean,
                     'branch' => $product->branch,
                     'price' => (string)$product->price,
-                    'description' => $product->description
+                    'description' => $product->description,
+                    'created-at' => $product->created_at->toAtomString(),
+                    'updated-at' => $product->updated_at->toAtomString()
                 ],
                 'links' => [
-                    'self' => route('api.v1.products.show', $product)
+                    'self' => route('api.v1.products.read', $product)
                 ],
             ]
         ]);
@@ -46,7 +48,7 @@ class IndexProductTest extends TestCase
     {
         $product = factory(Product::class, 3)->create();
 
-        $response = $this->getJson(route('api.v1.products.index'));
+        $response = $this->jsonApi()->get(route('api.v1.products.index'));
 
         $response->assertJsonFragment([
             'data' => [
@@ -58,10 +60,12 @@ class IndexProductTest extends TestCase
                         'ean' => (string)$product[0]->ean,
                         'branch' => $product[0]->branch,
                         'price' => (string)$product[0]->price,
-                        'description' => $product[0]->description
+                        'description' => $product[0]->description,
+                        'created-at' => $product[0]->created_at->toAtomString(),
+                        'updated-at' => $product[0]->updated_at->toAtomString()
                     ],
                     'links' => [
-                        'self' => route('api.v1.products.show', $product[0])
+                        'self' => route('api.v1.products.read', $product[0])
                     ]
                 ],
                 [
@@ -72,10 +76,12 @@ class IndexProductTest extends TestCase
                         'ean' => (string)$product[1]->ean,
                         'branch' => $product[1]->branch,
                         'price' => (string)$product[1]->price,
-                        'description' => $product[1]->description
+                        'description' => $product[1]->description,
+                        'created-at' => $product[1]->created_at->toAtomString(),
+                        'updated-at' => $product[1]->updated_at->toAtomString()
                     ],
                     'links' => [
-                        'self' => route('api.v1.products.show', $product[1])
+                        'self' => route('api.v1.products.read', $product[1])
                     ]
                 ],
                 [
@@ -86,10 +92,12 @@ class IndexProductTest extends TestCase
                         'ean' => (string)$product[2]->ean,
                         'branch' => $product[2]->branch,
                         'price' => (string)$product[2]->price,
-                        'description' => $product[2]->description
+                        'description' => $product[2]->description,
+                        'created-at' => $product[2]->created_at->toAtomString(),
+                        'updated-at' => $product[2]->updated_at->toAtomString()
                     ],
                     'links' => [
-                        'self' => route('api.v1.products.show', $product[2])
+                        'self' => route('api.v1.products.read', $product[2])
                     ]
                 ]
             ],

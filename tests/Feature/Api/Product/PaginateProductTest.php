@@ -15,13 +15,11 @@ class PaginateProductTest extends TestCase
      */
     public function canFetchPaginatedProducts()
     {
-        $this->withoutExceptionHandling();
-
         $products = factory(Product::class, 10)->create();
 
         $url = route('api.v1.products.index', ['page[size]' => 2, 'page[number]' => 3]);
 
-        $response = $this->getJson($url);
+        $response = $this->jsonApi()->get($url);
 
         $response->assertJsonCount(2, 'data')
             ->assertDontSee($products[0]->name)
@@ -40,10 +38,10 @@ class PaginateProductTest extends TestCase
         ]);
 
         $response->assertJsonFragment([
-            'first' => route('api.v1.products.index', ['page[size]' => 2, 'page[number]' => 1]),
-            'last' => route('api.v1.products.index', ['page[size]' => 2, 'page[number]' => 5]),
-            'prev' => route('api.v1.products.index', ['page[size]' => 2, 'page[number]' => 2]),
-            'next' => route('api.v1.products.index', ['page[size]' => 2, 'page[number]' => 4]),
+            'first' => route('api.v1.products.index', ['page[number]' => 1, 'page[size]' => 2]),
+            'last' => route('api.v1.products.index', ['page[number]' => 5, 'page[size]' => 2]),
+            'prev' => route('api.v1.products.index', ['page[number]' => 2, 'page[size]' => 2]),
+            'next' => route('api.v1.products.index', ['page[number]' => 4, 'page[size]' => 2]),
 
         ]);
 

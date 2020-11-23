@@ -15,22 +15,6 @@ class Product extends Model
 {
     use Searchable, SoftDeletes;
 
-
-    /**
-     * Type of API Object.
-     *
-     * @var string
-     */
-    public string $type = 'products';
-
-    /**
-     * Allowed sorts fields for API.
-     *
-     * @var array|string[]
-     */
-    public array $allowedSorts = ['name', 'branch'];
-
-
     /**
      * @var array
      */
