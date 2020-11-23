@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature\Api\Product;
+namespace Tests\Feature\Api\Products;
 
 use App\Entities\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class IndexProductTest extends TestCase
+class ListProductTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
      * @test
      */
-    public function can_fetch_single_product()
+    public function canFetchSingleProduct()
     {
         $product = factory(Product::class)->create();
 
@@ -44,7 +44,7 @@ class IndexProductTest extends TestCase
     /**
      * @test
      */
-    public function can_fetch_all_products()
+    public function canFetchAllProducts()
     {
         $product = factory(Product::class, 3)->create();
 

@@ -20,10 +20,8 @@ class Authorizer extends AbstractAuthorizer
      * @param Request $request
      *      the inbound request.
      * @return void
-     * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
      */
-    public function index($type, $request)
+    public function index($type, $request): void
     {
         // TODO: Implement index() method.
     }
@@ -36,10 +34,10 @@ class Authorizer extends AbstractAuthorizer
      * @param Request $request
      *      the inbound request.
      * @return void
-     * @throws AuthenticationException|AuthorizationException
+     * @throws AuthenticationException
      *      if the request is not authorized.
      */
-    public function create($type, $request)
+    public function create($type, $request): void
     {
         $this->authenticate();
     }
@@ -54,7 +52,7 @@ class Authorizer extends AbstractAuthorizer
      * @return void
      *      if the request is not authorized.
      */
-    public function read($record, $request)
+    public function read($record, $request): void
     {
         // TODO: Implement read() method.
     }
@@ -68,7 +66,7 @@ class Authorizer extends AbstractAuthorizer
      * @return void
      * @throws AuthenticationException if the request is not authorized.
      */
-    public function update($product, $request)
+    public function update($product, $request): void
     {
         $this->authenticate();
     }
@@ -81,10 +79,9 @@ class Authorizer extends AbstractAuthorizer
      * @param Request $request
      *      the inbound request.
      * @return void
-     * @throws AuthenticationException|AuthorizationException
-     *      if the request is not authorized.
+     * @throws AuthenticationException if the request is not authorized.
      */
-    public function delete($record, $request)
+    public function delete($record, $request): void
     {
         $this->authenticate();
     }

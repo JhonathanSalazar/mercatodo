@@ -66,6 +66,7 @@ return [
     | `'posts' => App\Post::class`
     */
     'resources' => [
+        'categories' => \App\Entities\Category::class,
         'products' => \App\Entities\Product::class,
     ],
 
