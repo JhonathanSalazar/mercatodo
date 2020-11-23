@@ -4,36 +4,33 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Entities\Product;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductCollection;
-use App\Http\Resources\ProductResource;
-use Illuminate\Support\Str;
+use App\Http\Resources\ResourceCollection;
+use App\Http\Resources\ResourceObject;
 
 class ProductController extends Controller
 {
 
-
     /**
      * Return the models via API.
      *
-     * @return ProductCollection
+     * @return ResourceCollection
      */
-    public function index(): ProductCollection
-
+    public function index(): ResourceCollection
     {
-        $products = Product::applySorts(request('sort'))->get();
+        $products = Product::applySorts()->jsonPaginate();
 
-        return ProductCollection::make($products);
+        return ResourceCollection::make($products);
     }
 
     /**
      * Return a specific model via API.
      *
      * @param Product $product
-     * @return ProductResource
+     * @return ResourceObject
      */
-    public function show(Product $product): ProductResource
+    public function show(Product $product): ResourceObject
     {
-        return ProductResource::make($product);
+        return ResourceObject::make($product);
     }
 
 

@@ -2,10 +2,7 @@
 
 namespace App\Entities;
 
-use App\Traits\HasSorts;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -16,15 +13,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
-    use Searchable, SoftDeletes, HasSorts;
+    use Searchable, SoftDeletes;
 
+
+    /**
+     * Type of API Object.
+     *
+     * @var string
+     */
+    public string $type = 'products';
 
     /**
      * Allowed sorts fields for API.
      *
      * @var array|string[]
      */
-    //public array $allowedSorts = ['name', 'branch'];
+    public array $allowedSorts = ['name', 'branch'];
 
 
     /**
@@ -44,6 +48,22 @@ class Product extends Model
     public function showUrl(): string
     {
         return "/admin/products/{$this->id}";
+    }
+
+    /**
+     * Returns the attributes required in the API.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return [
+            'name' => $this->name,
+            'ean' => (string)$this->ean,
+            'branch' => $this->branch,
+            'price' => (string)$this->price,
+            'description' => $this->description
+        ];
     }
 
     /**
