@@ -25,8 +25,7 @@ class CreateProductsTest extends TestCase
                 'attributes' => $product
             ]
         ])->post(route('api.v1.products.create'))
-            ->assertStatus(401)
-            ->dump();
+            ->assertStatus(401);
 
         $this->assertDatabaseMissing('products', $product);
     }

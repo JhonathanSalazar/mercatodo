@@ -3,6 +3,7 @@
 namespace App\JsonApi\Products;
 
 use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
+use Illuminate\Validation\Rule;
 
 class Validators extends AbstractValidators
 {
@@ -45,7 +46,10 @@ class Validators extends AbstractValidators
             'description' => 'required',
             'branch' => 'required',
             'price' => 'required|integer',
-            'ean' => ['required', 'unique:products']
+            'ean' => [
+                'required',
+                Rule::unique('products')->ignore($record)
+            ]
         ];
     }
 
