@@ -21,6 +21,7 @@ class IncludeCategoriesTest extends TestCase
         $category = factory(Category::class)->create();
         $product = factory(Product::class)->create();
         $product->category_id = $category->id;
+        $product->save();
 
         $this->jsonApi()
             ->includePaths('categories')
@@ -42,6 +43,8 @@ class IncludeCategoriesTest extends TestCase
         $category = factory(Category::class)->create();
         $product = factory(Product::class)->create();
         $product->category_id = $category->id;
+        $product->save();
+
 
         $this->jsonApi()
             ->get(route('api.v1.products.relationships.categories', $product))

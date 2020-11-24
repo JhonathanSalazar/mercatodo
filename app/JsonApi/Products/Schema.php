@@ -36,6 +36,7 @@ class Schema extends SchemaProvider
             'branch' => $product->branch,
             'price' => (string)$product->price,
             'description' => $product->description,
+            'category_id' => $product->category_id,
             'created-at' => $product->created_at->toAtomString(),
             'updated-at' => $product->updated_at->toAtomString()
         ];
