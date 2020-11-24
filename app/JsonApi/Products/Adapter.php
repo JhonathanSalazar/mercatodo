@@ -2,15 +2,22 @@
 
 namespace App\JsonApi\Products;
 
+use App\Entities\Product;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
+use CloudCreativity\LaravelJsonApi\Eloquent\BelongsTo;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class Adapter extends AbstractAdapter
 {
 
     protected $guarded = ['id'];
+
+    protected $includePaths = [
+        'categories' => 'category'
+    ];
 
     /**
      * Mapping of JSON API attribute field names to model keys.
@@ -33,7 +40,7 @@ class Adapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Entities\Product(), $paging);
+        parent::__construct(new Product(), $paging);
     }
 
     /**
@@ -41,15 +48,29 @@ class Adapter extends AbstractAdapter
      * @param Collection $filters
      * @return void
      */
-    protected function filter($query, Collection $filters)
+    protected function filter($query, Collection $filters): void
     {
         $this->filterWithScopes($query, $filters);
     }
 
-    protected function fillAttributes($product, Collection $attributes)
+    /**
+     * @param Model $product
+     * @param Collection $attributes
+     */
+    protected function fillAttributes($product, Collection $attributes): void
     {
         $product->fill($attributes->toArray());
         $product->user_id = auth()->id();
+    }
+
+    /**
+     * Return the category relationship adapted.
+     *
+     * @return BelongsTo
+     */
+    public function categories()
+    {
+        return $this->belongsTo('category');
     }
 
 }

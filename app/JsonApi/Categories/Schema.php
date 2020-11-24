@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\Categories;
 
+use App\Entities\Category;
 use Neomerx\JsonApi\Schema\SchemaProvider;
 
 class Schema extends SchemaProvider
@@ -13,7 +14,7 @@ class Schema extends SchemaProvider
     protected $resourceType = 'categories';
 
     /**
-     * @param \App\Entities\Category $resource
+     * @param Category $resource
      *      the domain record being serialized.
      * @return string
      */
@@ -23,7 +24,7 @@ class Schema extends SchemaProvider
     }
 
     /**
-     * @param \App\Entities\Category $resource
+     * @param Category $resource
      *      the domain record being serialized.
      * @return array
      */
@@ -32,6 +33,28 @@ class Schema extends SchemaProvider
         return [
             'name' => $resource->name,
             'url' => $resource->url,
+        ];
+    }
+
+    /**
+     * Return the relationship in category->products in the API.
+     *
+     * @param object $category
+     * @param bool $isPrimary
+     * @param array $includeRelationships
+     * @return array|array[]
+     */
+    public function getRelationships($category, $isPrimary, array $includeRelationships)
+    {
+        return [
+            'products' => [
+                self::SHOW_RELATED => true,
+                self::SHOW_SELF => true,
+                self::SHOW_DATA => isset($includeRelationships['products']),
+                self::DATA => function() use ($category) {
+                    return $category->products;
+                }
+            ]
         ];
     }
 }

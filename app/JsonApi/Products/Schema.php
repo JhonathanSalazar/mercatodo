@@ -40,4 +40,26 @@ class Schema extends SchemaProvider
             'updated-at' => $product->updated_at->toAtomString()
         ];
     }
+
+    /**
+     * Return the relationship in category->products in the API.
+     *
+     * @param object $category
+     * @param bool $isPrimary
+     * @param array $includeRelationships
+     * @return array|array[]
+     */
+    public function getRelationships($product, $isPrimary, array $includeRelationships)
+    {
+        return [
+            'categories' => [
+                self::SHOW_RELATED => true,
+                self::SHOW_SELF => true,
+                self::SHOW_DATA => isset($includeRelationships['categories']),
+                self::DATA => function() use ($product) {
+                    return $product->category;
+                }
+            ]
+        ];
+    }
 }

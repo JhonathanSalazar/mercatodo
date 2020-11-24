@@ -20,7 +20,7 @@ class ListProductTest extends TestCase
 
         $response = $this->jsonApi()->get(route('api.v1.products.read', $product));
 
-        $response->assertExactJson([
+        $response->assertJson([
             'data' => [
                 'type' => 'products',
                 'id' => (string)$product->getRouteKey(),
@@ -50,7 +50,7 @@ class ListProductTest extends TestCase
 
         $response = $this->jsonApi()->get(route('api.v1.products.index'));
 
-        $response->assertJsonFragment([
+        $response->assertJson([
             'data' => [
                 [
                     'type' => 'products',

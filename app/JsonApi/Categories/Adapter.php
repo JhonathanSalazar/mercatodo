@@ -2,7 +2,10 @@
 
 namespace App\JsonApi\Categories;
 
+use App\Entities\Category;
+use App\Entities\Product;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
+use CloudCreativity\LaravelJsonApi\Eloquent\HasMany;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -31,7 +34,7 @@ class Adapter extends AbstractAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new \App\Entities\Category(), $paging);
+        parent::__construct(new Category(), $paging);
     }
 
     /**
@@ -42,6 +45,16 @@ class Adapter extends AbstractAdapter
     protected function filter($query, Collection $filters)
     {
         $this->filterWithScopes($query, $filters);
+    }
+
+    /**
+     * Adapt the relation to show in the API.
+     *
+     * @return HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany();
     }
 
 }

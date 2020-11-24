@@ -40,11 +40,12 @@ class ListCategoriesTest extends TestCase
      */
     public function canFetchAllCategories()
     {
+        $this->withoutExceptionHandling();
         $categories = factory(Category::class, 3)->create();
 
         $response = $this->jsonApi()->get(route('api.v1.categories.index'));
 
-        $response->assertJsonFragment([
+        $response->assertJson([
             'data' => [
                 [
                     'type' => 'categories',

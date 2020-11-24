@@ -16,7 +16,13 @@ use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 
 JsonApi::register('v1')->routes(function ($api) {
     $api->resource('products');
+    $api->resource('products')->relationships(function ($api) {
+        $api->hasOne('categories')->except('replace');
+    });
     $api->resource('categories')->only('index', 'read');
+    $api->resource('categories')->relationships(function ($api) {
+        $api->hasMany('products')->except('replace', 'add', 'remove');
+    });
 });
 
 
