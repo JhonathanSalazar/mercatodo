@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Api\Products;
 
+use App\Entities\Category;
 use App\Entities\Product;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -18,7 +18,10 @@ class CreateProductsTest extends TestCase
      */
     public function guestsUserCanCreateProducts()
     {
-        $product = array_filter(factory(Product::class)->raw(['user_id' => null]));
+        $product = array_filter(factory(Product::class)->raw([
+            'category_id' => null,
+            ]));
+
         $this->jsonApi()->content([
             'data' => [
                 'type' => 'products',
@@ -36,19 +39,25 @@ class CreateProductsTest extends TestCase
     public function authenticatedUserCanCreateProducts()
     {
         $user = factory(User::class)->create();
-        $product = array_filter(factory(Product::class)->raw(['user_id' => '']));
+        $product = array_filter(factory(Product::class)->raw([
+            'user_id' => '',
+            'approved' => true // mass assigment check
+        ]));
         $this->assertDatabaseMissing('products', $product);
         Sanctum::actingAs($user);
 
         $this->jsonApi()->content([
             'data' => [
                 'type' => 'products',
-                'attributes' => $product
+                'attributes' => $product,
             ]
         ])->post(route('api.v1.products.create'))
             ->assertCreated();
 
-        $this->assertDatabaseHas('products', $product);
+        $this->assertDatabaseHas('products', [
+            'name' => $product['name'],
+            'branch' => $product['branch']
+        ]);
     }
 
     /**

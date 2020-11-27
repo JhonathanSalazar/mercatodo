@@ -13,7 +13,14 @@ use Illuminate\Support\Collection;
 class Adapter extends AbstractAdapter
 {
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'branch',
+        'price',
+        'ean',
+        'category_id'
+    ];
 
     protected $includePaths = [
         'categories' => 'category'
@@ -59,7 +66,7 @@ class Adapter extends AbstractAdapter
      */
     protected function fillAttributes($product, Collection $attributes): void
     {
-        $product->fill($attributes->toArray());
+        $product->fill($attributes->only($this->fillable)->toArray());
         $product->user_id = auth()->id();
     }
 
