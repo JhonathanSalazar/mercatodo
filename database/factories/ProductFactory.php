@@ -23,6 +23,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'description' => $faker->paragraph,
         'price' => $faker->randomNumber(3) * 100,
         'image' => null,
-        'published_at' => Carbon::yesterday()
+        'published_at' => Carbon::yesterday(),
     ];
 });

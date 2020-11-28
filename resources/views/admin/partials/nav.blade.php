@@ -13,12 +13,14 @@
             <span>Usuarios</span>
         </a>
     </li>
-    <li class="treeview {{ request()->is('admin/products') ? 'class = active' : ''}}">
-        <a href="{{ route('admin.products.index') }}">
-            <i class="fa fa-barcode"></i>
-            <span>Productos</span>
-        </a>
-    </li>
+    @if( auth()->user()->hasPermissionTo(Permissions::VIEW_PRODUCTS) )
+        <li class="treeview {{ request()->is('admin/products') ? 'class = active' : ''}}">
+            <a href="{{ route('admin.products.index') }}">
+                <i class="fa fa-barcode"></i>
+                <span>Productos</span>
+            </a>
+        </li>
+    @endif
     <li class="treeview {{ request()->is('admin/reports') ? 'class = active' : ''}}">
         <a href="{{ route('admin.reports.index') }}">
             <i class="fa fa-download"></i>

@@ -43,26 +43,6 @@ class OrderController extends Controller
     }
 
     /**
-     * @param Order $order
-     * @param OrderRequest $request
-     * @return Order
-     */
-    private function getOrderDataFromRequest(Order $order, OrderRequest $request): Order
-    {
-        $order->payer_name = $request->get('payer_name');
-        $order->payer_email = $request->get('payer_email');
-        $order->document_type = $request->get('payer_documentType');
-        $order->document_number = $request->get('payer_document');
-        $order->payer_phone = $request->get('payer_phone');
-        $order->payer_address = $request->get('payer_address');
-        $order->payer_city = $request->get('payer_city');
-        $order->payer_state = $request->get('payer_state');
-        $order->payer_postal = $request->get('payer_postal');
-
-        return $order;
-    }
-
-    /**
      * Create buyer order (Checkout).
      * @return RedirectResponse|View
      */
@@ -191,5 +171,25 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido eliminada');
+    }
+
+    /**
+     * @param Order $order
+     * @param OrderRequest $request
+     * @return Order
+     */
+    private function getOrderDataFromRequest(Order $order, OrderRequest $request): Order
+    {
+        $order->payer_name = $request->get('payer_name');
+        $order->payer_email = $request->get('payer_email');
+        $order->document_type = $request->get('payer_documentType');
+        $order->document_number = $request->get('payer_document');
+        $order->payer_phone = $request->get('payer_phone');
+        $order->payer_address = $request->get('payer_address');
+        $order->payer_city = $request->get('payer_city');
+        $order->payer_state = $request->get('payer_state');
+        $order->payer_postal = $request->get('payer_postal');
+
+        return $order;
     }
 }

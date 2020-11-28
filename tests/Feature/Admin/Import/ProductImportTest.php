@@ -2,9 +2,12 @@
 
 namespace Tests\Feature\Admin\Import;
 
+use App\Constants\Permissions;
+use App\Constants\PlatformRoles;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -61,12 +64,18 @@ class ProductImportTest extends TestCase
      */
     public function itCannotImportProductDueValidationError()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
+        $viewProductsPermission = Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
+        $updateProductsPermission = Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo([
+            $viewProductsPermission,
+            $updateProductsPermission
+        ]);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
         $importFile = $this->getFile('products-not-validate-import-file.xlsx');
         $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
+
 
         $response->assertViewIs('admin.products.import.errors')
             ->assertSee('El campo nombre es obligatorio.')

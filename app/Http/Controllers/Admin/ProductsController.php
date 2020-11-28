@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Permissions;
 use Exception;
 use Carbon\Carbon;
 use App\Entities\Tag;
 use App\Entities\Product;
 use App\Entities\Category;
-use Illuminate\Session\Store;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -30,7 +31,7 @@ class ProductsController extends Controller
     {
         $this->middleware([
             'auth',
-            'role:Admin'
+            'role:Super|Admin'
         ]);
     }
 
@@ -38,9 +39,12 @@ class ProductsController extends Controller
      * Display a listing of the resource.
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function index(): View
     {
+        $this->authorize('viewAny', Product::class);
+
         $products = Product::all();
 
         Log::info('admin.products.index', ['id' => auth()->id()]);
@@ -53,9 +57,12 @@ class ProductsController extends Controller
      *
      * @param Product $product
      * @return View
+     * @throws AuthorizationException
      */
     public function show(Product $product): View
     {
+        $this->authorize('view', $product);
+
         return view('admin.products.show', compact('product'));
     }
 
@@ -65,9 +72,12 @@ class ProductsController extends Controller
      * @param Request $request
      * @return RedirectResponse
      * @throws ValidationException
+     * @throws AuthorizationException
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Product::class);
+
         $attributes = $this->validate($request, ['name' => 'required']);
 
         $userId = array('user_id' => auth()->id());
@@ -84,9 +94,12 @@ class ProductsController extends Controller
      * @param Product $product
      * @param UpdateProductRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function update(Product $product, UpdateProductRequest $request): RedirectResponse
     {
+        $this->authorize('update', $product);
+
         $product->name = $request->get('name');
         $product->user_id = auth()->id();
         $product->ean = $request->get('ean');
@@ -122,9 +135,12 @@ class ProductsController extends Controller
      *
      * @param Product $product
      * @return View
+     * @throws AuthorizationException
      */
     public function edit(Product $product): View
     {
+        $this->authorize('view', $product);
+
         // Tomarlo desde Cache
         $categories = Category::all();
         $tags = Tag::all();
@@ -141,6 +157,8 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
+        $this->authorize('delete', $product);
+
         $product->delete();
 
         return redirect()
