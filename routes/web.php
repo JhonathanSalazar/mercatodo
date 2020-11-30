@@ -34,6 +34,9 @@ Route::group(['prefix' => 'admin'],
                 'as' => 'admin'
             ]);
 
+        Route::put('users/{user}/roles', 'Admin\UsersRolesController@update')->name('admin.users.roles.update');
+        Route::put('users/{user}/permissions', 'Admin\UsersPermissionsController@update')->name('admin.users.permissions.update');
+
         Route::get('products', 'Admin\ProductsController@index')->name('admin.products.index');
         Route::get('products/create', 'Admin\ProductsController@create')->name('admin.products.create');
         Route::get('products/export', 'Admin\ProductsExportController@export')->name('admin.products.export');
