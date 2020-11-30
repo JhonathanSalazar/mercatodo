@@ -21,7 +21,7 @@ class IndexProductsTest extends TestCase
      */
     public function guestCantIndexProducts()
     {
-        $product = factory(Product::class)->create();
+        factory(Product::class)->create();
 
         $response = $this->get(route('admin.products.index'));
 

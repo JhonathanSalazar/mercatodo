@@ -33,6 +33,9 @@ class UsersTableSeeder extends Seeder
 
         $viewReportPermission = Permission::create(['name' => Permissions::VIEW_REPORTS]);
 
+        $exportPermission = Permission::create(['name' => Permissions::EXPORT]);
+        $importPermission = Permission::create(['name' => Permissions::IMPORT]);
+
         $superRole->givePermissionTo([
             $createProductsPermission,
             $viewProductsPermission,
@@ -40,7 +43,9 @@ class UsersTableSeeder extends Seeder
             $deleteProductsPermission,
             $viewUserPermission,
             $updateUserPermission,
-            $viewReportPermission
+            $viewReportPermission,
+            $exportPermission,
+            $importPermission
         ]);
 
         $super = new User;

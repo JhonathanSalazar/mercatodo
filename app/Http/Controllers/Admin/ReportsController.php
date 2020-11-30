@@ -12,6 +12,20 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReportsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware([
+            'auth',
+            'role:Super|Admin'
+        ]);
+    }
+
     /**
      * Report index view.
      *

@@ -73,11 +73,32 @@ class ProductPolicy
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @param Product $product
      * @return mixed
      */
     public function delete(User $user): bool
     {
         return $user->hasPermissionTo(Permissions::DELETE_PRODUCTS);
+    }
+
+    /**
+     * Determine whether the user can import the model.
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function import(User $user): bool
+    {
+        return $user->hasPermissionTo(Permissions::IMPORT);
+    }
+
+    /**
+     * Determine whether the user can export the model.
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function export(User $user): bool
+    {
+        return $user->hasPermissionTo(Permissions::EXPORT);
     }
 }

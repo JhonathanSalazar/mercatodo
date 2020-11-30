@@ -2,15 +2,43 @@
 
 namespace App\Policies;
 
+use App\Constants\Permissions;
+use App\Constants\PlatformRoles;
 use App\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Spatie\Permission\Models\Permission;
 
 class UserPolicy
 {
     use HandlesAuthorization;
 
     /**
+     * Give the permission to the Super role.
+     *
+     * @param User $user
+     * @return bool|mixed|null
+     */
+    public function before(User $user)
+    {
+        if ($user->hasRole(PlatformRoles::SUPER)) {
+            return true;
+        }
+    }
+
+    /**
+     * Determine whether the user can view any model.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->hasPermissionTo(Permissions::VIEW_USERS);
+    }
+
+    /**
      * Determine whether the user can view the model.
+     *
      * @param User $user
      * @param User $model
      * @return bool
@@ -18,6 +46,11 @@ class UserPolicy
     public function view(User $user, User $model): bool
     {
         return $user->id == $model->id;
+    }
+
+    public function edit(User $user): bool
+    {
+        return $user->hasPermissionTo(Permissions::UPDATE_USERS);
     }
 
     /**

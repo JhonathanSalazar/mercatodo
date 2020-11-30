@@ -24,4 +24,10 @@ class Permissions
      * Report permissions.
      */
     const VIEW_REPORTS = 'View reports';
+
+    /**
+     * Export and import permissions.
+     */
+    const EXPORT = 'Exports';
+    const IMPORT = 'Import';
 }

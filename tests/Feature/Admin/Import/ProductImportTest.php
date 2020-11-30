@@ -29,7 +29,7 @@ class ProductImportTest extends TestCase
      */
     public function aBuyerCantImportProducts()
     {
-        $buyerRole = Role::create(['name' => 'Buyer']);
+        $buyerRole = Role::create(['name' => PlatformRoles::BUYER]);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
 
@@ -40,11 +40,50 @@ class ProductImportTest extends TestCase
     /**
      * @test
      */
-    public function aAdminCanImportProduct()
+    public function aAdminWithoutPermissionCantImportProduct()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
+        Permission::create(['name' => Permissions::IMPORT]);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
+
+        $importFile = $this->getFile('products-import-file.xlsx');
+        $this->post($this->getImportRoute(), ['productsImport' => $importFile])
+        ->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function aAdminWithPermissionCanImportProduct()
+    {
+        $importPermission = Permission::create(['name' => Permissions::IMPORT]);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($importPermission);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($admUser);
+
+        $importFile = $this->getFile('products-import-file.xlsx');
+        $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
+
+        $response->assertRedirect(route('admin.products.index'));
+        $this->assertDatabaseHas('products', [
+            'ean' => '1234562789',
+            'name' => 'Fake Name',
+            'branch' => 'Fake Branch',
+            'description' => 'A fake description',
+            'price' => 999999
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function superCanImportProduct()
+    {
+        Permission::create(['name' => Permissions::IMPORT]);
+        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
+        $superUser = factory(User::class)->create()->assignRole($superRole);
+        $this->actingAs($superUser);
 
         $importFile = $this->getFile('products-import-file.xlsx');
         $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
@@ -66,9 +105,11 @@ class ProductImportTest extends TestCase
     {
         $viewProductsPermission = Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
         $updateProductsPermission = Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
+        $importPermission = Permission::create(['name' => Permissions::IMPORT]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo([
             $viewProductsPermission,
-            $updateProductsPermission
+            $updateProductsPermission,
+            $importPermission
         ]);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);

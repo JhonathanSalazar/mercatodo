@@ -61,14 +61,18 @@
                             </td>
                             <td>{{ $user->role_name}}</td>
                             <td>
-                                <a href="{{ route('admin.users.show', $user) }}"
-                                   class="btn btn-xs btn-default">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.users.edit', $user) }}"
-                                   class="btn btn-xs btn-info">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
+                                @can(Permissions::VIEW_USERS)
+                                    <a href="{{ route('admin.users.show', $user) }}"
+                                       class="btn btn-xs btn-default">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                @endcan
+                                @can(Permissions::UPDATE_USERS)
+                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                       class="btn btn-xs btn-info">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

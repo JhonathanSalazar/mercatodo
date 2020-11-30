@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $this->middleware([
             'auth',
-            'role:Admin'
+            'role:Super|Admin'
         ]);
     }
 
