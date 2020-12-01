@@ -27,6 +27,7 @@ class Product extends Model
 
     /**
      * Create the product route show
+     *
      * @return string
      */
     public function showUrl(): string
@@ -35,7 +36,24 @@ class Product extends Model
     }
 
     /**
+     * Returns the attributes required in the API.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return [
+            'name' => $this->name,
+            'ean' => (string)$this->ean,
+            'branch' => $this->branch,
+            'price' => (string)$this->price,
+            'description' => $this->description
+        ];
+    }
+
+    /**
      * Return the relation product->category and category->product
+     *
      * @return BelongsTo
      */
     public function category(): BelongsTo
@@ -45,6 +63,7 @@ class Product extends Model
 
     /**
      * Return the relation product->tags and tags->product
+     *
      * @return BelongsToMany
      */
     public function tags(): BelongsToMany
@@ -55,7 +74,7 @@ class Product extends Model
     /**
      * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -67,9 +86,10 @@ class Product extends Model
 
     /**
      * Return the featured products published
+     *
      * @param Builder $query
      */
-    public function scopeFeaturedHome(Builder $query): void
+    public function scopeFeaturedHome(Builder $query)
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
@@ -80,9 +100,10 @@ class Product extends Model
 
     /**
      * Return the last products published
+     *
      * @param Builder $query
      */
-    public function scopeLastHome(Builder $query): void
+    public function scopeLastHome(Builder $query)
     {
         $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
@@ -106,6 +127,19 @@ class Product extends Model
         }
 
         return "/storage/" . $this->image;
+    }
+
+    /**
+     * Return the scope to a specific category.
+     *
+     * @param Builder $query
+     * @param string $value
+     */
+    public function scopeCategories(Builder $query, string $values)
+    {
+        $query->whereHas('category', function ($q) use ($values){
+            $q->whereIn('url', explode(',', $values));
+        });
     }
 
 }
