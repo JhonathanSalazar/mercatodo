@@ -13,6 +13,8 @@ use Illuminate\Support\Collection;
 class Adapter extends AbstractAdapter
 {
 
+    protected $fillable = ['name', 'url'];
+
     /**
      * Mapping of JSON API attribute field names to model keys.
      *
@@ -42,7 +44,7 @@ class Adapter extends AbstractAdapter
      * @param Collection $filters
      * @return void
      */
-    protected function filter($query, Collection $filters)
+    protected function filter($query, Collection $filters): void
     {
         $this->filterWithScopes($query, $filters);
     }
@@ -52,7 +54,7 @@ class Adapter extends AbstractAdapter
      *
      * @return HasMany
      */
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany();
     }
