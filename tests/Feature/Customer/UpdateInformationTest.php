@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Customer;
 
+use App\Constants\Permissions;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -16,7 +18,8 @@ class UpdateInformationTest extends TestCase
     /**
      * @test
      */
-    public function aUserCanUpdateYourPersonalInformation() {
+    public function aUserCanUpdateYourPersonalInformation()
+    {
 
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
@@ -40,8 +43,9 @@ class UpdateInformationTest extends TestCase
     /**
      * @test
      */
-    public function aUserCantUpdateInformationOfAnotherUser() {
-
+    public function aUserCantUpdateInformationOfAnotherUser()
+    {
+        Permission::create(['name' => Permissions::UPDATE_USERS]);
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser1 = factory(User::class)->create()->assignRole($buyerRole);
         $buyerUser2 = factory(User::class)->create()->assignRole($buyerRole);
@@ -57,7 +61,6 @@ class UpdateInformationTest extends TestCase
         ]));
 
         $response->assertStatus(403);
-
     }
 
 }

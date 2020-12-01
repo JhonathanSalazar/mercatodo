@@ -18,11 +18,11 @@ class UpdateUsersTest extends TestCase
     /**
      * @test
      */
-    public function guestCantUpdateUsers()
+    public function guestCantUpdateUsersInformation()
     {
         $user = factory(User::class)->create();
 
-        $this->patch(route('admin.users.update', [
+        $this->put(route('admin.users.update', [
             'user' => $user->id,
             'name' => $this->faker->firstName,
             'enable' => true,
@@ -39,14 +39,14 @@ class UpdateUsersTest extends TestCase
     /**
      * @test
      */
-    public function buyerCantUpdateUsers()
+    public function buyerCantUpdateUsersInformation()
     {
         $buyerUser = factory(User::class)->create();
         $this->actingAs($buyerUser);
 
         $user = factory(User::class)->create();
 
-        $this->patch(route('admin.users.update', [
+        $this->put(route('admin.users.update', [
             'user' => $user->id,
             'name' => $this->faker->firstName,
             'enable' => true,
@@ -63,7 +63,7 @@ class UpdateUsersTest extends TestCase
     /**
      * @test
      */
-    public function adminWithoutPermissionCantUpdateUsers()
+    public function adminWithoutPermissionCantUpdateUsersInformation()
     {
         Permission::create(['name' => Permissions::UPDATE_USERS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
@@ -72,7 +72,7 @@ class UpdateUsersTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->patch(route('admin.users.update', [
+        $this->put(route('admin.users.update', [
             'user' => $user->id,
             'name' => $this->faker->firstName,
             'enable' => true,
@@ -89,7 +89,47 @@ class UpdateUsersTest extends TestCase
     /**
      * @test
      */
-    public function adminWithPermissionCanUpdateUsers()
+    public function adminWithoutPermissionCantUpdateUsersRoleInformation()
+    {
+        $buyerRole = Role::create(['name' => PlatformRoles::BUYER]);
+        Permission::create(['name' => Permissions::UPDATE_USERS]);
+
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
+        $adminUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($adminUser);
+
+        $user = factory(User::class)->create();
+
+        $response = $this->put(route('admin.users.roles.update', [
+            'user' => $user->id,
+            'roles' => $buyerRole->name
+        ]))->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function adminWithoutPermissionCantUpdateUsersPermissionsInformation()
+    {
+        $buyerRole = Role::create(['name' => PlatformRoles::BUYER]);
+        Permission::create(['name' => Permissions::UPDATE_USERS]);
+
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
+        $adminUser = factory(User::class)->create()->assignRole($adminRole);
+        $this->actingAs($adminUser);
+
+        $user = factory(User::class)->create();
+
+        $response = $this->put(route('admin.users.roles.update', [
+            'user' => $user->id,
+            'roles' => $buyerRole->name
+        ]))->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function adminWithPermissionCanUpdateUsersInformation()
     {
         $updatePermission = Permission::create(['name' => Permissions::UPDATE_USERS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($updatePermission);
@@ -123,7 +163,7 @@ class UpdateUsersTest extends TestCase
     /**
      * @test
      */
-    public function superCanUpdateUsers()
+    public function superCanUpdateUsersInformation()
     {
         Permission::create(['name' => Permissions::UPDATE_USERS]);
         $superRole = Role::create(['name' => PlatformRoles::SUPER]);

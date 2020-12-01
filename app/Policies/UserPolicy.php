@@ -48,6 +48,12 @@ class UserPolicy
         return $user->id == $model->id;
     }
 
+    /**
+     * Determine whether the user can edit the model.
+
+     * @param User $user
+     * @return bool
+     */
     public function edit(User $user): bool
     {
         return $user->hasPermissionTo(Permissions::UPDATE_USERS);
@@ -55,13 +61,14 @@ class UserPolicy
 
     /**
      * Determine whether the user can update the model.
+     *
      * @param User $user
      * @param User $model
      * @return bool
      */
     public function update(User $user, User $model): bool
     {
-        return $user->id == $model->id;
+        return $user->id == $model->id || $user->hasPermissionTo(Permissions::UPDATE_USERS);
     }
 
 }

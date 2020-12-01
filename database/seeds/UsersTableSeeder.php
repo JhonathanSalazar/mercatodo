@@ -31,8 +31,6 @@ class UsersTableSeeder extends Seeder
         $viewUserPermission = Permission::create(['name' => Permissions::VIEW_USERS]);
         $updateUserPermission = Permission::create(['name' => Permissions::UPDATE_USERS]);
 
-        $viewReportPermission = Permission::create(['name' => Permissions::VIEW_REPORTS]);
-
         $exportPermission = Permission::create(['name' => Permissions::EXPORT]);
         $importPermission = Permission::create(['name' => Permissions::IMPORT]);
 
@@ -43,7 +41,6 @@ class UsersTableSeeder extends Seeder
             $deleteProductsPermission,
             $viewUserPermission,
             $updateUserPermission,
-            $viewReportPermission,
             $exportPermission,
             $importPermission
         ]);

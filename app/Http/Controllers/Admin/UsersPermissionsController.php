@@ -16,7 +16,7 @@ class UsersPermissionsController extends Controller
      * @param User $user
      * @return RedirectResponse
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): RedirectResponse
     {
         $user->syncPermissions($request->permissions);
 

@@ -147,7 +147,7 @@ class UpdateProductsTest extends TestCase
         $description = $this->faker->sentence;
         $ean = $this->faker->randomNumber(8);
         $branch = $this->faker->lastName;
-        $price = $this->faker->numberBetween(1000,100000);
+        $price = $this->faker->numberBetween(1,10) * 1000;
 
         $this->put(route('admin.products.update', [
             'product' => $product,
@@ -164,11 +164,13 @@ class UpdateProductsTest extends TestCase
         dump($name, $updatedProduct->name);
 
         $this->assertDatabaseCount('products', 1);
-        $this->assertEquals($name, $updatedProduct->name);
-        $this->assertEquals($description, $updatedProduct->description);
-        $this->assertEquals($ean, $updatedProduct->ean);
-        $this->assertEquals($branch, $updatedProduct->branch);
-        $this->assertEquals($price, $updatedProduct->price);
+        $this->assertDatabaseHas('products', [
+            'name' => $name,
+            'description' => $description,
+            'ean' => $ean,
+            'branch' => $branch,
+            'price' => $price
+        ]);
     }
 
 
