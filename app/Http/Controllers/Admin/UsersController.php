@@ -58,11 +58,15 @@ class UsersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
      * @param User $user
      * @return View
+     * @throws AuthorizationException
      */
     public function edit(User $user): View
     {
+        $this->authorize('edit', $user);
+
         $roles = Role::pluck('name', 'id');
         $permissions = Permission::pluck('name', 'id');
 
@@ -79,7 +83,7 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $this->authorize('edit', User::class);
+        $this->authorize('update', $user);
 
         $user->name = $request->get('name');
         $user->email = $request->get('email');

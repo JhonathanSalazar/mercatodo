@@ -67,28 +67,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Permisos</h3>
-                    </div>
-                    <div class="box-body">
-                        <form method="POST" action="{{ route('admin.users.permissions.update', $user) }}">
-                            @CSRF @METHOD('PUT')
-                            @foreach($permissions as $id => $name)
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="permissions[]" type="checkbox"
-                                               value="{{ $name }}"
-                                            {{ $user->getAllPermissions()->contains($id) ? 'checked' : '' }}>
-                                        {{ $name }}
-                                    </label>
-                                </div>
-                            @endforeach
-                            <button class="btn btn-primary btn-block">Actualizar permisos</button>
-                        </form>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

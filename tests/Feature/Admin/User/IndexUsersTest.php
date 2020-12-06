@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class UsersIndexTest extends TestCase
+class IndexUsersTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -77,28 +77,6 @@ class UsersIndexTest extends TestCase
         $this->actingAs($admUser);
 
         $this->get($this->getIndexRoute())->assertStatus(403);
-    }
-
-    /**
-     * @test
-     */
-    public function superCanIndexUsers()
-    {
-        $users = factory(User::class,10)->create();
-
-        Permission::create(['name' => Permissions::VIEW_USERS]);
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $this->actingAs($superUser);
-
-        $response = $this->get($this->getIndexRoute());
-
-        $response->assertStatus(200);
-
-        $users->each(function($item) use ($response) {
-            $response->assertSee($item->name);
-            $response->assertSee($item->email);
-        });
     }
 
     /**

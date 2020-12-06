@@ -37,7 +37,7 @@ class ProductExportTest extends TestCase
      */
     public function aBuyerUserCannotExportProducts()
     {
-        $buyerRole = Role::create(['name' => 'Buyer']);
+        $buyerRole = Role::create(['name' => PlatformRoles::BUYER]);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         factory(Product::class, 10)->create();
         Excel::fake();
@@ -56,7 +56,7 @@ class ProductExportTest extends TestCase
         $filePath = 'exports/products-' . $now . '.xlsx';
 
         Permission::create(['name' => Permissions::EXPORT]);
-        $adminRole = Role::create(['name' => 'Admin']);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         factory(Product::class, 10)->create();
         Excel::fake();
@@ -76,7 +76,7 @@ class ProductExportTest extends TestCase
         $filePath = 'exports/products-' . $now . '.xlsx';
 
         $exportPermission = Permission::create(['name' => Permissions::EXPORT]);
-        $adminRole = Role::create(['name' => 'Admin'])->givePermissionTo($exportPermission);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($exportPermission);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         factory(Product::class, 10)->create();
         Excel::fake();
@@ -98,42 +98,6 @@ class ProductExportTest extends TestCase
 
         Excel::assertQueuedWithChain([
             new NotifyUserOfCompletedExport($admUser, $filePath)
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function superCanQueueProductExport()
-    {
-        $this->withoutExceptionHandling();
-        $filePathTest = '/products-\d{4}\-\d{2}\-\d{2}\_\d{2}\-\d{2}\.xlsx/';
-        $now = Carbon::now()->isoFormat('YYYY-MM-DD_HH-mm');
-        $filePath = 'exports/products-' . $now . '.xlsx';
-
-        Permission::create(['name' => Permissions::EXPORT]);
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        factory(Product::class, 10)->create();
-        Excel::fake();
-
-        $this->actingAs($superUser)->from($this->getIndexRoute())
-            ->get($this->getExportRoute())
-            ->assertRedirect($this->getIndexRoute());
-
-        Excel::matchByRegex();
-
-        Excel::assertStored($filePathTest);
-
-        Excel::assertQueued(
-            $filePathTest,
-            function (ProductExport $export) {
-                return true;
-            }
-        );
-
-        Excel::assertQueuedWithChain([
-            new NotifyUserOfCompletedExport($superUser, $filePath)
         ]);
     }
 

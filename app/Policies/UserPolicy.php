@@ -37,7 +37,7 @@ class UserPolicy
 
     /**
      * Determine whether the user can edit the model.
-
+     *
      * @param User $user
      * @return bool
      */

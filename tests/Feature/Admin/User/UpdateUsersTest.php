@@ -13,7 +13,8 @@ use Tests\TestCase;
 
 class UpdateUsersTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * @test
@@ -142,46 +143,11 @@ class UpdateUsersTest extends TestCase
         $enable = $this->faker->boolean;
         $email = $this->faker->email;
 
-        $response = $this->patch(route('admin.users.update', [
-            'user' => $user->id,
-            'name' => $name,
-            'enable' => $enable,
-            'email' => $email
-        ]));
-
-        $response->assertRedirect(route('admin.users.index'));
-
-        $this->assertDatabaseCount('users', 2);
-
-        $this->assertDatabaseHas('users', [
+        $response = $this->patch(route('admin.users.update', $user), [
             'name' => $name,
             'enable' => $enable,
             'email' => $email
         ]);
-    }
-
-    /**
-     * @test
-     */
-    public function superCanUpdateUsersInformation()
-    {
-        Permission::create(['name' => Permissions::UPDATE_USERS]);
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $this->actingAs($superUser);
-
-        $user = factory(User::class)->create();
-
-        $name = $this->faker->firstName;
-        $enable = $this->faker->boolean;
-        $email = $this->faker->email;
-
-        $response = $this->patch(route('admin.users.update', [
-            'user' => $user->id,
-            'name' => $name,
-            'enable' => $enable,
-            'email' => $email
-        ]));
 
         $response->assertRedirect(route('admin.users.index'));
 
