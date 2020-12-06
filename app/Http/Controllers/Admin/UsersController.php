@@ -47,9 +47,12 @@ class UsersController extends Controller
      *
      * @param User $user
      * @return View
+     * @throws AuthorizationException
      */
     public function show(User $user): View
     {
+        $this->authorize('view', $user);
+
         return view('admin.users.show', compact('user'));
     }
 

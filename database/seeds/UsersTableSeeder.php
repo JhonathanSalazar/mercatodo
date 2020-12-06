@@ -19,7 +19,6 @@ class UsersTableSeeder extends Seeder
         Permission::truncate();
         Role::truncate();
 
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
         $buyerRole = Role::create(['name' => PlatformRoles::BUYER]);
 
@@ -34,7 +33,7 @@ class UsersTableSeeder extends Seeder
         $exportPermission = Permission::create(['name' => Permissions::EXPORT]);
         $importPermission = Permission::create(['name' => Permissions::IMPORT]);
 
-        $superRole->givePermissionTo([
+        $adminRole->givePermissionTo([
             $createProductsPermission,
             $viewProductsPermission,
             $updateProductsPermission,
@@ -44,13 +43,6 @@ class UsersTableSeeder extends Seeder
             $exportPermission,
             $importPermission
         ]);
-
-        $super = new User;
-        $super->name = 'Super';
-        $super->email = 'super@gmail.com';
-        $super->password = bcrypt('123123');
-        $super->save();
-        $super->assignRole($superRole);
 
         $admin = new User;
         $admin->name = 'Admin';

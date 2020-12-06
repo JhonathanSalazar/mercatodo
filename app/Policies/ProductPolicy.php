@@ -13,25 +13,12 @@ class ProductPolicy
     use HandlesAuthorization;
 
     /**
-     * Give the permission to the Super role.
-     *
-     * @param User $user
-     * @return bool|mixed|null
-     */
-    public function before(User $user)
-    {
-        if ($user->hasRole(PlatformRoles::SUPER)) {
-            return true;
-        }
-    }
-
-    /**
      * Determine whether the user can view any models.
      *
      * @param User $user
      * @return bool
      */
-    public function viewAny(User $user): bool
+    public function index(User $user): bool
     {
         return $user->hasPermissionTo(Permissions::VIEW_PRODUCTS);
     }
@@ -58,6 +45,11 @@ class ProductPolicy
         return $user->hasPermissionTo(Permissions::CREATE_PRODUCTS);
     }
 
+    public function edit(User $user): bool
+    {
+        return $user->hasPermissionTo(Permissions::UPDATE_PRODUCTS);
+    }
+
     /**
      * Determine whether the user can update the model.
      *
@@ -75,7 +67,7 @@ class ProductPolicy
      * @param User $user
      * @return mixed
      */
-    public function delete(User $user): bool
+    public function destroy(User $user): bool
     {
         return $user->hasPermissionTo(Permissions::DELETE_PRODUCTS);
     }

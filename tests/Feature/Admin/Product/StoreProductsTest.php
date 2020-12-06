@@ -93,29 +93,6 @@ class StoreProductsTest extends TestCase
     /**
      * @test
      */
-    public function superCanCreateProducts()
-    {
-        Permission::create(['name' => Permissions::CREATE_PRODUCTS]);
-
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $this->actingAs($superUser);
-
-        $attributes = [
-            'name' => $this->faker->firstName,
-            'user_id' => auth()->id()
-        ];
-
-        $response = $this->post(route('admin.products.store'), $attributes);
-        $product = Product::where($attributes)->first();
-
-        $this->assertDatabaseHas('products', $attributes);
-        $response->assertRedirect(route('admin.products.edit', $product));
-    }
-
-    /**
-     * @test
-     */
     public function productRequireANameToCreate()
     {
         $createProductPermission = Permission::create(['name' => Permissions::CREATE_PRODUCTS]);

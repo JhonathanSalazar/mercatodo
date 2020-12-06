@@ -23,7 +23,7 @@ class ProductsImportController extends Controller
     {
         $this->middleware([
             'auth',
-            'role:Super|Admin'
+            'role:Admin'
         ]);
     }
 

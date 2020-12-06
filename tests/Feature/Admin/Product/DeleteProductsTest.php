@@ -23,11 +23,6 @@ class DeleteProductsTest extends TestCase
     {
         $product = factory(Product::class)->create();
 
-        $product->name = $this->faker->firstName;
-        $product->description = $this->faker->sentence;
-        $product->ean = $this->faker->randomNumber(8);
-        $product->branch = $this->faker->lastName;
-
         $this->delete(route('admin.products.destroy', $product))
             ->assertRedirect(route('login'));
     }
@@ -76,23 +71,5 @@ class DeleteProductsTest extends TestCase
 
         $this->delete(route('admin.products.destroy', $product))
             ->assertStatus(403);
-    }
-
-    /**
-     * @test
-     */
-    public function superCanDeleteProducts()
-    {
-        $this->withoutExceptionHandling();
-        Permission::create(['name' => Permissions::DELETE_PRODUCTS]);
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $product = factory(Product::class)->create();
-        $this->actingAs($superUser);
-
-        $this->delete(route('admin.products.destroy', $product))
-            ->assertRedirect(route('admin.products.index'));
-
-        $this->assertDeleted('products', array($product));
     }
 }

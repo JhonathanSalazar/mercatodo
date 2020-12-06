@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\Permissions;
 use Exception;
 use Carbon\Carbon;
 use App\Entities\Tag;
@@ -11,7 +10,6 @@ use App\Entities\Category;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\RedirectResponse;
@@ -31,7 +29,7 @@ class ProductsController extends Controller
     {
         $this->middleware([
             'auth',
-            'role:Super|Admin'
+            'role:Admin'
         ]);
     }
 
@@ -43,11 +41,9 @@ class ProductsController extends Controller
      */
     public function index(): View
     {
-        $this->authorize('viewAny', Product::class);
+        $this->authorize('index', Product::class);
 
         $products = Product::all();
-
-        Log::info('admin.products.index', ['id' => auth()->id()]);
 
         return view('admin.products.index', compact('products'));
     }
@@ -139,7 +135,7 @@ class ProductsController extends Controller
      */
     public function edit(Product $product): View
     {
-        $this->authorize('view', $product);
+        $this->authorize('edit', $product);
 
         // Tomarlo desde Cache
         $categories = Category::all();
@@ -157,7 +153,7 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
-        $this->authorize('delete', $product);
+        $this->authorize('destroy', $product);
 
         $product->delete();
 

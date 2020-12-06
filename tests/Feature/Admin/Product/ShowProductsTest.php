@@ -80,26 +80,4 @@ class ShowProductsTest extends TestCase
 
         $response->assertStatus(403);
     }
-
-    /**
-     * @test
-     */
-    public function superCanShowAnProduct()
-    {
-        Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $this->actingAs($superUser);
-
-        $product = factory(Product::class)->create();
-
-        $response = $this->get(route('admin.products.show', compact('product')));
-
-        $response->assertStatus(200)
-            ->assertSee($product->name)
-            ->assertSee($product->ean)
-            ->assertSee($product->branch)
-            ->assertSee($product->price)
-            ->assertSee($product->description);
-    }
 }

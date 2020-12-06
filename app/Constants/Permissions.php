@@ -24,6 +24,8 @@ class Permissions
      * Report permissions.
      */
     const VIEW_REPORTS = 'View reports';
+    const DOWNLOAD_REPORTS = 'Download reports';
+    const DELETE_REPORTS = 'Delete reports';
 
     /**
      * Export and import permissions.

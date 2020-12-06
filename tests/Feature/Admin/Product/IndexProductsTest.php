@@ -81,30 +81,4 @@ class IndexProductsTest extends TestCase
 
         $response->assertStatus(403);
     }
-
-    /**
-     * @test
-     */
-    public function superRoleCanIndexProducts()
-    {
-        Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
-
-        factory(Product::class,30)->create();
-
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $admUser = factory(User::class)->create()->assignRole($superRole);
-        $this->actingAs($admUser);
-
-        $response = $this->get(route('admin.products.index'));
-
-        $responseProducts = $response->getOriginalContent()['products'];
-
-        $response->assertStatus(200);
-
-        $responseProducts->each(function($item) use ($response) {
-            $response->assertSee($item->name);
-            $response->assertSee($item->ean);
-            $response->assertSee($item->price);
-        });
-    }
 }

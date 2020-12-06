@@ -13,19 +13,6 @@ class UserPolicy
     use HandlesAuthorization;
 
     /**
-     * Give the permission to the Super role.
-     *
-     * @param User $user
-     * @return bool|mixed|null
-     */
-    public function before(User $user)
-    {
-        if ($user->hasRole(PlatformRoles::SUPER)) {
-            return true;
-        }
-    }
-
-    /**
      * Determine whether the user can view any model.
      *
      * @param User $user
@@ -45,7 +32,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->id == $model->id;
+        return $user->id == $model->id || $user->hasPermissionTo(Permissions::VIEW_USERS);
     }
 
     /**

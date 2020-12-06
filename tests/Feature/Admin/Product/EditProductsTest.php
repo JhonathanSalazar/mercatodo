@@ -45,7 +45,7 @@ class EditProductsTest extends TestCase
      */
     public function adminWithPermissionCanEditProducts()
     {
-        $editProductPermission = Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
+        $editProductPermission = Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($editProductPermission);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
@@ -61,7 +61,7 @@ class EditProductsTest extends TestCase
      */
     public function adminWithoutPermissionCantEditProducts()
     {
-        Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
+        Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
@@ -69,21 +69,5 @@ class EditProductsTest extends TestCase
 
         $this->get(route('admin.products.edit', $product))
             ->assertStatus(403);
-    }
-
-    /**
-     * @test
-     */
-    public function superCanEditProducts()
-    {
-        Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $product = factory(Product::class)->create();
-        $this->actingAs($superUser);
-
-        $this->get(route('admin.products.edit', $product))
-            ->assertStatus(200)
-            ->assertSee($product->name);
     }
 }

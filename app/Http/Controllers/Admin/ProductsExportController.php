@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\Permissions;
 use App\Entities\Product;
-use App\Entities\Report;
 use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
 use App\Jobs\NotifyUserOfCompletedExport;
@@ -23,7 +21,7 @@ class ProductsExportController extends Controller
     {
         $this->middleware([
             'auth',
-            'role:Super|Admin'
+            'role:Admin'
         ]);
     }
 

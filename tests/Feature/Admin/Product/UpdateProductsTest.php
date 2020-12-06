@@ -15,7 +15,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateProductsTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
 
     /**
@@ -72,23 +73,21 @@ class UpdateProductsTest extends TestCase
         $branch = $this->faker->lastName;
         $price = $this->faker->numberBetween(1000,100000);
 
-        $this->put(route('admin.products.update', [
-            'product' => $product,
+        $this->put(route('admin.products.update', $product), [
             'name' => $name,
             'description' => $description,
             'ean' => $ean,
             'branch' => $branch,
             'price' => $price,
             'category' => $category->id
-        ]));
-
-        $this->assertDatabaseHas('products', [
-            'name' => $name,
-            'description' => $description,
-            'ean' => $ean,
-            'branch' => $branch,
-            'price' => $price
         ]);
+
+        $product->refresh();
+
+        $this->assertEquals($name, $product->name);
+        $this->assertEquals($description, $product->description);
+        $this->assertEquals($ean, $product->ean);
+        $this->assertEquals($price, $product->price);
     }
 
     /**
@@ -128,51 +127,6 @@ class UpdateProductsTest extends TestCase
         $this->assertNotEquals($ean, $product->ean);
         $this->assertNotEquals($branch, $product->branch);
     }
-
-    /**
-     * @test
-     */
-    public function superCanUpdateProducts()
-    {
-        Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
-
-        $superRole = Role::create(['name' => PlatformRoles::SUPER]);
-        $superUser = factory(User::class)->create()->assignRole($superRole);
-        $this->actingAs($superUser);
-
-        $category = factory(Category::class)->create();
-        $product = factory(Product::class)->create();
-
-        $name = $this->faker->firstName;
-        $description = $this->faker->sentence;
-        $ean = $this->faker->randomNumber(8);
-        $branch = $this->faker->lastName;
-        $price = $this->faker->numberBetween(1,10) * 1000;
-
-        $this->put(route('admin.products.update', [
-            'product' => $product,
-            'name' => $name,
-            'description' => $description,
-            'ean' => $ean,
-            'branch' => $branch,
-            'price' => $price,
-            'category' => $category->id
-        ]));
-
-        $updatedProduct = Product::first();
-
-        dump($name, $updatedProduct->name);
-
-        $this->assertDatabaseCount('products', 1);
-        $this->assertDatabaseHas('products', [
-            'name' => $name,
-            'description' => $description,
-            'ean' => $ean,
-            'branch' => $branch,
-            'price' => $price
-        ]);
-    }
-
 
     /**
      * @test
