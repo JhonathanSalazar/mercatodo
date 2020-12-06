@@ -16,9 +16,9 @@ class FilterProductsTest extends TestCase
      */
     public function canFilterProductsByCategory()
     {
-        factory(Product::class, 3)->create();
-
         $category = factory(Category::class)->create();
+        factory(Product::class)->create(['category_id' => $category]);
+        factory(Product::class)->create();
 
         $this->jsonApi()
             ->filter(['categories' => $category->getRouteKey()])
@@ -31,10 +31,10 @@ class FilterProductsTest extends TestCase
      */
     public function canFilterProductsBySeveralCategory()
     {
-        factory(Product::class, 3)->create();
-
         $category1 = factory(Category::class)->create();
         $category2 = factory(Category::class)->create();
+        factory(Product::class)->create(['category_id' => $category1]);
+        factory(Product::class)->create(['category_id' => $category2]);
 
         $this->jsonApi()
             ->filter([

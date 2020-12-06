@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api\Categories;
 
 use App\Entities\Category;
+use App\Entities\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,10 +17,12 @@ class IncludeProductsTest extends TestCase
     public function canIncludeProductsRelation()
     {
         $category = factory(Category::class)->create();
+        factory(Product::class)->create(['category_id' => $category]);
 
         $this->jsonApi()
             ->includePaths('products')
             ->get(route('api.v1.categories.read', $category))
+            ->dump()
             ->assertSee($category->products[0]->name)
             ->assertJsonFragment([
                 'related' => route('api.v1.categories.relationships.products', $category)
@@ -34,8 +37,8 @@ class IncludeProductsTest extends TestCase
      */
     public function canFetchRelatedProducts()
     {
-        $this->withoutExceptionHandling();
         $category = factory(Category::class)->create();
+        factory(Product::class)->create(['category_id' => $category]);
 
         $this->jsonApi()
             ->get(route('api.v1.categories.relationships.products', $category))

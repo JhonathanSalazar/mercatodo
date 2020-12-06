@@ -40,7 +40,7 @@ class Product extends Model
      *
      * @return array
      */
-    public function fields()
+    public function fields(): array
     {
         return [
             'name' => $this->name,
