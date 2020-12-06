@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Permissions;
+use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportProductRequest;
 use App\Imports\ProductsImport;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -25,11 +28,16 @@ class ProductsImportController extends Controller
     }
 
     /**
+     * Import the resources.
+     *
      * @param ImportProductRequest $request
      * @return RedirectResponse|Response
+     * @throws AuthorizationException
      */
     public function import(ImportProductRequest $request)
     {
+        $this->authorize('import', Product::class);
+
         $file = $request->file('productsImport');
 
         $import = new ProductsImport;

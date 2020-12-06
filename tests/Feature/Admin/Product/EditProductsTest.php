@@ -2,8 +2,11 @@
 
 namespace Tests\Feature\Admin\Product;
 
+use App\Constants\Permissions;
+use App\Constants\PlatformRoles;
 use App\Entities\User;
 use App\Entities\Product;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,13 +40,13 @@ class EditProductsTest extends TestCase
             ->assertStatus(403);
     }
 
-
     /**
      * @test
      */
-    public function adminCanEditProducts()
+    public function adminWithPermissionCanEditProducts()
     {
-        $adminRole = Role::create(['name' => 'Admin']);
+        $editProductPermission = Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($editProductPermission);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $product = factory(Product::class)->create();
         $this->actingAs($admUser);
@@ -51,5 +54,20 @@ class EditProductsTest extends TestCase
         $this->get(route('admin.products.edit', $product))
             ->assertStatus(200)
             ->assertSee($product->name);
+    }
+
+    /**
+     * @test
+     */
+    public function adminWithoutPermissionCantEditProducts()
+    {
+        Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
+        $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);
+        $admUser = factory(User::class)->create()->assignRole($adminRole);
+        $product = factory(Product::class)->create();
+        $this->actingAs($admUser);
+
+        $this->get(route('admin.products.edit', $product))
+            ->assertStatus(403);
     }
 }

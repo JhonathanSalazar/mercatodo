@@ -50,9 +50,11 @@
                         </li>
                     </ul>
 
-                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary btn-block">
-                        <b>Editar producto</b>
-                    </a>
+                    @can(Permissions::UPDATE_PRODUCTS)
+                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary btn-block">
+                            <b>Editar producto</b>
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>

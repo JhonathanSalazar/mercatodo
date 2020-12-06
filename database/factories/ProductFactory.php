@@ -1,9 +1,10 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/** @var Factory $factory */
 
 use App\Entities\Product;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 
@@ -23,6 +24,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'description' => $faker->paragraph,
         'price' => $faker->randomNumber(3) * 100,
         'image' => null,
-        'published_at' => Carbon::yesterday()
+        'published_at' => Carbon::yesterday(),
     ];
 });
