@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    protected $guarded = [];
+
     /**
      * Change the keyName to reference.
      * @return string
