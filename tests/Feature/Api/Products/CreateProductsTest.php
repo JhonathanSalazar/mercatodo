@@ -43,6 +43,7 @@ class CreateProductsTest extends TestCase
             'approved' => true // mass assigment check
         ]));
         $this->assertDatabaseMissing('products', $product);
+
         Sanctum::actingAs($user);
 
         $this->jsonApi()->content([
