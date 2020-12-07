@@ -27,16 +27,16 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithCo
     }
 
     /**
-    * @return Collection
-    */
+     * @return Collection
+     */
     public function collection()
     {
         return Product::all();
     }
 
     /**
-     * @var $product
      * @return array
+     * @var $product
      */
     public function map($product): array
     {
@@ -45,7 +45,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithCo
             $product->name,
             $product->branch,
             $product->description,
-            $product->category_id,
+            $product->category->name,
             $product->price,
             $product->stock,
             Date::dateTimeToExcel($product->published_at)
@@ -72,7 +72,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithCo
             'NOMBRE',
             'MARCA',
             'DESCRIPCION',
-            'ID_CATEGORIA',
+            'CATEGORIA',
             'PRECIO',
             'STOCK',
             'FECHA_PUBLICACION',

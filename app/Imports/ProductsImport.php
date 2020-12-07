@@ -2,9 +2,11 @@
 
 namespace App\Imports;
 
+use App\Entities\Category;
 use App\Entities\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -31,6 +33,12 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     public function model(array $row)
     {
         ++$this->rows;
+        $categoryName = $row['categoria'];
+
+        $category = Category::firstOrCreate([
+            'name' => $categoryName,
+            'url' => Str::slug($categoryName)
+        ]);
 
         Product::updateOrCreate(
             [
@@ -41,7 +49,7 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
                 'name' => $row['nombre'],
                 'branch' => $row['marca'],
                 'description' => $row['descripcion'],
-                'category_id' => $row['id_categoria'],
+                'category_id' => $category->id,
                 'price' => $row['precio'],
                 'stock' => $row['stock'],
                 'published_at' => $row['fecha_publicacion'],
@@ -60,7 +68,7 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
             'nombre' => 'required',
             'marca' => 'required',
             'descripcion' => 'required',
-            'id_categoria' => 'required',
+            'categoria' => 'required',
             'precio' => 'required|integer',
         ];
     }
