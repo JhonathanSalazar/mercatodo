@@ -10,9 +10,18 @@ use App\Imports\ProductsImport;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductsImportController extends Controller
 {
+
+    /**
+     * File import template.
+     *
+     * @var string
+     */
+    private string $templateFile = 'imports/product-import-template.xlsx';
 
     /**
      * Create a new controller instance.
@@ -57,13 +66,24 @@ class ProductsImportController extends Controller
         }
     }
 
+
+    /**
+     * Download the template import file.
+     *
+     * @return StreamedResponse
+     */
+    public function template(): StreamedResponse
+    {
+        return Storage::download($this->templateFile);
+    }
+
     /**
      * Show the import error in a admin view.
      *
      * @param $failures
      * @return array
      */
-    private function getFailures($failures)
+    private function getFailures($failures): array
     {
         $validationError = [];
 

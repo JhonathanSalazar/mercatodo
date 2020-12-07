@@ -4,15 +4,13 @@ namespace App\Imports;
 
 use App\Entities\Category;
 use App\Entities\Product;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
@@ -52,7 +50,7 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
                 'category_id' => $category->id,
                 'price' => $row['precio'],
                 'stock' => $row['stock'],
-                'published_at' => $row['fecha_publicacion'],
+                'published_at' => Carbon::create($row['fecha_publicacion']),
                 'user_id' => auth()->id(),
             ]
         );

@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin'],
         Route::get('products/create', 'Admin\ProductsController@create')->name('admin.products.create');
         Route::get('products/export', 'Admin\ProductsExportController@export')->name('admin.products.export');
         Route::post('products/import', 'Admin\ProductsImportController@import')->name('admin.products.import');
+        Route::get('products/import/template', 'Admin\ProductsImportController@template')->name('admin.products.import.template');
         Route::post('products', 'Admin\ProductsController@store')->name('admin.products.store');
         Route::get('products/{product}', 'Admin\ProductsController@show')->name('admin.products.show');
         Route::get('products/edit/{product}', 'Admin\ProductsController@edit')->name('admin.products.edit');

@@ -48,7 +48,7 @@ class ProductExport implements FromCollection, WithMapping, WithHeadings, WithCo
             $product->category->name,
             $product->price,
             $product->stock,
-            Date::dateTimeToExcel($product->published_at)
+            $product->published_at->toDateString()
         ];
     }
 
