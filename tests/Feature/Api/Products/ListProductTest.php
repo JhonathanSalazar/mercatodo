@@ -3,8 +3,10 @@
 namespace Tests\Feature\Api\Products;
 
 use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ListProductTest extends TestCase
@@ -16,7 +18,10 @@ class ListProductTest extends TestCase
      */
     public function canFetchSingleProduct()
     {
+        $user = factory(User::class)->create();
         $product = factory(Product::class)->create();
+
+        Sanctum::actingAs($user);
 
         $response = $this->jsonApi()->get(route('api.v1.products.read', $product));
 
@@ -46,7 +51,10 @@ class ListProductTest extends TestCase
      */
     public function canFetchAllProducts()
     {
+        $user = factory(User::class)->create();
         $product = factory(Product::class, 3)->create();
+
+        Sanctum::actingAs($user);
 
         $response = $this->jsonApi()->get(route('api.v1.products.index'));
 

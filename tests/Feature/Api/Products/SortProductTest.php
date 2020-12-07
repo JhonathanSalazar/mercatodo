@@ -3,7 +3,9 @@
 namespace Tests\Feature\Api\Products;
 
 use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class SortProductTest extends TestCase
@@ -15,9 +17,12 @@ class SortProductTest extends TestCase
      */
     public function itCanSortProductByNameAsc()
     {
+        $user = factory(User::class)->create();
         factory(Product::class)->create(['name' => 'C Name']);
         factory(Product::class)->create(['name' => 'A Name']);
         factory(Product::class)->create(['name' => 'B Name']);
+
+        Sanctum::actingAs($user);
 
         $url = route('api.v1.products.index', [
             'sort' => 'name'
@@ -35,9 +40,12 @@ class SortProductTest extends TestCase
      */
     public function itCanSortProductByNameDesc()
     {
+        $user = factory(User::class)->create();
         factory(Product::class)->create(['name' => 'C Name']);
         factory(Product::class)->create(['name' => 'A Name']);
         factory(Product::class)->create(['name' => 'B Name']);
+
+        Sanctum::actingAs($user);
 
         $url = route('api.v1.products.index', [
             'sort' => '-name'
@@ -55,6 +63,7 @@ class SortProductTest extends TestCase
      */
     public function itCanSortProductByNameAndBranch()
     {
+        $user = factory(User::class)->create();
         factory(Product::class)->create([
             'name' => 'C Name',
             'branch' => 'B branch'
@@ -67,6 +76,8 @@ class SortProductTest extends TestCase
             'name' => 'B Name',
             'branch' => 'A branch'
         ]);
+
+        Sanctum::actingAs($user);
 
         $url = route('api.v1.products.index') . '?sort=name,branch';
 
@@ -90,7 +101,10 @@ class SortProductTest extends TestCase
      */
     public function itCannotSortProductByUnknownsFields()
     {
+        $user = factory(User::class)->create();
         factory(Product::class,3)->create();
+
+        Sanctum::actingAs($user);
 
         $url = route('api.v1.products.index') . '?sort=unknown';
 

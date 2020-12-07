@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Api\Products;
 
-use App\Entities\Category;
 use App\Entities\Product;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -44,6 +43,7 @@ class CreateProductsTest extends TestCase
             'approved' => true // mass assigment check
         ]));
         $this->assertDatabaseMissing('products', $product);
+
         Sanctum::actingAs($user);
 
         $this->jsonApi()->content([

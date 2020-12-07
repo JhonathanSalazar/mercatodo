@@ -4,7 +4,9 @@ namespace Tests\Feature\Api\Products;
 
 use App\Entities\Category;
 use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class FilterProductsTest extends TestCase
@@ -16,9 +18,12 @@ class FilterProductsTest extends TestCase
      */
     public function canFilterProductsByCategory()
     {
-        factory(Product::class, 3)->create();
-
+        $user = factory(User::class)->create();
         $category = factory(Category::class)->create();
+        factory(Product::class)->create(['category_id' => $category]);
+        factory(Product::class)->create();
+
+        Sanctum::actingAs($user);
 
         $this->jsonApi()
             ->filter(['categories' => $category->getRouteKey()])
@@ -31,10 +36,13 @@ class FilterProductsTest extends TestCase
      */
     public function canFilterProductsBySeveralCategory()
     {
-        factory(Product::class, 3)->create();
-
+        $user = factory(User::class)->create();
         $category1 = factory(Category::class)->create();
         $category2 = factory(Category::class)->create();
+        factory(Product::class)->create(['category_id' => $category1]);
+        factory(Product::class)->create(['category_id' => $category2]);
+
+        Sanctum::actingAs($user);
 
         $this->jsonApi()
             ->filter([

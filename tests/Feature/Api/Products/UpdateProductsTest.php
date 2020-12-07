@@ -30,6 +30,7 @@ class UpdateProductsTest extends TestCase
     {
         $user = factory(User::class)->create();
         $product = factory(Product::class)->create();
+
         Sanctum::actingAs($user);
 
         $this->jsonApi()->content([
@@ -59,6 +60,7 @@ class UpdateProductsTest extends TestCase
     {
         $user = factory(User::class)->create();
         $product = factory(Product::class)->create();
+
         Sanctum::actingAs($user);
 
         $this->jsonApi()->content([

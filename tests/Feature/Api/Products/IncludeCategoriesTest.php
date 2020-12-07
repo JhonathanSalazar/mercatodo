@@ -4,8 +4,10 @@ namespace Tests\Feature\Api\Products;
 
 use App\Entities\Category;
 use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class IncludeCategoriesTest extends TestCase
@@ -18,10 +20,13 @@ class IncludeCategoriesTest extends TestCase
      */
     public function canIncludeCategoriesRelationShip()
     {
+        $user = factory(User::class)->create();
         $category = factory(Category::class)->create();
         $product = factory(Product::class)->create();
         $product->category_id = $category->id;
         $product->save();
+
+        Sanctum::actingAs($user);
 
         $this->jsonApi()
             ->includePaths('categories')
@@ -40,11 +45,13 @@ class IncludeCategoriesTest extends TestCase
      */
     public function canFetchRelatedCategories()
     {
+        $user = factory(User::class)->create();
         $category = factory(Category::class)->create();
         $product = factory(Product::class)->create();
         $product->category_id = $category->id;
         $product->save();
 
+        Sanctum::actingAs($user);
 
         $this->jsonApi()
             ->get(route('api.v1.products.relationships.categories', $product))

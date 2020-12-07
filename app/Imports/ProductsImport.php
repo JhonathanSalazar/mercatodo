@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -31,7 +32,7 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     {
         ++$this->rows;
 
-        return Product::updateOrCreate(
+        Product::updateOrCreate(
             [
                 'ean' => $row['ean'],
             ],
@@ -71,5 +72,4 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOn
     {
         return $this->rows;
     }
-
 }

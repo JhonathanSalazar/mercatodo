@@ -23,9 +23,15 @@
         </div>
 
         <div class="box-header pull-right">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#createProduct"><i class="fa fa-plus"></i> Crear producto</button>
-            <a href="{{ route('admin.products.export') }}" class="btn btn-danger"><i class="fa fa-download"></i> Exportar</a>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#importProduct"><i class="fa fa-upload"></i> Importar</button>
+            @can(Permissions::CREATE_PRODUCTS)
+                <button class="btn btn-primary" data-toggle="modal" data-target="#createProduct"><i class="fa fa-plus"></i> Crear producto</button>
+            @endcan
+            @can(Permissions::EXPORT)
+                <a href="{{ route('admin.products.export') }}" class="btn btn-danger"><i class="fa fa-download"></i> Exportar</a>
+            @endcan
+            @can(Permissions::IMPORT)
+                <button class="btn btn-primary" data-toggle="modal" data-target="#importProduct"><i class="fa fa-upload"></i> Importar</button>
+            @endcan
         </div>
 
         <div class="box-body">
@@ -67,23 +73,29 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('admin.products.show', $product) }}"
-                               class="btn btn-xs btn-default">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            <a href="{{ route('admin.products.edit', $product) }}"
-                               class="btn btn-xs btn-info">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            <form method="POST"
-                                  action="{{ route('admin.products.destroy', $product) }}"
-                                  style="display: inline">
-                                @CSRF @method('DELETE')
-                            <button class="btn btn-xs btn-danger"
-                                onclick="return confirm('Estas seguro de eliminar el producto? ')">
-                                <i class="fa fa-close"></i>
-                            </button>
-                            </form>
+                            @can(Permissions::VIEW_PRODUCTS)
+                                <a href="{{ route('admin.products.show', $product) }}"
+                                   class="btn btn-xs btn-default">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            @endcan
+                            @can(Permissions::UPDATE_PRODUCTS)
+                                <a href="{{ route('admin.products.edit', $product) }}"
+                                   class="btn btn-xs btn-info">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            @endcan
+                            @can(Permissions::DELETE_PRODUCTS)
+                                <form method="POST"
+                                      action="{{ route('admin.products.destroy', $product) }}"
+                                      style="display: inline">
+                                    @CSRF @method('DELETE')
+                                <button class="btn btn-xs btn-danger"
+                                    onclick="return confirm('Estas seguro de eliminar el producto? ')">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                     @empty

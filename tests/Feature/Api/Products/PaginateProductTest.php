@@ -3,7 +3,9 @@
 namespace Tests\Feature\Api\Products;
 
 use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class PaginateProductTest extends TestCase
@@ -15,7 +17,10 @@ class PaginateProductTest extends TestCase
      */
     public function canFetchPaginatedProducts()
     {
+        $user = factory(User::class)->create();
         $products = factory(Product::class, 10)->create();
+
+        Sanctum::actingAs($user);
 
         $url = route('api.v1.products.index', ['page[size]' => 2, 'page[number]' => 3]);
 
@@ -42,9 +47,6 @@ class PaginateProductTest extends TestCase
             'last' => route('api.v1.products.index', ['page[number]' => 5, 'page[size]' => 2]),
             'prev' => route('api.v1.products.index', ['page[number]' => 2, 'page[size]' => 2]),
             'next' => route('api.v1.products.index', ['page[number]' => 4, 'page[size]' => 2]),
-
         ]);
-
-
     }
 }

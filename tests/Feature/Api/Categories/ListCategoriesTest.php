@@ -4,7 +4,9 @@ namespace Tests\Feature\Api\Categories;
 
 use App\Entities\Category;
 use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ListCategoriesTest extends TestCase
@@ -16,7 +18,10 @@ class ListCategoriesTest extends TestCase
      */
     public function canFetchSingleCategory()
     {
+        $user = factory(User::class)->create();
         $category = factory(Category::class)->create();
+
+        Sanctum::actingAs($user);
 
         $response = $this->jsonApi()->get(route('api.v1.categories.read', $category));
 
@@ -40,8 +45,10 @@ class ListCategoriesTest extends TestCase
      */
     public function canFetchAllCategories()
     {
-        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
         $categories = factory(Category::class, 3)->create();
+
+        Sanctum::actingAs($user);
 
         $response = $this->jsonApi()->get(route('api.v1.categories.index'));
 

@@ -37,10 +37,11 @@
                                 </a>
                             </li>
                         </ul>
-
-                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block">
-                            <b>Editar usuario</b>
-                        </a>
+                        @can(Permissions::UPDATE_USERS)
+                            <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block">
+                                <b>Editar usuario</b>
+                            </a>
+                        @endcan
                     </div>
                 </div>
             </div>
