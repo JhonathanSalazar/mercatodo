@@ -8,10 +8,8 @@ use App\Http\Requests\ImportProductRequest;
 use App\Imports\ProductsImport;
 use App\Jobs\DeleteErrorsImportsTable;
 use App\Jobs\NotifyUserCompletedImport;
-use App\Jobs\NotifyUserIncompletedImport;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

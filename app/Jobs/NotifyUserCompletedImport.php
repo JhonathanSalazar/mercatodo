@@ -39,7 +39,7 @@ class NotifyUserCompletedImport implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->user->notify(new ImportReady());
     }
