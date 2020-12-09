@@ -22,11 +22,11 @@
         <div class="box-body">
             <table id="admin-table" class="table table-bordered table-striped center">
                 <thead>
-                <tr>
-                    <th>Fila</th>
-                    <th>Campo fallido</th>
-                    <th>Descripción error</th>
-                </tr>
+                    <tr>
+                        <th>Fila</th>
+                        <th>Campo fallido</th>
+                        <th>Descripción error</th>
+                    </tr>
                 </thead>
                 <tbody>
                 @forelse($failures as $failure)

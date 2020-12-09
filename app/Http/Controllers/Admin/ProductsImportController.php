@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\Permissions;
 use App\Entities\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportProductRequest;
 use App\Imports\ProductsImport;
+use App\Jobs\DeleteErrorsImportsTable;
+use App\Jobs\NotifyUserCompletedImport;
+use App\Jobs\NotifyUserIncompletedImport;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -40,32 +42,21 @@ class ProductsImportController extends Controller
      * Import the resources.
      *
      * @param ImportProductRequest $request
-     * @return RedirectResponse|Response
+     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function import(ImportProductRequest $request)
+    public function import(ImportProductRequest $request): RedirectResponse
     {
         $this->authorize('import', Product::class);
 
-        $file = $request->file('productsImport');
-
-        $import = new ProductsImport;
-        $import->import($file);
-
-        $cant = $import->getRowCount();
-
-        if (count($import->failures()) > 0) {
-            $failures = $this->getFailures($import->failures());
-            return response()->view('admin.products.import.errors', [
-                'failures' => $failures,
-                'cant' => $cant
+        (new ProductsImport())->queue($request->file('productsImport'))
+            ->chain([
+                new NotifyUserCompletedImport($request->user()),
+                new DeleteErrorsImportsTable(),
             ]);
-        } else {
-            return redirect()->route('admin.products.index')
-                ->with('status', "Se importarón $cant registros satisfactoriamente");
-        }
-    }
 
+        return redirect(route('admin.products.index'));
+    }
 
     /**
      * Download the template import file.
@@ -77,25 +68,4 @@ class ProductsImportController extends Controller
         return Storage::download($this->templateFile);
     }
 
-    /**
-     * Show the import error in a admin view.
-     *
-     * @param $failures
-     * @return array
-     */
-    private function getFailures($failures): array
-    {
-        $validationError = [];
-
-        foreach ($failures as $failure) {
-            $validationError[] = [
-                'row' => $failure->row(),
-                'attribute' => $failure->attribute(),
-                'error' => $failure->errors(),
-                'values' =>  $failure->values()
-            ];
-        }
-
-        return $validationError;
-    }
 }
