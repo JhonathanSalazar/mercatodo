@@ -7,6 +7,7 @@ use App\Constants\PlatformRoles;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -57,52 +58,18 @@ class ProductImportTest extends TestCase
      */
     public function aAdminWithPermissionCanImportProduct()
     {
+        $this->withExceptionHandling();
         $importPermission = Permission::create(['name' => Permissions::IMPORT]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($importPermission);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
         $this->actingAs($admUser);
 
+        Excel::fake();
+
         $importFile = $this->getFile('products-import-file.xlsx');
-        $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
+        $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
 
-        $response->assertRedirect(route('admin.products.index'));
-        $this->assertDatabaseHas('products', [
-            'ean' => '1234562789',
-            'name' => 'Fake Name',
-            'branch' => 'Fake Branch',
-            'description' => 'A fake description',
-            'price' => 999999
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function itCannotImportProductDueValidationError()
-    {
-        $viewProductsPermission = Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
-        $updateProductsPermission = Permission::create(['name' => Permissions::UPDATE_PRODUCTS]);
-        $importPermission = Permission::create(['name' => Permissions::IMPORT]);
-        $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo([
-            $viewProductsPermission,
-            $updateProductsPermission,
-            $importPermission
-        ]);
-        $admUser = factory(User::class)->create()->assignRole($adminRole);
-        $this->actingAs($admUser);
-
-        $importFile = $this->getFile('products-not-validate-import-file.xlsx');
-        $response = $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
-
-
-        $response->assertViewIs('admin.products.import.errors')
-            ->assertSee('El campo nombre es obligatorio.')
-            ->assertSee('El campo marca es obligatorio.')
-            ->assertSee('El campo descripcion es obligatorio.')
-            ->assertSee('El campo categoria es obligatorio.')
-            ->assertSee('El campo precio es obligatorio.');
-
-        $this->assertDatabaseCount('products', 0);
+        Excel::assertQueued($importFile->getFilename());
 
     }
 
