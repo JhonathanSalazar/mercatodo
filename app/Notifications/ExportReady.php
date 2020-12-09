@@ -29,9 +29,22 @@ class ExportReady extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail','database'];
     }
 
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param mixed $notifiable
+     * @return MailMessage
+     */
+    public function toMail($notifiable): MailMessage
+    {
+        return (new MailMessage)
+            ->subject(trans('reports.products_exported'))
+            ->line(trans('reports.products_exported'))
+            ->line(trans('messages.check_reports'));
+    }
 
     /**
      * Get the array representation of the notification.
@@ -39,7 +52,7 @@ class ExportReady extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             'message' => 'Exportación finalizada, ver en reportes.',
