@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -25,8 +25,6 @@ class DashboardController extends Controller
      */
     public function main(): View
     {
-
-
         return view('admin.dashboard');
     }
 }

@@ -108,21 +108,6 @@
                     </div>
                 </div>
 
-                <!-- search form
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                    </button>
-                  </span>
-                    </div>
-                </form>
-
-                -->
-
-                <!-- /.search form -->
-
                 @include('admin.partials.nav')
 
             </section>
@@ -376,16 +361,6 @@
     <script src="/adminlte/plugins/datepicker/bootstrap-datepicker.js"></script>
     <!-- Bootstrap WYSIHTML5 -->
     <script src="/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-    <!-- Slimscroll -->
-    <script src="/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="/adminlte/plugins/fastclick/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="/adminlte/js/app.min.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="/adminlte/js/pages/dashboard.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="/adminlte/js/demo.js"></script>
     <!-- Vue -->
     <script src="{{ mix('/js/app.js') }}"></script>
     @stack('scripts')
