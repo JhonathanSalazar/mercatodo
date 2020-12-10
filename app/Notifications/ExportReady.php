@@ -41,8 +41,8 @@ class ExportReady extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(trans('reports.products_exported'))
-            ->line(trans('reports.products_exported'))
+            ->subject(trans('reports.exported'))
+            ->line(trans('reports.exported'))
             ->line(trans('messages.check_reports'));
     }
 

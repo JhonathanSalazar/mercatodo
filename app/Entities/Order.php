@@ -2,9 +2,10 @@
 
 namespace App\Entities;
 
-use App\Classes\PaymentStatus;
+use App\Constants\PaymentStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -59,6 +60,7 @@ class Order extends Model
      * Get the Orders Payed.
      *
      * @param Builder $query
+     * @return Builder[]|Collection
      */
     public function scopePayedPerDayToChart(Builder $query)
     {
@@ -70,5 +72,22 @@ class Order extends Model
             ->groupBy(function ($val) {
                 return Carbon::parse($val->paid_at)->format('Y-m-d');
             });
+    }
+
+    /**
+     * Return the sold products.
+     *
+     * @param Builder $query
+     * @param string $fromDate
+     * @param string $untilDate
+     * @return Builder
+     */
+    public function scopeSoldProducts(Builder $query, string $fromDate, string $untilDate): Builder
+    {
+        return $query->where('status', '=', PaymentStatus::APPROVED)
+            ->whereBetween('paid_at', [$fromDate, $untilDate])
+            ->join('order_items', 'orders.id', '=', 'order_items.id')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->select('orders.order_reference', 'products.ean', 'products.name', 'order_items.price', 'orders.paid_at', 'orders.user_id');
     }
 }

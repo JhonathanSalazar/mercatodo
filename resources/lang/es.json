@@ -17,5 +17,7 @@
  "APPROVED": "Aprobado",
  "PENDING": "Pendiente",
  "REJECTED": "Rechazado",
- "product-export": "Exportación de producto"
+ "product-export": "Exportación de producto",
+ "sold_products": "Productos vendidos",
+ "orders_created": "Ordenes creadas"
 }

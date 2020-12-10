@@ -231,7 +231,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Permissions' => \App\Constants\Permissions::class,
-        'RolesPlatform' => \App\Constants\PlatformRoles::class
+        'RolesPlatform' => \App\Constants\PlatformRoles::class,
+        'PlatformReports' => \App\Constants\Reports::class
     ],
 
 ];

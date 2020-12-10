@@ -3,6 +3,11 @@
 @section('header')
     <h1>Dashboard
         <small>Metricas</small></h1>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
 @endsection
 
 @section('content')
@@ -20,44 +25,53 @@
             </div>
         </div>
         <div class="col-md-4">
-            <form action="">
+            <form action="{{ route('admin.reports.store') }}" method="POST">
+                @CSRF
                 <div class="box box-warning">
                     <div class="box-header with-border">
                         <h3 class="box-title">Reportes</h3>
                     </div>
                     <div class="box-body">
                         <div class="">
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('report_type') ? 'has-error' : ''}}">
                                 <label>Seleccione el tipo de reporte</label>
-                                <select name="" id="" class="form-control">
-                                    <option value="">Tipo de reporte</option>
+                                <select name="report_type" class="form-control">
+                                    <option class="disabled hidden" value="">Tipo de reporte</option>
+                                    @foreach(PlatformReports::TYPES as $value)
+                                        <option value="{{ $value }}"
+                                            {{ old('report_type') == $value ? 'selected' : ''}}
+                                        >@lang($value)</option>
+                                    @endforeach
                                 </select>
+                                {!! $errors->first('report_type', '<span class="help-block">:message</span>') !!}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('from_date') ? 'has-error' : ''}}">
                                 <label>Desde</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="from_report"
+                                    <input name="from_date"
                                            type="text"
                                            class="form-control pull-right"
                                            id="datepicker"
                                     >
                                 </div>
+                                {!! $errors->first('from_date', '<span class="help-block">:message</span>') !!}
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('until_date') ? 'has-error' : ''}}">
                                 <label>Hasta</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="until_report"
+                                    <input name="until_date"
                                            type="text"
                                            class="form-control pull-right"
                                            id="datepicker1"
                                     >
                                 </div>
+                                {!! $errors->first('until_date', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
                     </div>
