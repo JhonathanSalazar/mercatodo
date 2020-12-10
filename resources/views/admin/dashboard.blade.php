@@ -55,6 +55,7 @@
                                            type="text"
                                            class="form-control pull-right"
                                            id="datepicker"
+                                           value="{{ old('from_date') }}"
                                     >
                                 </div>
                                 {!! $errors->first('from_date', '<span class="help-block">:message</span>') !!}
@@ -69,6 +70,7 @@
                                            type="text"
                                            class="form-control pull-right"
                                            id="datepicker1"
+                                           value="{{ old('until_date') }}"
                                     >
                                 </div>
                                 {!! $errors->first('until_date', '<span class="help-block">:message</span>') !!}

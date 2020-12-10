@@ -7,12 +7,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Return_;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
@@ -60,9 +58,9 @@ class Order extends Model
      * Get the Orders Payed.
      *
      * @param Builder $query
-     * @return Builder[]|Collection
+     * @return Collection
      */
-    public function scopePayedPerDayToChart(Builder $query)
+    public function scopePayedPerDayToChart(Builder $query): Collection
     {
         return $query
             ->where('status', '=', PaymentStatus::APPROVED)
@@ -89,5 +87,11 @@ class Order extends Model
             ->join('order_items', 'orders.id', '=', 'order_items.id')
             ->join('products', 'order_items.product_id', '=', 'products.id')
             ->select('orders.order_reference', 'products.ean', 'products.name', 'order_items.price', 'orders.paid_at', 'orders.user_id');
+    }
+
+    public function scopeCreatedBetween(Builder $query, string $fromDate, string $untilDate): Builder
+    {
+        return $query->select('order_reference', 'user_id', 'grand_total', 'item_count','status', 'created_at')
+            ->whereBetween('created_at', [$fromDate, $untilDate]);
     }
 }

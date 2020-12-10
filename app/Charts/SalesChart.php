@@ -15,6 +15,7 @@ class SalesChart extends BaseChart
      * Handles the HTTP request for the given chart.
      * It must always return an instance of Chartisan
      * and never a string or an array.
+     *
      * @param Request $request
      * @return Chartisan
      */
@@ -30,6 +31,6 @@ class SalesChart extends BaseChart
 
         return Chartisan::build()
             ->labels($dates)
-            ->dataset('Sample', $total);
+            ->dataset('Sales', $total);
     }
 }

@@ -43,7 +43,7 @@ class ProductsController extends Controller
     {
         $this->authorize('index', Product::class);
 
-        $products = Product::all();
+        $products = Product::paginate();
 
         return view('admin.products.index', compact('products'));
     }

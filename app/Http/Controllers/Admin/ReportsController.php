@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\Reports;
-use App\Entities\Order;
 use App\Entities\Report;
 use App\Exports\ReportExport;
 use App\Http\Controllers\Controller;
@@ -12,7 +10,6 @@ use App\Jobs\ExportReportCompleted;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -44,7 +41,7 @@ class ReportsController extends Controller
     {
         $this->authorize('viewAny', Report::class);
 
-        $reports = Report::all();
+        $reports = Report::orderBy('created_at','desc')->paginate();
 
         return view('admin.reports.index', compact('reports'));
     }

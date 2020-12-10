@@ -21,6 +21,7 @@ class DashboardController extends Controller
 
     /**
      * Show the application dashboard.
+     *
      * @return View
      */
     public function main(): View
