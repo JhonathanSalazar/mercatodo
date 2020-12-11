@@ -6,10 +6,10 @@ use App\Constants\Permissions;
 use App\Constants\PlatformRoles;
 use App\Entities\Product;
 use App\Entities\User;
-use Spatie\Permission\Models\Permission;
-use Tests\TestCase;
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class IndexProductsTest extends TestCase
 {
@@ -47,7 +47,7 @@ class IndexProductsTest extends TestCase
      */
     public function adminRoleWithPermissionCanIndexProducts()
     {
-        $products = factory(Product::class,10)->create();
+        $products = factory(Product::class, 10)->create();
 
         $viewProductPermission = Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($viewProductPermission);
@@ -58,7 +58,7 @@ class IndexProductsTest extends TestCase
 
         $response->assertStatus(200);
 
-        $products->each(function($item) use ($response) {
+        $products->each(function ($item) use ($response) {
             $response->assertSee($item->name);
             $response->assertSee($item->ean);
             $response->assertSee($item->price);
@@ -70,7 +70,7 @@ class IndexProductsTest extends TestCase
      */
     public function adminRoleWithoutPermissionCantIndexProducts()
     {
-        factory(Product::class,30)->create();
+        factory(Product::class, 30)->create();
 
         Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);

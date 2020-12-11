@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Orders;
 
+use App\Constants\PaymentStatus;
 use App\Entities\User;
 use App\Entities\Order;
 use Tests\TestCase;
@@ -24,7 +25,8 @@ class IndexOrderTest extends TestCase
         $this->actingAs($buyerUser);
 
         $orders = factory(Order::class, 5)->create([
-            'user_id' => $buyerUser
+            'user_id' => $buyerUser,
+            'status' => PaymentStatus::PENDING
         ]);
 
         $response = $this->get(route('orders.index', $buyerUser));
@@ -35,7 +37,7 @@ class IndexOrderTest extends TestCase
             $response->assertSee($order->id);
             $response->assertSee($order->item_count);
             $response->assertSee($order->grand_total);
-            $response->assertSee($order->status);
+            $response->assertSee(trans($order->status));
         });
 
     }

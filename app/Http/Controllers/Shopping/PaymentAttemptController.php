@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Classes\PaymentStatus;
-use Carbon\Carbon;
-use App\Entities\Order;
-use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
 use App\Classes\P2PRequest;
+use App\Constants\PaymentStatus;
+use App\Entities\Order;
 use App\Entities\PaymentAttempt;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Dnetix\Redirection\Exceptions\PlacetoPayException;
 use Dnetix\Redirection\PlacetoPay;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Controllers\Controller;
-use Dnetix\Redirection\Exceptions\PlacetoPayException;
+use Illuminate\View\View;
 
 class PaymentAttemptController extends Controller
 {
@@ -39,9 +38,6 @@ class PaymentAttemptController extends Controller
         $paymentAttemp->processUrl = $response->processUrl();
         $paymentAttemp->save();
 
-        Log::info('paymentAttempt.store', ['user' => auth()->user(), 'order' => $order->id]);
-
-
         return redirect()->away($response->processUrl());
     }
 
@@ -65,8 +61,6 @@ class PaymentAttemptController extends Controller
         }
 
         $order->update();
-
-        Log::info('paymentAttempt.show', ['user' => auth()->user(), 'order' => $order->id]);
 
         return view('payment.show', compact('order', 'paymentAttempt'));
     }

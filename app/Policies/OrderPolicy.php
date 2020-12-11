@@ -12,6 +12,7 @@ class OrderPolicy
 
     /**
      * Determine whether the user can view the model.
+     *
      * @param User $user
      * @param Order $order
      * @return bool
@@ -23,6 +24,7 @@ class OrderPolicy
 
     /**
      * Determine whether the user can edit the model.
+     *
      * @param User $user
      * @param Order $order
      * @return mixed
@@ -34,6 +36,7 @@ class OrderPolicy
 
     /**
      * Determine whether the user can update the model.
+     *
      * @param User $user
      * @param Order $order
      * @return bool

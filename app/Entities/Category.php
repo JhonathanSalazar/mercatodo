@@ -2,8 +2,10 @@
 
 namespace App\Entities;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -27,8 +29,13 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    public static function getCategoryFromCache() {
-
-        //return
+    /**
+     * @return Collection
+     */
+    public static function getCategoryFromCache(): Collection
+    {
+        return Cache::rememberForever('categories', function () {
+            return Category::select('id', 'name', 'url')->get();
+        });
     }
 }

@@ -15,7 +15,6 @@ class UpdateProductRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()->hasRole([
-            PlatformRoles::SUPER,
             PlatformRoles::ADMIN,
         ]);
     }

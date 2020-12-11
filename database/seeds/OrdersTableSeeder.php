@@ -2,13 +2,14 @@
 
 use Illuminate\Database\Seeder;
 
-class OrderSeeder extends Seeder
+class OrdersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
      * @return void
      */
-    public function run(): void
+    public function run()
     {
         //
     }

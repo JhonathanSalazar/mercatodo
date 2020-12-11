@@ -3,10 +3,8 @@
 namespace App\Policies;
 
 use App\Constants\Permissions;
-use App\Constants\PlatformRoles;
 use App\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Spatie\Permission\Models\Permission;
 
 class UserPolicy
 {

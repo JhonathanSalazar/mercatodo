@@ -13,7 +13,10 @@ use Illuminate\Queue\SerializesModels;
 
 class ExportReportCompleted implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var User
@@ -42,7 +45,7 @@ class ExportReportCompleted implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         Report::create([
             'type' => $this->type,

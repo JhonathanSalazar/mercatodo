@@ -34,7 +34,7 @@ class DatabaseStorage
      * @param $key
      * @param $value
      */
-    public function put($key, $value)
+    public function put($key, $value): void
     {
         if ($row = DatabaseStorageModel::find($key)) {
             // update

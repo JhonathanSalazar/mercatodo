@@ -2,8 +2,6 @@
 
 namespace App\Entities;
 
-use App\Classes\PaymentStatus;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

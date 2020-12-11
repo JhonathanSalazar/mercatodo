@@ -137,9 +137,8 @@ class ProductsController extends Controller
     {
         $this->authorize('edit', $product);
 
-        // Tomarlo desde Cache
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::getCategoryFromCache();
+        $tags = Tag::getTagsFromCache();
 
         return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }

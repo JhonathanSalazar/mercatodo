@@ -3,9 +3,6 @@
 
 namespace App\Constants;
 
-
-use phpDocumentor\Reflection\Types\Self_;
-
 class Reports
 {
     public const SOLD_PRODUCTS = 'sold_products';

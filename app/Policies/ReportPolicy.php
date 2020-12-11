@@ -3,10 +3,8 @@
 namespace App\Policies;
 
 use App\Constants\Permissions;
-use App\Entities\Report;
 use App\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use PhpParser\Node\Expr\Cast\Bool_;
 
 class ReportPolicy
 {

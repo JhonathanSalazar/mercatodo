@@ -33,7 +33,7 @@ class ProductExport implements FromCollection,
     /**
      * @return Collection
      */
-    public function collection()
+    public function collection(): Collection
     {
         return Product::all();
     }
@@ -67,7 +67,7 @@ class ProductExport implements FromCollection,
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function headings(): array
     {

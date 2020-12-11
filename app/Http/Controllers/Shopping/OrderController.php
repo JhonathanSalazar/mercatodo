@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Shopping;
 
-use App\Entities\User;
 use App\Entities\Order;
-use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
-use App\Http\Requests\OrderRequest;
+use App\Entities\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\OrderRequest;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -25,7 +24,8 @@ class OrderController extends Controller
     }
 
     /**
-     * Save items and order in the table
+     * Save items and order in the table.
+     *
      * @param string $userId
      * @param Order $order
      * @return void
@@ -44,6 +44,7 @@ class OrderController extends Controller
 
     /**
      * Create buyer order (Checkout).
+     *
      * @return RedirectResponse|View
      */
     public function create()
@@ -59,6 +60,7 @@ class OrderController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
      * @param User $user
      * @return View
      * @throws AuthorizationException
@@ -69,14 +71,13 @@ class OrderController extends Controller
 
         $orders = $user->orders;
 
-        Log::info('order.index', ['user' => auth()->user()]);
-
         return view('order.index', compact('orders'));
     }
 
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param OrderRequest $request
      * @return RedirectResponse
      */
@@ -98,12 +99,12 @@ class OrderController extends Controller
 
         \Cart::session($userId)->clear();
 
-        Log::info('order.store', ['user' => auth()->user(), 'order' => $order->id]);
-
         return redirect()->route('orders.show', $order);
     }
 
     /**
+     * Show the order info.
+     *
      * @param Order $order
      * @return View
      * @throws AuthorizationException
@@ -114,13 +115,12 @@ class OrderController extends Controller
 
         $items = $order->items()->get();
 
-        Log::info('order.show', ['user' => auth()->user(), 'order' => $order->id]);
-
         return view('order.show', compact('items', 'order'));
     }
 
     /**
      * Show the form for editing the Order.
+     *
      * @param Order $order
      * @return View
      * @throws AuthorizationException
@@ -136,6 +136,7 @@ class OrderController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param OrderRequest $request
      * @param Order $order
      * @return RedirectResponse
@@ -148,14 +149,13 @@ class OrderController extends Controller
         $order = $this->getOrderDataFromRequest($order, $request);
         $order->update();
 
-        Log::info('order.update', ['user' => auth()->user(), 'order' => $order->id]);
-
         return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido actualizada');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param Order $order
      * @return RedirectResponse
      * @throws AuthorizationException
@@ -167,13 +167,13 @@ class OrderController extends Controller
 
         $order->delete();
 
-        Log::warning('order.delete', ['user' => auth()->user(), 'order' => $order->id]);
-
         return redirect()->route('orders.index', $order->user_id)
             ->with('status', 'Tu orden a sido eliminada');
     }
 
     /**
+     * Get the data required to create an order.
+     *
      * @param Order $order
      * @param OrderRequest $request
      * @return Order

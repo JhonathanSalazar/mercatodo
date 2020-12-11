@@ -75,7 +75,7 @@ class Adapter extends AbstractAdapter
      *
      * @return BelongsTo
      */
-    public function categories()
+    public function categories(): BelongsTo
     {
         return $this->belongsTo('category');
     }

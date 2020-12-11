@@ -41,6 +41,7 @@ class HomeCarousel extends Component
 
     /**
      * Create a new component instance.
+     *
      * @param Product $product
      */
     public function __construct(Product $product)

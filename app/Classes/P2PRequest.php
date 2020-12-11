@@ -4,7 +4,6 @@
 namespace App\Classes;
 
 use App\Entities\Order;
-use http\Client\Request;
 
 class P2PRequest
 {
@@ -33,9 +32,10 @@ class P2PRequest
     }
 
     /** Return the requiered request to create a payment with PlaceToPay Redirection
+     *
      * @return array
      */
-    public function create()
+    public function create(): array
     {
         return $this->p2pRequest;
     }

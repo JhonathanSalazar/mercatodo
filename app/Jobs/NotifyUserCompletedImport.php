@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Entities\Report;
 use App\Entities\User;
 use App\Notifications\ImportReady;
 use Illuminate\Bus\Queueable;

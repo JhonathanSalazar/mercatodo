@@ -232,7 +232,8 @@ return [
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Permissions' => \App\Constants\Permissions::class,
         'RolesPlatform' => \App\Constants\PlatformRoles::class,
-        'PlatformReports' => \App\Constants\Reports::class
+        'PlatformReports' => \App\Constants\Reports::class,
+        'PaymentStatus' => \App\Constants\PaymentStatus::class
     ],
 
 ];

@@ -18,17 +18,16 @@ class Schema extends SchemaProvider
      *      the domain record being serialized.
      * @return string
      */
-    public function getId($resource)
+    public function getId($resource): string
     {
         return (string)$resource->getRouteKey();
     }
 
     /**
-     * @param Product $resource
-     *      the domain record being serialized.
+     * @param $product
      * @return array
      */
-    public function getAttributes($product)
+    public function getAttributes($product): array
     {
         return [
             'name' => $product->name,
@@ -45,12 +44,12 @@ class Schema extends SchemaProvider
     /**
      * Return the relationship in category->products in the API.
      *
-     * @param object $category
+     * @param $product
      * @param bool $isPrimary
      * @param array $includeRelationships
      * @return array|array[]
      */
-    public function getRelationships($product, $isPrimary, array $includeRelationships)
+    public function getRelationships($product, $isPrimary, array $includeRelationships): array
     {
         return [
             'categories' => [

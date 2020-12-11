@@ -2,19 +2,19 @@
 
 namespace App\Entities;
 
-use App\Constants\PaymentStatus;
 use Carbon\Carbon;
-use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use Searchable, SoftDeletes;
+    use Searchable;
+    use SoftDeletes;
 
     /**
      * @var array

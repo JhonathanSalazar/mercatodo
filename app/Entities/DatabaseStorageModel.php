@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Darryldecode\Cart\CartConditionCollection;
 use Illuminate\Database\Eloquent\Model;
 
 class DatabaseStorageModel extends Model
@@ -19,11 +20,20 @@ class DatabaseStorageModel extends Model
         'id', 'cart_data',
     ];
 
-    public function setCartDataAttribute($value)
+    /**
+     * Set the Cart Data Attributes
+     *
+     * @param $value
+     */
+    public function setCartDataAttribute($value): void
     {
         $this->attributes['cart_data'] = serialize($value);
     }
 
+    /**
+     * @param $value
+     * @return CartConditionCollection|array
+     */
     public function getCartDataAttribute($value)
     {
         return unserialize($value);

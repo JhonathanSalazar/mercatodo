@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Constants\PaymentStatus;
 use App\Entities\Order;
 use App\Entities\Product;
 use Faker\Generator as Faker;
@@ -11,7 +12,7 @@ $factory->define(Order::class, function (Faker $faker) {
     return [
         'order_reference' => Str::random(10),
         'user_id' => factory(App\Entities\User::class),
-        'status' => 'pending',
+        'status' => PaymentStatus::PENDING,
         'grand_total' => $faker->randomNumber(7),
         'item_count' => $faker->randomNumber(2),
         'paid_at' => null,

@@ -3,7 +3,6 @@
 namespace App\JsonApi\Categories;
 
 use App\Entities\Category;
-use App\Entities\Product;
 use CloudCreativity\LaravelJsonApi\Eloquent\AbstractAdapter;
 use CloudCreativity\LaravelJsonApi\Eloquent\HasMany;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;

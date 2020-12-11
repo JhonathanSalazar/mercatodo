@@ -25,7 +25,7 @@
                     <td>{{ $order->grand_total }}</td>
                     <td>{{ __($order->status) }}</td>
                     <td>
-                        @if($order->status == null || $order->status == \App\Classes\PaymentStatus::REJECTED)
+                        @if($order->status == null || $order->status == PaymentStatus::REJECTED)
                             <form action="{{ route('orders.delete', $order) }}" method="POST">
                                 @csrf @method('DELETE')
                                 <button>Eliminar</button>
@@ -35,7 +35,6 @@
             @empty
                 Aún no tienes ordenes, sigue comprando
             @endforelse
-
             <tbody>
         </table>
     </section>

@@ -3,7 +3,6 @@
 namespace App\JsonApi\Products;
 
 use CloudCreativity\LaravelJsonApi\Auth\AbstractAuthorizer;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 

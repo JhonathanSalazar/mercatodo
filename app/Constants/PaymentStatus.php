@@ -12,4 +12,10 @@ class PaymentStatus
     public const APPROVED = 'APPROVED';
     public const PENDING = 'PENDING';
     public const REJECTED = 'REJECTED';
+
+    const TYPES = [
+        self::APPROVED,
+        self::PENDING,
+        self::REJECTED
+    ];
 }

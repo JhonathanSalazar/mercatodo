@@ -3,9 +3,7 @@
 namespace App\Policies;
 
 use App\Constants\Permissions;
-use App\Constants\PlatformRoles;
 use App\Entities\User;
-use App\Entities\Product;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
@@ -65,7 +63,7 @@ class ProductPolicy
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @return mixed
+     * @return bool
      */
     public function destroy(User $user): bool
     {
@@ -76,7 +74,7 @@ class ProductPolicy
      * Determine whether the user can import the model.
      *
      * @param User $user
-     * @return mixed
+     * @return bool
      */
     public function import(User $user): bool
     {
@@ -87,7 +85,7 @@ class ProductPolicy
      * Determine whether the user can export the model.
      *
      * @param User $user
-     * @return mixed
+     * @return bool
      */
     public function export(User $user): bool
     {

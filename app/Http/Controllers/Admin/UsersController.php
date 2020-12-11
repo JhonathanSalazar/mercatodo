@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -21,7 +20,7 @@ class UsersController extends Controller
     {
         $this->middleware([
             'auth',
-            'role:Super|Admin'
+            'role:Admin'
         ]);
     }
 
@@ -36,8 +35,6 @@ class UsersController extends Controller
         $this->authorize('viewAny', User::class);
 
         $users = User::paginate();
-
-        Log::info('admin.users.index', ['user', auth()->id()]);
 
         return view('admin.users.index', compact('users'));
     }
