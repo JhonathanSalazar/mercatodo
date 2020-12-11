@@ -12,6 +12,7 @@
         "algolia/algoliasearch-client-php": "^2.2",
         "barryvdh/laravel-dompdf": "^0.8.6",
         "cloudcreativity/laravel-json-api": "2",
+        "consoletvs/charts": "7.*",
         "darryldecode/cart": "^4.1",
         "dnetix/redirection": "^1.0",
         "doctrine/dbal": "^2.12",

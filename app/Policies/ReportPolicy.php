@@ -24,6 +24,17 @@ class ReportPolicy
     }
 
     /**
+     * Determine whether the user can storage the model.
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function store(User $user): bool
+    {
+        return $user->hasPermissionTo(Permissions::DOWNLOAD_REPORTS);
+    }
+
+    /**
      * Determine whether the user can download the model.
      *
      * @param User $user

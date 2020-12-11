@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin'],
         Route::patch('notifications/{notification}', 'Admin\NotificationsController@read')->name('admin.notification.read');
 
         Route::get('reports', 'Admin\ReportsController@index')->name('admin.reports.index');
+        Route::post('reports', 'Admin\ReportsController@store')->name('admin.reports.store');
         Route::get('reports/download/{report}', 'Admin\ReportsController@download')->name('admin.reports.download');
         Route::delete('reports/download/{report}', 'Admin\ReportsController@destroy')->name('admin.reports.destroy');
 

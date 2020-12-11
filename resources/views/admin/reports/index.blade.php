@@ -34,6 +34,7 @@
             <table id="users-table" class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Tipo</th>
                     <th>Fecha Creación</th>
                     <th>Acción</th>
@@ -43,14 +44,19 @@
                 @foreach($reports as $report)
                     <tr>
                         <td>
+                            {{ trans($report->id) }}
+                        </td>
+                        <td>
                             {{ trans($report->type) }}
                         </td>
                         <td>{{ $report->created_at->format('m/d/Y - H:i') }}</td>
                         <td>
-                            <a href="{{ route('admin.reports.download', $report->id) }}"
-                               class="btn btn-xs btn-info">
-                                <i class="fa fa-download"></i> Descargar
-                            </a>
+                            @if($report->file_path)
+                                <a href="{{ route('admin.reports.download', $report->id) }}"
+                                   class="btn btn-xs btn-info">
+                                    <i class="fa fa-download"></i> Descargar
+                                </a>
+                            @endif
                             <form method="POST"
                                   action="{{ route('admin.reports.destroy', $report->id) }}"
                                   style="display: inline">
@@ -65,6 +71,7 @@
                 @endforeach
                 </tbody>
             </table>
+            {{ $reports->links() }}
         </div>
         <!-- /.box-body -->
     </div>

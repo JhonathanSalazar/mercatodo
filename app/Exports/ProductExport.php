@@ -14,7 +14,11 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ProductExport implements FromCollection, WithMapping, WithHeadings, WithColumnFormatting, ShouldQueue
+class ProductExport implements FromCollection,
+    WithMapping,
+    WithHeadings,
+    WithColumnFormatting,
+    ShouldQueue
 {
 
     use Exportable;

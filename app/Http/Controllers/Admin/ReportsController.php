@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entities\Report;
+use App\Exports\ReportExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReportRequest;
+use App\Jobs\ExportReportCompleted;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -37,9 +41,33 @@ class ReportsController extends Controller
     {
         $this->authorize('viewAny', Report::class);
 
-        $reports = Report::all();
+        $reports = Report::orderBy('created_at','desc')->paginate();
 
         return view('admin.reports.index', compact('reports'));
+    }
+
+
+    /**
+     * Generate and store the required report.
+     *
+     * @param ReportRequest $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function store(ReportRequest $request): RedirectResponse
+    {
+        $this->authorize('store', Report::class);
+
+        $now = Carbon::now()->isoFormat('YYYY-MM-DD_HH-mm');
+        $type = $request->get('report_type');
+        $fromDate = Carbon::parse($request->get('from_date'));
+        $untilDate = Carbon::parse($request->get('until_date'));
+        $filePath = 'exports/' . $type . '_' . $now . '.xlsx';
+
+        (new ReportExport($request->user(), $type, $fromDate, $untilDate))->store($filePath)
+            ->chain([new ExportReportCompleted($request->user(), $filePath, $type)]);
+
+        return redirect()->back()->with('status', trans('reports.created'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Constants\PaymentStatus;
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
@@ -88,10 +89,11 @@ class Product extends Model
      * Return the featured products published
      *
      * @param Builder $query
+     * @return Builder
      */
-    public function scopeFeaturedHome(Builder $query)
+    public function scopeFeaturedHome(Builder $query): Builder
     {
-        $query->whereNotNull('published_at')
+        return $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
             ->where('category_id', '=', 2)
             ->orderBy('published_at', 'desc')
@@ -102,10 +104,11 @@ class Product extends Model
      * Return the last products published
      *
      * @param Builder $query
+     * @return Builder
      */
-    public function scopeLastHome(Builder $query)
+    public function scopeLastHome(Builder $query): Builder
     {
-        $query->whereNotNull('published_at')
+        return $query->whereNotNull('published_at')
             ->where('published_at', '<=', Carbon::now())
             ->where('category_id', '=', 3)
             ->orderBy('published_at', 'desc')
@@ -113,6 +116,19 @@ class Product extends Model
             ->limit(4);
     }
 
+    /**
+     * Return the scope to a specific category.
+     *
+     * @param Builder $query
+     * @param string $values
+     * @return Builder
+     */
+    public function scopeCategories(Builder $query, string $values): Builder
+    {
+        return $query->whereHas('category', function ($q) use ($values) {
+            $q->whereIn('url', explode(',', $values));
+        });
+    }
 
     /**
      * Get the url attribute correctly.
@@ -127,19 +143,6 @@ class Product extends Model
         }
 
         return "/storage/" . $this->image;
-    }
-
-    /**
-     * Return the scope to a specific category.
-     *
-     * @param Builder $query
-     * @param string $value
-     */
-    public function scopeCategories(Builder $query, string $values)
-    {
-        $query->whereHas('category', function ($q) use ($values){
-            $q->whereIn('url', explode(',', $values));
-        });
     }
 
 }

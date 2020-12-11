@@ -47,7 +47,7 @@ class IndexProductsTest extends TestCase
      */
     public function adminRoleWithPermissionCanIndexProducts()
     {
-        $products = factory(Product::class,30)->create();
+        $products = factory(Product::class,10)->create();
 
         $viewProductPermission = Permission::create(['name' => Permissions::VIEW_PRODUCTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($viewProductPermission);

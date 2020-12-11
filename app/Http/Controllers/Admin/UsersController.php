@@ -35,7 +35,7 @@ class UsersController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::all();
+        $users = User::paginate();
 
         Log::info('admin.users.index', ['user', auth()->id()]);
 
