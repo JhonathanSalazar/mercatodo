@@ -53,5 +53,4 @@ class ReportPolicy
     {
         return $user->hasPermissionTo(Permissions::DELETE_REPORTS);
     }
-
 }

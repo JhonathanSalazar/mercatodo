@@ -78,5 +78,4 @@ class UpdateProductsTest extends TestCase
             'name' => 'Name changed',
         ]);
     }
-
 }

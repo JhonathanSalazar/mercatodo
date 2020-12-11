@@ -41,7 +41,7 @@ class ReportsController extends Controller
     {
         $this->authorize('viewAny', Report::class);
 
-        $reports = Report::orderBy('created_at','desc')->paginate();
+        $reports = Report::orderBy('created_at', 'desc')->paginate();
 
         return view('admin.reports.index', compact('reports'));
     }
@@ -101,5 +101,4 @@ class ReportsController extends Controller
 
         return back()->with('status', 'Su reporte a sido eliminado');
     }
-
 }

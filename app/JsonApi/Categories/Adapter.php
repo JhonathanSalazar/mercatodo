@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 
 class Adapter extends AbstractAdapter
 {
-
     protected $fillable = ['name', 'url'];
 
     /**
@@ -57,5 +56,4 @@ class Adapter extends AbstractAdapter
     {
         return $this->hasMany();
     }
-
 }

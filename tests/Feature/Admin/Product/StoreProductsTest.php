@@ -105,5 +105,4 @@ class StoreProductsTest extends TestCase
 
         $this->post(route('admin.products.store'), $attribute)->assertSessionHasErrors('name');
     }
-
 }

@@ -137,12 +137,10 @@ class Product extends Model
      */
     public function getImageUrlAttribute(): string
     {
-
         if ($this->image == null) {
             return "/storage/images/default.jpeg";
         }
 
         return "/storage/" . $this->image;
     }
-
 }

@@ -35,4 +35,3 @@ $factory->afterCreating(Order::class, function (Order $order, Faker $faker) {
         'quantity' => $faker->randomNumber(2),
     ]);
 });
-

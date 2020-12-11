@@ -9,10 +9,8 @@ use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-
 class IndexOrderTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -39,7 +37,6 @@ class IndexOrderTest extends TestCase
             $response->assertSee($order->grand_total);
             $response->assertSee(trans($order->status));
         });
-
     }
 
     /**

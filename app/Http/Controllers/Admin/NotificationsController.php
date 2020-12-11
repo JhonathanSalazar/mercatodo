@@ -28,5 +28,4 @@ class NotificationsController extends Controller
     {
         DatabaseNotification::find($notification)->markAsRead();
     }
-
 }

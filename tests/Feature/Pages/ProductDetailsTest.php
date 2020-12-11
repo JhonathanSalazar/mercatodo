@@ -3,9 +3,7 @@
 namespace Tests\Feature\Pages;
 
 use App\Entities\Product;
-use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ProductDetailsTest extends TestCase

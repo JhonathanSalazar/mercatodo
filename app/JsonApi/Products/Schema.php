@@ -56,7 +56,7 @@ class Schema extends SchemaProvider
                 self::SHOW_RELATED => true,
                 self::SHOW_SELF => true,
                 self::SHOW_DATA => isset($includeRelationships['categories']),
-                self::DATA => function() use ($product) {
+                self::DATA => function () use ($product) {
                     return $product->category;
                 }
             ]

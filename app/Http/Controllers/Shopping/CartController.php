@@ -40,7 +40,7 @@ class CartController extends Controller
         $price = $product->price;
         $qty = request('quantity');
 
-        $condition = new CartCondition( config('shopping_cart.tax'));
+        $condition = new CartCondition(config('shopping_cart.tax'));
 
         Cart::session($userId)->condition($condition)->add($id, $name, $price, $qty);
 

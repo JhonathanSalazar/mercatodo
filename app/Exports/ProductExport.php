@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-
 use App\Entities\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
@@ -14,13 +13,13 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ProductExport implements FromCollection,
+class ProductExport implements
+    FromCollection,
     WithMapping,
     WithHeadings,
     WithColumnFormatting,
     ShouldQueue
 {
-
     use Exportable;
 
     protected $authUser;

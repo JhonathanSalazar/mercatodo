@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class EditInformationTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**

@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditOrderTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**

@@ -11,15 +11,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdateOrderTest extends TestCase
 {
-
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * @test
      */
     public function aBuyerCanUpdateYourOrder()
     {
-
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);

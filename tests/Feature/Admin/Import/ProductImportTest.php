@@ -58,7 +58,6 @@ class ProductImportTest extends TestCase
      */
     public function aAdminWithPermissionCanImportProduct()
     {
-        $this->withExceptionHandling();
         $importPermission = Permission::create(['name' => Permissions::IMPORT]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($importPermission);
         $admUser = factory(User::class)->create()->assignRole($adminRole);
@@ -70,7 +69,6 @@ class ProductImportTest extends TestCase
         $this->post($this->getImportRoute(), ['productsImport' => $importFile]);
 
         Excel::assertQueued($importFile->getFilename());
-
     }
 
     /**

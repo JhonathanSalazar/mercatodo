@@ -12,15 +12,14 @@ use Tests\TestCase;
 
 class UpdateInformationTest extends TestCase
 {
-
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * @test
      */
     public function aUserCanUpdateYourPersonalInformation()
     {
-
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
@@ -62,5 +61,4 @@ class UpdateInformationTest extends TestCase
 
         $response->assertStatus(403);
     }
-
 }

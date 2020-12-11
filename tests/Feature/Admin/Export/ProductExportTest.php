@@ -17,7 +17,6 @@ use Tests\TestCase;
 
 class ProductExportTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**

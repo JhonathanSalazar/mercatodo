@@ -9,7 +9,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 
 $factory->define(Product::class, function (Faker $faker) {
-
     $filepath = storage_path('app/public/images');
 
     if (!File::exists($filepath)) {

@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class IndexReportsTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -46,7 +45,7 @@ class IndexReportsTest extends TestCase
      */
     public function adminRoleWithPermissionCanViewReports()
     {
-        $products = factory(Report::class,10)->create();
+        $products = factory(Report::class, 10)->create();
 
         $viewReportsPermission = Permission::create(['name' => Permissions::VIEW_REPORTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($viewReportsPermission);
@@ -57,7 +56,7 @@ class IndexReportsTest extends TestCase
 
         $response->assertStatus(200);
 
-        $products->each(function($item) use ($response) {
+        $products->each(function ($item) use ($response) {
             $response->assertSee($item->type);
         });
     }
@@ -67,7 +66,7 @@ class IndexReportsTest extends TestCase
      */
     public function adminRoleWithoutPermissionCantIndexReports()
     {
-        factory(Report::class,10)->create();
+        factory(Report::class, 10)->create();
 
         Permission::create(['name' => Permissions::VIEW_REPORTS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);

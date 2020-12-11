@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('auth', 'ApiAuthController@login');
 
-Route::middleware(['auth:sanctum'])->group(function() {
+Route::middleware(['auth:sanctum'])->group(function () {
     JsonApi::register('v1')->routes(function ($api) {
         $api->resource('products');
         $api->resource('products')->relationships(function ($api) {
@@ -28,7 +28,3 @@ Route::middleware(['auth:sanctum'])->group(function() {
         });
     });
 });
-
-
-
-

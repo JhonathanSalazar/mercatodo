@@ -55,5 +55,4 @@ class UserPolicy
     {
         return $user->id == $model->id || $user->hasPermissionTo(Permissions::UPDATE_USERS);
     }
-
 }

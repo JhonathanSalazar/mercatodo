@@ -14,7 +14,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DeleteProductsTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * @test

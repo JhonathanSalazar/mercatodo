@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddCartProductTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -24,7 +23,6 @@ class AddCartProductTest extends TestCase
             'product' => $product,
             'quantity' => 1
         ]))->assertRedirect(route('login'));
-
     }
 
     /**
@@ -47,12 +45,11 @@ class AddCartProductTest extends TestCase
 
         $cartProducts = \Cart::session($userId)->getContent();
 
-        foreach($cartProducts as $cartProduct) {
+        foreach ($cartProducts as $cartProduct) {
             $this->assertEquals($product->id, $cartProduct->id);
             $this->assertEquals($product->name, $cartProduct->name);
             $this->assertEquals($product->price, $cartProduct->price);
         }
-
     }
 
     /**

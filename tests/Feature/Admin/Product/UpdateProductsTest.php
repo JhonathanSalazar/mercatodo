@@ -71,7 +71,7 @@ class UpdateProductsTest extends TestCase
         $description = $this->faker->sentence;
         $ean = $this->faker->randomNumber(8);
         $branch = $this->faker->lastName;
-        $price = $this->faker->numberBetween(1000,100000);
+        $price = $this->faker->numberBetween(1000, 100000);
 
         $this->put(route('admin.products.update', $product), [
             'name' => $name,
@@ -107,7 +107,7 @@ class UpdateProductsTest extends TestCase
         $description = $this->faker->sentence;
         $ean = $this->faker->randomNumber(8);
         $branch = $this->faker->lastName;
-        $price = $this->faker->numberBetween(1000,100000);
+        $price = $this->faker->numberBetween(1000, 100000);
 
         $this->put(route('admin.products.update', [
             'product' => $product,
@@ -160,7 +160,6 @@ class UpdateProductsTest extends TestCase
 
         $this->put(route('admin.products.update', $product), compact('product'))
             ->assertSessionHasErrors('ean');
-
     }
 
     /**
@@ -178,7 +177,6 @@ class UpdateProductsTest extends TestCase
 
         $this->put(route('admin.products.update', $product), compact('product'))
             ->assertSessionHasErrors('branch');
-
     }
 
     /**
@@ -196,7 +194,6 @@ class UpdateProductsTest extends TestCase
 
         $this->put(route('admin.products.update', $product), compact('product'))
             ->assertSessionHasErrors('description');
-
     }
 
     /**
@@ -214,7 +211,5 @@ class UpdateProductsTest extends TestCase
 
         $this->put(route('admin.products.update', $product), compact('product'))
             ->assertSessionHasErrors('price');
-
     }
-
 }

@@ -16,11 +16,11 @@ class DeleteErrorsImportsTable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-     /**
-     * Execute the job.
-     *
-     * @return void
-     */
+    /**
+    * Execute the job.
+    *
+    * @return void
+    */
     public function handle(): void
     {
         ErrorImport::truncate();

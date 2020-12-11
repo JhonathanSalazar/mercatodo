@@ -50,7 +50,6 @@ class ApiAuthController extends Controller
                 'token_type' => 'Bearer',
             ]);
         } catch (Exception $error) {
-
             return response()->json([
                 'status_code' => 500,
                 'message' => 'Error in Login',

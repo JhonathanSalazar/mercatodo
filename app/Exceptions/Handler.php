@@ -8,7 +8,6 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-
     use HandlesErrors;
 
     /**

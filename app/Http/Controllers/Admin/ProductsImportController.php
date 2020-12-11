@@ -65,5 +65,4 @@ class ProductsImportController extends Controller
     {
         return Storage::download($this->templateFile);
     }
-
 }

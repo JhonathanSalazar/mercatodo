@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class IndexProductsTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**

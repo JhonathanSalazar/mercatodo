@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->string('payer_name');
             $table->string('payer_email');
-            $table->enum('document_type',['CC', 'DI']);
+            $table->enum('document_type', ['CC', 'DI']);
             $table->string('document_number');
             $table->string('payer_phone');
             $table->string('payer_address');

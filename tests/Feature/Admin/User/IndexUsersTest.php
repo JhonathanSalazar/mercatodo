@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class IndexUsersTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -20,7 +19,6 @@ class IndexUsersTest extends TestCase
      */
     public function guestCantIndexUsers()
     {
-
         factory(User::class, 5)->create();
 
         $response = $this->get($this->getIndexRoute());
@@ -47,7 +45,7 @@ class IndexUsersTest extends TestCase
      */
     public function adminRoleWithPermissionCanIndexUsers()
     {
-        $users = factory(User::class,10)->create();
+        $users = factory(User::class, 10)->create();
 
         $viewUserPermission = Permission::create(['name' => Permissions::VIEW_USERS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN])->givePermissionTo($viewUserPermission);
@@ -58,7 +56,7 @@ class IndexUsersTest extends TestCase
 
         $response->assertStatus(200);
 
-        $users->each(function($item) use ($response) {
+        $users->each(function ($item) use ($response) {
             $response->assertSee($item->name);
             $response->assertSee($item->email);
         });
@@ -69,7 +67,7 @@ class IndexUsersTest extends TestCase
      */
     public function adminRoleWithoutPermissionCantIndexUsers()
     {
-        factory(User::class,10)->create();
+        factory(User::class, 10)->create();
 
         Permission::create(['name' => Permissions::VIEW_USERS]);
         $adminRole = Role::create(['name' => PlatformRoles::ADMIN]);

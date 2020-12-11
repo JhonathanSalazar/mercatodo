@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ShowOrderTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -60,7 +59,6 @@ class ShowOrderTest extends TestCase
      */
     public function aBuyerCantShowOrdersFromOtherCustomers()
     {
-
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
@@ -70,7 +68,6 @@ class ShowOrderTest extends TestCase
         $this->assertNotEquals($buyerUser->id, $order->user_id);
         $this->get(route('orders.show', compact('order')))
             ->assertStatus(403);
-
     }
 
     /**

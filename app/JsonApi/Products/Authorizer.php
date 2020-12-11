@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class Authorizer extends AbstractAuthorizer
 {
-
     protected $guards = ['sanctum'];
 
     /**
@@ -22,7 +21,7 @@ class Authorizer extends AbstractAuthorizer
      */
     public function index($type, $request): void
     {
-        // TODO: Implement index() method.
+
     }
 
     /**
@@ -84,5 +83,4 @@ class Authorizer extends AbstractAuthorizer
     {
         $this->authenticate();
     }
-
 }

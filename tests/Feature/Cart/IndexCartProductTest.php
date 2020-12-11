@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class IndexCartProductTest extends TestCase
 {
-
     use RefreshDatabase;
 
 
@@ -25,7 +24,7 @@ class IndexCartProductTest extends TestCase
     /**
      * @test
      */
-    public  function buyerCanIndexCartProduct()
+    public function buyerCanIndexCartProduct()
     {
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);

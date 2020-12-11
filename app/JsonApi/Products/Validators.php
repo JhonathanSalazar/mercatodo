@@ -68,5 +68,4 @@ class Validators extends AbstractValidators
             //
         ];
     }
-
 }

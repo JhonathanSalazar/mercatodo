@@ -33,6 +33,5 @@ class CategoriesTableSeeder extends Seeder
         $lastProductCategory->name = 'Temporada Pasada';
         $lastProductCategory->url = Str::slug('Temporada Pasada');
         $lastProductCategory->save();
-
     }
 }

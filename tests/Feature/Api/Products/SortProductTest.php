@@ -102,7 +102,7 @@ class SortProductTest extends TestCase
     public function itCannotSortProductByUnknownsFields()
     {
         $user = factory(User::class)->create();
-        factory(Product::class,3)->create();
+        factory(Product::class, 3)->create();
 
         Sanctum::actingAs($user);
 
@@ -110,5 +110,4 @@ class SortProductTest extends TestCase
 
         $this->jsonApi()->get($url)->assertStatus(400);
     }
-
 }

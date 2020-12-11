@@ -42,7 +42,6 @@ class ProductsExportController extends Controller
         (new ProductExport(auth()->user()))->store($filePath)
             ->chain([new NotifyUserOfCompletedExport($user, $filePath)]);
 
-        return back()->with('status','Será notificado cuando el proceso termine');
+        return back()->with('status', 'Será notificado cuando el proceso termine');
     }
-
 }

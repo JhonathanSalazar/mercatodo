@@ -11,7 +11,6 @@ use Tests\TestCase;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-
 class EditProductsTest extends TestCase
 {
     use RefreshDatabase;

@@ -12,7 +12,8 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ReportExport implements FromCollection,
+class ReportExport implements
+    FromCollection,
     WithMapping,
     WithHeadings,
     ShouldQueue
@@ -63,7 +64,6 @@ class ReportExport implements FromCollection,
      */
     public function map($row): array
     {
-
         $columns = [];
 
         switch ($this->type) {

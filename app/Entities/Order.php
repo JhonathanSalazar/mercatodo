@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-
     use SoftDeletes;
 
     /**
@@ -91,7 +90,7 @@ class Order extends Model
 
     public function scopeCreatedBetween(Builder $query, string $fromDate, string $untilDate): Builder
     {
-        return $query->select('order_reference', 'user_id', 'grand_total', 'item_count','status', 'created_at')
+        return $query->select('order_reference', 'user_id', 'grand_total', 'item_count', 'status', 'created_at')
             ->whereBetween('created_at', [$fromDate, $untilDate]);
     }
 }

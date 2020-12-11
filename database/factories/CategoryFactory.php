@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Str;
 
 $factory->define(Category::class, function (Faker $faker) {
-
     $name = $faker->firstName;
 
     return [
@@ -16,4 +15,3 @@ $factory->define(Category::class, function (Faker $faker) {
         'url' => Str::slug($name)
     ];
 });
-

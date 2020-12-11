@@ -24,15 +24,19 @@ Route::get('tags/{tag}', 'Product\TagsController@show')->name('pages.tag.show');
 Route::get('categories/{category}', 'Product\CategoriesController@show')->name('pages.category.show');
 Route::get('products/{product}', 'Product\DetailsController@show')->name('products.details');
 
-Route::group(['prefix' => 'admin'],
+Route::group(
+    ['prefix' => 'admin'],
     function () {
         Route::get('/', 'Admin\DashboardController@main')->name('admin.dashboard');
 
-        Route::resource('users', 'Admin\UsersController',
+        Route::resource(
+            'users',
+            'Admin\UsersController',
             [
                 'except' => ['create', 'store'],
                 'as' => 'admin'
-            ]);
+            ]
+        );
 
         Route::put('users/{user}/roles', 'Admin\UsersRolesController@update')->name('admin.users.roles.update');
 
@@ -54,8 +58,8 @@ Route::group(['prefix' => 'admin'],
         Route::post('reports', 'Admin\ReportsController@store')->name('admin.reports.store');
         Route::get('reports/download/{report}', 'Admin\ReportsController@download')->name('admin.reports.download');
         Route::delete('reports/download/{report}', 'Admin\ReportsController@destroy')->name('admin.reports.destroy');
-
-    });
+    }
+);
 
 Route::get('accounts/{user}', 'Customer\UserDataController@edit')->name('pages.user-account.edit');
 Route::put('accounts/{user}', 'Customer\UserDataController@update')->name('pages.user-account.update');
@@ -79,6 +83,3 @@ Route::get('orders/pay/show/{order}', 'Shopping\PaymentAttemptController@show')-
 Route::get('/checkout', 'Customer\PagesController@checkout')->name('pages.checkout');
 Route::get('/about', 'Customer\PagesController@aboutUs')->name('pages.about');
 Route::get('/contact', 'Customer\PagesController@contactUs')->name('pages.contact');
-
-
-

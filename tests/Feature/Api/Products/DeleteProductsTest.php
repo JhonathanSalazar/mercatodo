@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class DeleteProductsTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**

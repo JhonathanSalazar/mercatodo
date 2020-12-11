@@ -32,5 +32,4 @@ class Report extends Model
     {
         return '/storage/' . $this->file_path;
     }
-
 }

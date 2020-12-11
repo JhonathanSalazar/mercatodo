@@ -3,7 +3,6 @@
 namespace Tests\Feature\Api\Categories;
 
 use App\Entities\Category;
-use App\Entities\Product;
 use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;

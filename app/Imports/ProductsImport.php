@@ -17,14 +17,14 @@ use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Validators\Failure;
 
-class ProductsImport implements ToModel,
+class ProductsImport implements
+    ToModel,
     WithHeadingRow,
     WithValidation,
     SkipsOnFailure,
     WithChunkReading,
     WithUpserts,
     ShouldQueue
-
 {
     use Importable;
     use SkipsFailures;
