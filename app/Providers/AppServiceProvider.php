@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use CloudCreativity\LaravelJsonApi\LaravelJsonApi;
 use Illuminate\Support\ServiceProvider;
+use ConsoleTVs\Charts\Registrar as Charts;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,10 +21,15 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
+     * @param Charts $charts
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
-        //
+        LaravelJsonApi::defaultApi('v1');
+
+        $charts->register([
+            \App\Charts\SalesChart::class
+        ]);
     }
 }

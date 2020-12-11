@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Product;
 
-
-use App\Category;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Entities\Category;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {
@@ -16,7 +14,7 @@ class CategoriesController extends Controller
      */
     public function show(Category $category): View
     {
-        $products = $category->products()->paginate(5);
+        $products = $category->products()->with('category')->paginate(5);
 
         return view('product.list', compact('products'));
     }

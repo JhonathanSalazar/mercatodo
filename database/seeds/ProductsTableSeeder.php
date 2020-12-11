@@ -1,22 +1,21 @@
 <?php
 
-use App\Tag;
-use App\Product;
+use App\Entities\Tag;
+use App\Entities\Product;
 use Illuminate\Database\Seeder;
 
 class ProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Product::truncate();
         Tag::truncate();
 
-        //Productos caracteristicos
+        // Productos caracteristicos
         $product1 = factory(Product::class)->create(['category_id' => 2]);
         $product1->tags()->attach(Tag::create(['name' => 'mujer']));
 
@@ -29,7 +28,7 @@ class ProductsTableSeeder extends Seeder
         $product4 = factory(Product::class)->create(['category_id' => 2]);
         $product4->tags()->sync(1);
 
-        //Ultimos productos
+        // Ultimos productos
         $product5 = factory(Product::class)->create(['category_id' => 3]);
         $product5->tags()->attach(Tag::create(['name' => 'hombre']));
 

@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Bogota',
 
     /*
     |--------------------------------------------------------------------------
@@ -229,8 +229,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Cart' => Darryldecode\Cart\Facades\CartFacade::class
-
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        'Permissions' => \App\Constants\Permissions::class,
+        'RolesPlatform' => \App\Constants\PlatformRoles::class,
+        'PlatformReports' => \App\Constants\Reports::class,
+        'PaymentStatus' => \App\Constants\PaymentStatus::class
     ],
 
 ];

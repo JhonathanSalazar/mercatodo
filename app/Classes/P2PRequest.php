@@ -3,9 +3,7 @@
 
 namespace App\Classes;
 
-
-use App\Order;
-use http\Client\Request;
+use App\Entities\Order;
 
 class P2PRequest
 {
@@ -27,18 +25,18 @@ class P2PRequest
                 ],
             ],
             'expiration' => date('c', strtotime('+2 days')),
-            'returnUrl' => route('payment.show', $order),
+            'returnUrl' => route('payments.show', $order),
             'ipAddress' => \Request::ip(),
             'userAgent' => \Request::header('User-Agent'),
         ];
     }
 
     /** Return the requiered request to create a payment with PlaceToPay Redirection
+     *
      * @return array
      */
-    public function create()
+    public function create(): array
     {
         return $this->p2pRequest;
     }
-
 }

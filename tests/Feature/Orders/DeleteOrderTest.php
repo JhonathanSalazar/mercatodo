@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Orders;
 
-use App\Order;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use App\Entities\User;
+use App\Entities\Order;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DeleteOrderTest extends TestCase
 {
@@ -25,8 +25,8 @@ class DeleteOrderTest extends TestCase
             'user_id' => $buyerUser
         ]);
 
-        $this->delete(route('order.delete', $order))
-            ->assertRedirect(route('order.index', $buyerUser));
+        $this->delete(route('orders.delete', $order))
+            ->assertRedirect(route('orders.index', $buyerUser));
 
         $this->assertDeleted('orders', array($order));
     }
@@ -42,6 +42,6 @@ class DeleteOrderTest extends TestCase
 
         $order = factory(Order::class)->create();
 
-        $this->delete(route('order.delete', $order))->assertStatus(403);
+        $this->delete(route('orders.delete', $order))->assertStatus(403);
     }
 }

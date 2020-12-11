@@ -2,11 +2,17 @@
 
 namespace App\View\Components\Product;
 
+use App\Entities\Product;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
 class HomeCarousel extends Component
 {
+
+    /**
+     * @var mixed
+     */
+    public $id;
 
     /**
      * @var string
@@ -34,28 +40,18 @@ class HomeCarousel extends Component
     public $url;
 
     /**
-     * @var int
-     */
-    public $id;
-
-
-    /**
      * Create a new component instance.
-     * @param string $name
-     * @param string $image
-     * @param string $price
-     * @param string $category
-     * @param string $url
-     * @param int $id
+     *
+     * @param Product $product
      */
-    public function __construct(string $name, string $image, string $price, string $category, string $url, int $id)
+    public function __construct(Product $product)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->image = $image;
-        $this->price = $price;
-        $this->category = $category;
-        $this->url = $url;
+        $this->id = $product->id;
+        $this->name = $product->name;
+        $this->image = $product->getImageUrlAttribute();
+        $this->price = $product->price;
+        $this->category = $product->category->name;
+        $this->url = $product->category->url;
     }
 
     /**

@@ -2,16 +2,14 @@
 
 namespace Tests\Feature\Orders;
 
-use App\Order;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Spatie\Permission\Models\Role;
+use App\Entities\User;
+use App\Entities\Order;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditOrderTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -21,7 +19,7 @@ class EditOrderTest extends TestCase
     {
         $order = factory(Order::class)->create();
 
-        $this->get(route('order.edit', compact('order')))
+        $this->get(route('orders.edit', compact('order')))
             ->assertRedirect(route('login'));
     }
 
@@ -38,7 +36,7 @@ class EditOrderTest extends TestCase
             'user_id' => $buyerUser
         ]);
 
-        $this->get(route('order.edit', compact('order')))
+        $this->get(route('orders.edit', compact('order')))
             ->assertStatus(200)
             ->assertSee($order->payer_name)
             ->assertSee($order->payer_email)
@@ -61,8 +59,9 @@ class EditOrderTest extends TestCase
 
         $order = factory(Order::class)->create();
 
+
         $this->assertNotEquals($buyerUser->id, $order->user_id);
-        $this->get(route('order.show', compact('order')))
+        $this->get(route('orders.show', compact('order')))
             ->assertStatus(403);
     }
 }

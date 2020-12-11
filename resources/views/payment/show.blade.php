@@ -8,29 +8,31 @@
     <section class="main-content">
         <div class="row">
             <div class="col-12 center">
-                @if($order->status == 'APPROVED')
-                    <h5>TU TRANSACCIÓN HA SIDO APROBADA</h5>
+                @if($order->status == PaymentStatus::APPROVED)
+                    <h5>@lang('orders.payment.approved')</h5>
+                @elseif($order->status == PaymentStatus::PENDING)
+                    <h5>@lang('orders.payment.pending')</h5>
                 @else
-                    <h5>TU TRANSACCIÓN HA SIDO RECHAZADA</h5>
+                    <h5>@lang('orders.payment.rejected')</h5>
                 @endif
             </div>
         </div>
         <div class="row">
             <div class="col-4 offset-4">
                 <p class="mt-3">
-                    <strong>Estado</strong>: {{ $order->status }}<br>
-                    <strong>Razón</strong>: {{ $order->message }}<br>
-                    <strong># Transacción</strong>: {{ $paymentAttempt->requestID }}<br>
-                    <strong>Total</strong>: $ {{ $order->grand_total }} COP<br>
+                    <strong>@lang('orders.state')</strong>: {{ __($order->status) }}<br>
+                    <strong>@lang('orders.reason')</strong>: {{ $order->message }}<br>
+                    <strong>@lang('orders.transaction_number')</strong>: {{ $paymentAttempt->requestID }}<br>
+                    <strong>@lang('orders.total')</strong>: $ {{ $order->grand_total }} COP<br>
                 </p>
             </div>
         </div>
         <div class="row mt-4">
             <div class="col-12 center">
-                <form action="{{ route('payment.store', $order) }}">
-                    <a class="mr-3" href="{{ route('order.index', $order->user_id) }}">Regresar</a>
-                    @if($order->status != 'APPROVED')
-                        <button>Reintentar Pago</button>
+                <form action="{{ route('payments.store', $order) }}">
+                    <a class="mr-3" href="{{ route('orders.index', $order->user_id) }}">@lang('orders.back')</a>
+                    @if($order->status == PaymentStatus::REJECTED)
+                        <button>@lang('orders.pay_retry')</button>
                     @endif
                 </form>
             </div>

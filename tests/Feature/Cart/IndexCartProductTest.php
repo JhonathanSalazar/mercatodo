@@ -2,15 +2,14 @@
 
 namespace Tests\Feature\Cart;
 
-use App\Product;
-use App\User;
+use App\Entities\Product;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class IndexCartProductTest extends TestCase
 {
-
     use RefreshDatabase;
 
 
@@ -22,21 +21,24 @@ class IndexCartProductTest extends TestCase
         $this->get(route('cart.index'))->assertRedirect(route('login'));
     }
 
-
     /**
      * @test
      */
-    public  function buyerCanIndexCartProduct()
+    public function buyerCanIndexCartProduct()
     {
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
 
         $product = factory(Product::class)->create();
-        $_REQUEST['quantity'] = 1;
 
-        $this->get(route('cart.add', compact('product')))
-            ->assertStatus(302);
+        //For each en caso de usar 10 products en el trait.
+        //$this->addCart($product, $buyerUser);
+
+        $this->post(route('cart.add', [
+            'product' => $product,
+            'quantity' => 1
+        ]))->assertStatus(302);
 
         $response = $this->get(route('cart.index'));
 

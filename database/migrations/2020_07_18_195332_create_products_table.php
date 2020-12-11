@@ -17,13 +17,13 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('user_id');
-            $table->string('ean')->nullable();
+            $table->string('ean')->unique()->nullable();
             $table->string('branch')->nullable();
             $table->integer('price')->nullable();
             $table->text('description')->nullable();
             $table->boolean('stock')->default(true);
             $table->timestamp('published_at')->nullable();
-            $table->unsignedBigInteger('category_id')->default(1);
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

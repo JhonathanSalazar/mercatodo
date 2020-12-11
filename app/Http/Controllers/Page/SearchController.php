@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Page;
 
-use App\Http\Controllers\Controller;
-use App\Product;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Entities\Product;
 use Illuminate\View\View;
+use App\Http\Controllers\Controller;
 
 class SearchController extends Controller
 {
@@ -16,9 +14,7 @@ class SearchController extends Controller
     public function index(): View
     {
         $search = request('q');
-
         $products = Product::search($search)->paginate();
-
 
         return view('product.list', compact('products'));
     }

@@ -5,13 +5,9 @@
         <div class="col-md-5">
             <div class="box box-primary">
                 <div class="box-body box-profile">
-
-                    @if($product->image)
                     <img class="img-responsive center-block"
-                         src="/storage/{{ $product->image }}"
+                         src="{{ $product->getImageUrlAttribute() }}"
                          alt="{{ $product->name }}">
-                    @endif
-
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
                             <b>Nombre</b> <a class="pull-right">{{ $product->name }}</a>
@@ -54,9 +50,11 @@
                         </li>
                     </ul>
 
-                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary btn-block">
-                        <b>Editar producto</b>
-                    </a>
+                    @can(Permissions::UPDATE_PRODUCTS)
+                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary btn-block">
+                            <b>Editar producto</b>
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>

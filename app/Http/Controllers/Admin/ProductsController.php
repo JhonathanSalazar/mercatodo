@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-use App\Tag;
-use App\Product;
-use App\Category;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Entities\Tag;
+use App\Entities\Product;
+use App\Entities\Category;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateProductRequest;
-use Intervention\Image\Facades\Image;
 use Illuminate\Validation\ValidationException;
-
 
 class ProductsController extends Controller
 {
@@ -37,37 +36,47 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Product $product
      * @return View
+     * @throws AuthorizationException
      */
-    public function index(Product $product): View
+    public function index(): View
     {
-        $products = Product::all();
+        $this->authorize('index', Product::class);
+
+        $products = Product::paginate();
+
         return view('admin.products.index', compact('products'));
     }
 
     /**
      * Display the specified resource.
+     *
      * @param Product $product
      * @return View
+     * @throws AuthorizationException
      */
     public function show(Product $product): View
     {
+        $this->authorize('view', $product);
+
         return view('admin.products.show', compact('product'));
     }
 
     /**
      * Store the specified resource.
+     *
      * @param Request $request
      * @return RedirectResponse
      * @throws ValidationException
+     * @throws AuthorizationException
      */
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Product::class);
+
         $attributes = $this->validate($request, ['name' => 'required']);
 
         $userId = array('user_id' => auth()->id());
-
         $attributes = array_merge($attributes, $userId);
 
         $product = Product::create($attributes);
@@ -77,12 +86,15 @@ class ProductsController extends Controller
 
     /**
      * Store the specified resource.
+     *
      * @param Product $product
      * @param UpdateProductRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(Product $product ,UpdateProductRequest $request): RedirectResponse
+    public function update(Product $product, UpdateProductRequest $request): RedirectResponse
     {
+        $this->authorize('update', $product);
 
         $product->name = $request->get('name');
         $product->user_id = auth()->id();
@@ -93,9 +105,8 @@ class ProductsController extends Controller
         $product->category_id = $request->get('category');
         $product->published_at = Carbon::parse($request->get('published_at'));
 
-        if($request->file('image'))
-        {
-            if($product->image) {
+        if ($request->file('image')) {
+            if ($product->image) {
                 Storage::delete($product->image);
             }
 
@@ -105,7 +116,7 @@ class ProductsController extends Controller
                 ->limitColors(255)
                 ->encode();
 
-            Storage::put($product->image, (string) $img);
+            Storage::put($product->image, (string)$img);
         }
 
         $product->save();
@@ -117,25 +128,31 @@ class ProductsController extends Controller
 
     /**
      *  Show the edit form of the specified resource.
+     *
      * @param Product $product
      * @return View
+     * @throws AuthorizationException
      */
     public function edit(Product $product): View
     {
-        $categories = Category::all();
-        $tags = Tag::all();
+        $this->authorize('edit', $product);
+
+        $categories = Category::getCategoryFromCache();
+        $tags = Tag::getTagsFromCache();
 
         return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
      *  Delete the resource and their relations.
+     *
      * @param Product $product
      * @return RedirectResponse
      * @throws Exception
      */
     public function destroy(Product $product): RedirectResponse
     {
+        $this->authorize('destroy', $product);
 
         $product->delete();
 

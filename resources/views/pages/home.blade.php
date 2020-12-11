@@ -32,12 +32,7 @@
                                 @forelse($featuredProductsHome as $product)
                                     <div class="col-md-3">
                                         <x-product.home-carousel
-                                            id="{{ $product->id }}"
-                                            name="{{ $product->name }}"
-                                            image="{{ $product->image }}"
-                                            price="{{ $product->price }}"
-                                            category="{{ $product->category->name }}"
-                                            url="{{ $product->category->url }}"></x-product.home-carousel>
+                                            :product="$product"></x-product.home-carousel>
                                     </div>
                                 @empty
                                     No hay productos para mostrar
@@ -64,12 +59,7 @@
                                 @forelse($lastProductsHome as $product)
                                     <div class="col-md-3">
                                         <x-product.home-carousel
-                                            id="{{ $product->id }}"
-                                            name="{{ $product->name }}"
-                                            image="{{ $product->image }}"
-                                            price="{{ $product->price }}"
-                                            category="{{ $product->category->name }}"
-                                            url="{{ $product->category->url }}"></x-product.home-carousel>
+                                            :product="$product"></x-product.home-carousel>
                                     </div>
                                 @empty
                                     No hay productos para mostrar
@@ -80,7 +70,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row feature_box py-4">
             <div class="col-md-4">
                 <div class="service">

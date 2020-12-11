@@ -2,16 +2,17 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Order;
-use App\Product;
+use App\Constants\PaymentStatus;
+use App\Entities\Order;
+use App\Entities\Product;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 $factory->define(Order::class, function (Faker $faker) {
     return [
         'order_reference' => Str::random(10),
-        'user_id' => factory(App\User::class),
-        'status' => 'pending',
+        'user_id' => factory(App\Entities\User::class),
+        'status' => PaymentStatus::PENDING,
         'grand_total' => $faker->randomNumber(7),
         'item_count' => $faker->randomNumber(2),
         'paid_at' => null,
@@ -34,4 +35,3 @@ $factory->afterCreating(Order::class, function (Order $order, Faker $faker) {
         'quantity' => $faker->randomNumber(2),
     ]);
 });
-

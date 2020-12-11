@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Orders;
 
-use App\Order;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
+use App\Constants\PaymentStatus;
+use App\Entities\User;
+use App\Entities\Order;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class IndexOrderTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
@@ -18,17 +18,16 @@ class IndexOrderTest extends TestCase
      */
     public function aBuyerCanIndexYourOrders()
     {
-        $this->withoutExceptionHandling();
-
         $buyerRole = Role::create(['name' => 'Buyer']);
         $buyerUser = factory(User::class)->create()->assignRole($buyerRole);
         $this->actingAs($buyerUser);
 
         $orders = factory(Order::class, 5)->create([
-            'user_id' => $buyerUser
+            'user_id' => $buyerUser,
+            'status' => PaymentStatus::PENDING
         ]);
 
-        $response = $this->get(route('order.index', $buyerUser));
+        $response = $this->get(route('orders.index', $buyerUser));
 
         $response->assertStatus(200);
 
@@ -36,9 +35,8 @@ class IndexOrderTest extends TestCase
             $response->assertSee($order->id);
             $response->assertSee($order->item_count);
             $response->assertSee($order->grand_total);
-            $response->assertSee($order->status);
+            $response->assertSee(trans($order->status));
         });
-
     }
 
     /**
@@ -54,7 +52,6 @@ class IndexOrderTest extends TestCase
             'user_id' => $admUser
         ]);
 
-        $this->get(route('order.index', $admUser))
-        ->assertStatus(403);
+        $this->get(route('orders.index', $admUser))->assertStatus(403);
     }
 }

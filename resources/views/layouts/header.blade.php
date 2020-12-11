@@ -19,7 +19,7 @@
                             <li><a href={{ route('admin.dashboard') }}>Administración</a></li>
                             @else
                                 <li><a href="{{ route('cart.index') }}">Tu carrito</a></li>
-                                <li><a href={{ route('order.index', auth()->user()) }}>Ordenes</a></li>
+                                <li><a href={{ route('orders.index', auth()->user()) }}>Ordenes</a></li>
                             @endif
                             <li>
                                 <a href='#'

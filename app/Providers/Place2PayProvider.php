@@ -9,12 +9,11 @@ class Place2PayProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton(PlacetoPay::class, function() {
+        $this->app->singleton(PlacetoPay::class, function () {
             return new PlacetoPay([
                 'login' => config('placetopay.login'),
                 'tranKey' => config('placetopay.trankey'),
@@ -29,7 +28,6 @@ class Place2PayProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
      * @return void
      */
     public function boot()

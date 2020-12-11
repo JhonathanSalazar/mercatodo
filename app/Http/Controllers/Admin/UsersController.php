@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Entities\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\View\View;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -29,10 +28,14 @@ class UsersController extends Controller
      * Display a listing of the resource.
      *
      * @return View
+     * @throws AuthorizationException
      */
     public function index(): View
     {
-        $users = User::all();
+        $this->authorize('viewAny', User::class);
+
+        $users = User::paginate();
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -41,9 +44,12 @@ class UsersController extends Controller
      *
      * @param User $user
      * @return View
+     * @throws AuthorizationException
      */
     public function show(User $user): View
     {
+        $this->authorize('view', $user);
+
         return view('admin.users.show', compact('user'));
     }
 
@@ -52,32 +58,34 @@ class UsersController extends Controller
      *
      * @param User $user
      * @return View
+     * @throws AuthorizationException
      */
     public function edit(User $user): View
     {
-        return view('admin.users.edit', compact('user'));
+        $this->authorize('edit', $user);
+
+        $roles = Role::pluck('name', 'id');
+        $permissions = Permission::pluck('name', 'id');
+
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UserRequest $request
      * @param User $user
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($user->id)
-            ],
-            'enable' => 'required'
-        ]);
+        $this->authorize('update', $user);
 
-        $user->update($data);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->enable = $request->get('enable');
+        $user->update();
 
         return redirect()->route('admin.users.index')
             ->with('status', 'Perfil actualizado satisfactoriamente');

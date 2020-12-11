@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\Pages;
 
-use App\Product;
-use App\User;
+use App\Entities\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ProductDetailsTest extends TestCase

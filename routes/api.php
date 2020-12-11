@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use CloudCreativity\LaravelJsonApi\Facades\JsonApi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('auth', 'ApiAuthController@login');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    JsonApi::register('v1')->routes(function ($api) {
+        $api->resource('products');
+        $api->resource('products')->relationships(function ($api) {
+            $api->hasOne('categories')->except('replace');
+        });
+        $api->resource('categories')->only('index', 'read');
+        $api->resource('categories')->relationships(function ($api) {
+            $api->hasMany('products')->except('replace', 'add', 'remove');
+        });
+    });
 });

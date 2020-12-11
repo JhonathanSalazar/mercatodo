@@ -2,7 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Constants\Permissions;
+use App\Entities\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -10,14 +11,14 @@ class UserPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view any model.
      *
      * @param User $user
-     * @return mixed
+     * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
-        //
+        return $user->hasPermissionTo(Permissions::VIEW_USERS);
     }
 
     /**
@@ -25,22 +26,22 @@ class UserPolicy
      *
      * @param User $user
      * @param User $model
-     * @return mixed
+     * @return bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model): bool
     {
-        return $user->id === $model->id;
+        return $user->id == $model->id || $user->hasPermissionTo(Permissions::VIEW_USERS);
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can edit the model.
      *
      * @param User $user
-     * @return mixed
+     * @return bool
      */
-    public function create(User $user)
+    public function edit(User $user): bool
     {
-        //
+        return $user->hasPermissionTo(Permissions::UPDATE_USERS);
     }
 
     /**
@@ -48,46 +49,10 @@ class UserPolicy
      *
      * @param User $user
      * @param User $model
-     * @return mixed
+     * @return bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model): bool
     {
-        return $user->id === $model->id;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param User $user
-     * @param User $model
-     * @return mixed
-     */
-    public function delete(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param User $model
-     * @return mixed
-     */
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param User $model
-     * @return mixed
-     */
-    public function forceDelete(User $user, User $model)
-    {
-        //
+        return $user->id == $model->id || $user->hasPermissionTo(Permissions::UPDATE_USERS);
     }
 }
